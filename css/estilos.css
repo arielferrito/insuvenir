@@ -106,3 +106,90 @@ body{
     color:white;
 
 }
+
+.destacados{
+
+    max-width:1200px;
+    margin:70px auto;
+    padding:20px;
+
+}
+
+.destacados h2{
+
+    text-align:center;
+    margin-bottom:40px;
+    color:#444;
+
+}
+
+.grilla-productos{
+
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:30px;
+
+}
+
+.tarjeta-producto{
+
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+    transition:.2s;
+
+}
+
+.tarjeta-producto:hover{
+
+    transform:translateY(-5px);
+
+}
+
+.imagen-producto{
+
+    height:220px;
+    background:#ececec;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#888;
+    font-size:18px;
+
+}
+
+.tarjeta-producto h3{
+
+    padding:20px 20px 10px;
+
+}
+
+.precio{
+
+    padding:0 20px;
+    font-size:26px;
+    font-weight:bold;
+    color:#6ec1e4;
+
+}
+
+.tarjeta-producto button{
+
+    width:calc(100% - 40px);
+    margin:20px;
+    padding:14px;
+    border:none;
+    border-radius:8px;
+    background:#6ec1e4;
+    color:white;
+    cursor:pointer;
+    font-size:16px;
+
+}
+
+.tarjeta-producto button:hover{
+
+    opacity:.9;
+
+}
