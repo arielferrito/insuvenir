@@ -36,3 +36,73 @@ body{
     font-size:18px;
 
 }
+.hero{
+
+    max-width:1100px;
+    margin:50px auto;
+    padding:60px 30px;
+    text-align:center;
+
+}
+
+.hero h2{
+
+    font-size:40px;
+    color:#333;
+
+}
+
+.hero p{
+
+    margin:25px auto;
+    max-width:700px;
+    color:#666;
+    line-height:1.6;
+    font-size:20px;
+
+}
+
+.botones{
+
+    margin-top:35px;
+
+}
+
+.btn{
+
+    display:inline-block;
+    padding:14px 28px;
+    margin:10px;
+    text-decoration:none;
+    border-radius:8px;
+    font-weight:bold;
+    transition:.2s;
+
+}
+
+.btn-principal{
+
+    background:#6ec1e4;
+    color:white;
+
+}
+
+.btn-principal:hover{
+
+    transform:translateY(-2px);
+
+}
+
+.btn-secundario{
+
+    border:2px solid #6ec1e4;
+    color:#6ec1e4;
+
+}
+
+.btn-secundario:hover{
+
+    background:#6ec1e4;
+    color:white;
+
+}
