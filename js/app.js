@@ -69,26 +69,39 @@ function mostrarProductos(productos) {
 
 
 function crearTarjetaProducto(producto) {
-  const nombre = escaparHTML(producto.producto || "Producto");
+  const nombre = escaparHTML(
+    producto.producto || "Producto"
+  );
 
   const descripcion = escaparHTML(
     producto.descripcion || "Insumo para souvenirs."
   );
 
-  const precio = formatearPrecio(producto.precio1);
+  const precio = formatearPrecio(
+    producto.precio1
+  );
 
-  const stock = Number(producto.stock || 0);
+  const stock = Number(
+    producto.stock || 0
+  );
 
   const estado = escaparHTML(
-    producto.estado || (stock > 0 ? "Disponible" : "Sin stock")
+    producto.estado ||
+    (stock > 0 ? "Disponible" : "Sin stock")
   );
 
   const claseEstado =
-    stock > 0 && estado.toLowerCase() !== "sin stock"
+    stock > 0
       ? "estado-disponible"
       : "estado-sin-stock";
 
-  const imagen = obtenerImagen(producto.idFoto, nombre);
+  const imagen = obtenerImagen(
+    producto.idFoto,
+    nombre
+  );
+
+  const urlProducto =
+    `producto.html?familia=${encodeURIComponent(producto.familia)}`;
 
   return `
     <article class="producto">
@@ -113,12 +126,24 @@ function crearTarjetaProducto(producto) {
           Desde ${precio}
         </p>
 
-        <button
-          type="button"
-          ${stock <= 0 ? "disabled" : ""}
-        >
-          ${stock > 0 ? "Ver producto" : "Sin stock"}
-        </button>
+        ${
+          stock > 0
+            ? `
+              <a
+                class="boton-producto"
+                href="${urlProducto}"
+              >
+                Ver producto
+              </a>
+            `
+            : `
+              <span
+                class="boton-producto boton-producto-desactivado"
+              >
+                Sin stock
+              </span>
+            `
+        }
 
       </div>
 
