@@ -421,3 +421,167 @@ body{
     background:#fff;
     border-radius:14px;
 }
+.logo{
+    text-decoration:none;
+}
+
+.boton-producto{
+    display:block;
+    width:calc(100% - 40px);
+    margin:25px 20px;
+    padding:15px;
+    border-radius:10px;
+    background:#d96ca6;
+    color:#fff;
+    text-align:center;
+    text-decoration:none;
+    font-size:16px;
+    font-weight:700;
+}
+
+.boton-producto:hover{
+    opacity:.9;
+}
+
+.boton-producto-desactivado{
+    background:#bbb;
+    pointer-events:none;
+}
+
+.ficha-producto{
+    max-width:1200px;
+    min-height:650px;
+    margin:70px auto;
+    padding:0 25px;
+    display:grid;
+    grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr);
+    gap:65px;
+}
+
+.ficha-galeria{
+    min-width:0;
+}
+
+.foto-principal{
+    width:100%;
+    aspect-ratio:1 / 1;
+    overflow:hidden;
+    border-radius:22px;
+    background:#f3edf2;
+    box-shadow:0 15px 35px rgba(0,0,0,.08);
+}
+
+.foto-principal img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    display:block;
+}
+
+.miniaturas{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:12px;
+    margin-top:18px;
+}
+
+.miniatura{
+    aspect-ratio:1 / 1;
+    padding:0;
+    overflow:hidden;
+    border:2px solid transparent;
+    border-radius:12px;
+    background:#fff;
+    cursor:pointer;
+}
+
+.miniatura img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+.miniatura-activa{
+    border-color:#d96ca6;
+}
+
+.ficha-informacion{
+    align-self:start;
+    padding-top:15px;
+}
+
+.ficha-informacion h1{
+    margin:18px 0;
+    font-size:46px;
+    line-height:1.12;
+}
+
+.ficha-descripcion{
+    color:#6e6369;
+    font-size:18px;
+    line-height:1.7;
+}
+
+.tabla-precios{
+    margin-top:35px;
+    padding:24px;
+    border-radius:18px;
+    background:#fff;
+    box-shadow:0 10px 30px rgba(0,0,0,.07);
+}
+
+.tabla-precios h2{
+    margin-bottom:18px;
+    font-size:22px;
+}
+
+.fila-precio{
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    padding:15px 0;
+    border-bottom:1px solid #eee;
+}
+
+.fila-precio:last-child{
+    border-bottom:0;
+}
+
+.fila-precio strong{
+    color:#d96ca6;
+    font-size:20px;
+}
+
+.destacado-precio{
+    margin:8px -12px -10px;
+    padding:16px 12px;
+    border-radius:12px;
+    background:#f8edf4;
+}
+
+.stock-ficha{
+    margin-top:25px;
+    color:#666;
+}
+
+.boton-volver{
+    margin:30px 0 0;
+}
+
+@media (max-width:850px){
+
+    .ficha-producto{
+        grid-template-columns:1fr;
+        margin:35px auto;
+        gap:35px;
+    }
+
+    .ficha-informacion h1{
+        font-size:36px;
+    }
+
+    .miniaturas{
+        grid-template-columns:repeat(4,1fr);
+    }
+}
