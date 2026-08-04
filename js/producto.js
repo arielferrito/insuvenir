@@ -9,9 +9,6 @@ document.addEventListener(
 
 
 async function cargarProducto() {
-  const contenedor =
-    document.getElementById("ficha-producto");
-
   const parametros =
     new URLSearchParams(window.location.search);
 
@@ -25,6 +22,42 @@ async function cargarProducto() {
     return;
   }
 
+  /*
+   * Primero intenta usar los productos
+   * que la Home ya descargó.
+   */
+  const productosGuardados =
+    sessionStorage.getItem(
+      "insuvenir_productos"
+    );
+
+  if (productosGuardados) {
+    try {
+      const productos =
+        JSON.parse(productosGuardados);
+
+      const producto =
+        buscarProductoPorFamilia_(
+          productos,
+          familia
+        );
+
+      if (producto) {
+        mostrarFicha(producto);
+        return;
+      }
+    } catch (error) {
+      console.warn(
+        "No se pudo leer el catálogo guardado.",
+        error
+      );
+    }
+  }
+
+  /*
+   * Si alguien abre la ficha directamente,
+   * consulta la API como respaldo.
+   */
   try {
     const respuesta =
       await fetch(API_URL);
@@ -44,10 +77,15 @@ async function cargarProducto() {
       );
     }
 
+    sessionStorage.setItem(
+      "insuvenir_productos",
+      JSON.stringify(productos)
+    );
+
     const producto =
-      productos.find(item =>
-        String(item.familia) ===
-        String(familia)
+      buscarProductoPorFamilia_(
+        productos,
+        familia
       );
 
     if (!producto) {
@@ -68,6 +106,19 @@ async function cargarProducto() {
   }
 }
 
+function buscarProductoPorFamilia_(
+  productos,
+  familia
+) {
+  if (!Array.isArray(productos)) {
+    return null;
+  }
+
+  return productos.find(item =>
+    String(item.familia) ===
+    String(familia)
+  ) || null;
+}
 
 function mostrarFicha(producto) {
   const contenedor =
