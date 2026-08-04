@@ -19,11 +19,19 @@ async function cargarProductos() {
       throw new Error("No se pudo consultar la API.");
     }
 
-    const productos = await respuesta.json();
+   const productos = await respuesta.json();
 
-    if (!Array.isArray(productos)) {
-      throw new Error(productos.error || "La API devolvió un formato incorrecto.");
-    }
+sessionStorage.setItem(
+  "insuvenir_productos",
+  JSON.stringify(productos)
+);
+
+if (!Array.isArray(productos)) {
+  throw new Error(
+    productos.error ||
+    "La API devolvió un formato incorrecto."
+  );
+}
 
     const destacados = productos.filter(
       producto => producto.destacado === true
