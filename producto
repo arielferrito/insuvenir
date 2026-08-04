@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Producto | Insuvenir</title>
+
+    <link
+        rel="stylesheet"
+        href="css/estilos.css"
+    >
+
+</head>
+
+<body>
+
+    <header class="header">
+
+        <a
+            href="index.html"
+            class="logo"
+        >
+            INSUVENIR
+        </a>
+
+        <nav class="menu">
+
+            <a href="index.html">
+                Inicio
+            </a>
+
+            <a href="index.html#productos">
+                Productos
+            </a>
+
+        </nav>
+
+    </header>
+
+    <main
+        class="ficha-producto"
+        id="ficha-producto"
+    >
+
+        <p class="mensaje-catalogo">
+            Cargando producto...
+        </p>
+
+    </main>
+
+    <footer class="footer">
+
+        <p>
+            © 2026 Insuvenir · Insumos para souvenirs
+        </p>
+
+    </footer>
+
+    <script src="js/producto.js"></script>
+
+</body>
+
+</html>
