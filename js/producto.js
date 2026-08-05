@@ -292,7 +292,9 @@ function mostrarFicha(producto) {
   `;
 
   activarMiniaturas();
-  function activarColores() {
+  activarColores();
+}
+function activarColores() {
   const botones =
     document.querySelectorAll(".opcion-color");
 
@@ -312,6 +314,7 @@ function mostrarFicha(producto) {
       );
 
       const color = boton.dataset.color;
+
       const stock = Number(
         boton.dataset.stock || 0
       );
@@ -325,8 +328,6 @@ function mostrarFicha(producto) {
       );
     });
   });
-}
-  activarColores();
 }
 
 
