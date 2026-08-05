@@ -22,7 +22,7 @@ async function cargarProductos() {
    const productos = await respuesta.json();
 
 sessionStorage.setItem(
-  "insuvenir_productos",
+  "insuvenir_productos_v2",
   JSON.stringify(productos)
 );
 
