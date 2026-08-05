@@ -28,7 +28,7 @@ async function cargarProducto() {
    */
   const productosGuardados =
     sessionStorage.getItem(
-      "insuvenir_productos"
+      "insuvenir_productos_v2"
     );
 
   if (productosGuardados) {
@@ -78,7 +78,7 @@ async function cargarProducto() {
     }
 
     sessionStorage.setItem(
-      "insuvenir_productos",
+      "insuvenir_productos_v2",
       JSON.stringify(productos)
     );
 
