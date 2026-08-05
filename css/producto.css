@@ -307,3 +307,46 @@
         font-size: 22px;
     }
 }
+/* ==================================
+   SELECTOR DE COLORES
+================================== */
+
+.selector-colores {
+    margin-top: 30px;
+}
+
+.selector-colores h2 {
+    margin-bottom: 14px;
+    color: #40373c;
+    font-size: 20px;
+}
+
+.lista-colores {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.opcion-color {
+    padding: 10px 15px;
+    border: 2px solid #eadde4;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #61565c;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.opcion-color:hover {
+    border-color: #d96ca6;
+    transform: translateY(-2px);
+}
+
+.opcion-color-activa {
+    border-color: #d96ca6;
+    background: #d96ca6;
+    color: #ffffff;
+    box-shadow: 0 6px 16px rgba(217, 108, 166, .22);
+}
