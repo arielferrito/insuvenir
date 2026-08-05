@@ -1,6 +1,7 @@
 const API_URL =
   "https://script.google.com/macros/s/AKfycbyAl92YO1VnX5yzVG2ueFYCKtP6lGhmB0K4V7CiEDbtCNuCjknRBnB9YhyMTjyJt55O/exec";
 
+const CLAVE_CATALOGO = "insuvenir_productos_v3";
 
 document.addEventListener(
   "DOMContentLoaded",
@@ -12,55 +13,33 @@ async function cargarProducto() {
   const parametros =
     new URLSearchParams(window.location.search);
 
-  const familia =
-    parametros.get("familia");
+  const familia = parametros.get("familia");
 
   if (!familia) {
-    mostrarError(
-      "No se indicó qué producto abrir."
-    );
+    mostrarError("No se indicó qué producto abrir.");
     return;
   }
 
   /*
-   * Primero intenta usar los productos
-   * que la Home ya descargó.
+   * Primero busca un catálogo actualizado
+   * dentro del almacenamiento de la sesión.
    */
-  const productosGuardados =
-    sessionStorage.getItem(
-      "insuvenir_productos_v2"
-    );
+  const productoGuardado =
+    obtenerProductoGuardado_(familia);
 
-  if (productosGuardados) {
-    try {
-      const productos =
-        JSON.parse(productosGuardados);
-
-      const producto =
-        buscarProductoPorFamilia_(
-          productos,
-          familia
-        );
-
-      if (producto) {
-        mostrarFicha(producto);
-        return;
-      }
-    } catch (error) {
-      console.warn(
-        "No se pudo leer el catálogo guardado.",
-        error
-      );
-    }
+  if (productoGuardado) {
+    mostrarFicha(productoGuardado);
+    return;
   }
 
   /*
-   * Si alguien abre la ficha directamente,
-   * consulta la API como respaldo.
+   * Si no existe o pertenece a una versión vieja,
+   * vuelve a consultar la API.
    */
   try {
-    const respuesta =
-      await fetch(API_URL);
+    const respuesta = await fetch(API_URL, {
+      cache: "no-store"
+    });
 
     if (!respuesta.ok) {
       throw new Error(
@@ -68,17 +47,17 @@ async function cargarProducto() {
       );
     }
 
-    const productos =
-      await respuesta.json();
+    const productos = await respuesta.json();
 
     if (!Array.isArray(productos)) {
       throw new Error(
+        productos.error ||
         "La API devolvió un formato incorrecto."
       );
     }
 
     sessionStorage.setItem(
-      "insuvenir_productos_v2",
+      CLAVE_CATALOGO,
       JSON.stringify(productos)
     );
 
@@ -106,6 +85,64 @@ async function cargarProducto() {
   }
 }
 
+
+function obtenerProductoGuardado_(familia) {
+  const clavesPosibles = [
+    CLAVE_CATALOGO,
+    "insuvenir_productos_v2",
+    "insuvenir_productos"
+  ];
+
+  for (const clave of clavesPosibles) {
+    const contenido =
+      sessionStorage.getItem(clave);
+
+    if (!contenido) {
+      continue;
+    }
+
+    try {
+      const productos = JSON.parse(contenido);
+
+      const producto =
+        buscarProductoPorFamilia_(
+          productos,
+          familia
+        );
+
+      if (!producto) {
+        continue;
+      }
+
+      /*
+       * Si el producto guardado no tiene todavía
+       * la propiedad "colores", pertenece a una
+       * versión anterior y no debe utilizarse.
+       */
+      const tieneDatosDeColores =
+        Object.prototype.hasOwnProperty.call(
+          producto,
+          "colores"
+        );
+
+      if (!tieneDatosDeColores) {
+        continue;
+      }
+
+      return producto;
+
+    } catch (error) {
+      console.warn(
+        `No se pudo leer ${clave}.`,
+        error
+      );
+    }
+  }
+
+  return null;
+}
+
+
 function buscarProductoPorFamilia_(
   productos,
   familia
@@ -115,10 +152,11 @@ function buscarProductoPorFamilia_(
   }
 
   return productos.find(item =>
-    String(item.familia) ===
-    String(familia)
+    String(item.familia).trim() ===
+    String(familia).trim()
   ) || null;
 }
+
 
 function mostrarFicha(producto) {
   const contenedor =
@@ -135,18 +173,29 @@ function mostrarFicha(producto) {
 
   const fotos = obtenerFotos(producto);
 
-  const stock = Number(producto.stock || 0);
+  const stock = Number(
+    producto.stock || 0
+  );
 
-  const colores = Array.isArray(producto.colores)
-    ? producto.colores
-    : [];
+  const colores =
+    Array.isArray(producto.colores)
+      ? producto.colores.filter(color =>
+          color &&
+          color.nombre &&
+          Number(color.stock || 0) > 0
+        )
+      : [];
 
   const colorInicial =
-    colores.length > 0 ? colores[0] : null;
+    colores.length > 0
+      ? colores[0]
+      : null;
 
   const estado = escaparHTML(
     producto.estado ||
-    (stock > 0 ? "En Stock" : "Sin Stock")
+    (stock > 0
+      ? "En Stock"
+      : "Sin Stock")
   );
 
   const claseEstado =
@@ -155,40 +204,15 @@ function mostrarFicha(producto) {
       : "estado-sin-stock";
 
   const selectorColores =
-    colores.length > 0
-      ? `
-        <section class="selector-colores">
-
-          <h2>Elegí un color</h2>
-
-          <div class="lista-colores">
-
-            ${colores
-              .map((color, indice) => `
-                <button
-                  type="button"
-                  class="opcion-color ${
-                    indice === 0
-                      ? "opcion-color-activa"
-                      : ""
-                  }"
-                  data-color="${escaparHTML(color.nombre)}"
-                  data-stock="${Number(color.stock || 0)}"
-                >
-                  ${escaparHTML(color.nombre)}
-                </button>
-              `)
-              .join("")}
-
-          </div>
-
-        </section>
-      `
-      : "";
+    crearSelectorColores_(colores);
 
   const textoDisponibilidad =
     colorInicial
-      ? `Disponibles en ${escaparHTML(colorInicial.nombre)}: ${Number(colorInicial.stock)} unidades`
+      ? `Disponibles en ${escaparHTML(
+          colorInicial.nombre
+        )}: ${Number(
+          colorInicial.stock
+        )} unidades`
       : stock > 0
         ? `Disponibilidad estimada: ${stock} unidades`
         : "Producto momentáneamente sin stock";
@@ -197,17 +221,14 @@ function mostrarFicha(producto) {
     <div class="ficha-galeria">
 
       <div class="foto-principal">
-
         <img
           id="foto-principal"
           src="${fotos[0]}"
           alt="${nombre}"
         >
-
       </div>
 
       <div class="miniaturas">
-
         ${fotos
           .map((foto, indice) => `
             <button
@@ -218,17 +239,15 @@ function mostrarFicha(producto) {
                   : ""
               }"
               data-foto="${foto}"
+              aria-label="Ver imagen ${indice + 1}"
             >
-
               <img
                 src="${foto}"
                 alt="${nombre} ${indice + 1}"
               >
-
             </button>
           `)
           .join("")}
-
       </div>
 
     </div>
@@ -294,47 +313,98 @@ function mostrarFicha(producto) {
   activarMiniaturas();
   activarColores();
 }
+
+
+function crearSelectorColores_(colores) {
+  if (colores.length === 0) {
+    return "";
+  }
+
+  return `
+    <section class="selector-colores">
+
+      <h2>Elegí un color</h2>
+
+      <div class="lista-colores">
+
+        ${colores
+          .map((color, indice) => `
+            <button
+              type="button"
+              class="opcion-color ${
+                indice === 0
+                  ? "opcion-color-activa"
+                  : ""
+              }"
+              data-color="${escaparHTML(color.nombre)}"
+              data-stock="${Number(color.stock || 0)}"
+            >
+              ${escaparHTML(color.nombre)}
+            </button>
+          `)
+          .join("")}
+
+      </div>
+
+    </section>
+  `;
+}
+
+
 function activarColores() {
   const botones =
-    document.querySelectorAll(".opcion-color");
+    document.querySelectorAll(
+      ".opcion-color"
+    );
 
   const disponibilidad =
-    document.getElementById("stock-ficha");
+    document.getElementById(
+      "stock-ficha"
+    );
+
+  if (!disponibilidad) {
+    return;
+  }
 
   botones.forEach(boton => {
-    boton.addEventListener("click", () => {
-      botones.forEach(item =>
-        item.classList.remove(
+    boton.addEventListener(
+      "click",
+      () => {
+        botones.forEach(item =>
+          item.classList.remove(
+            "opcion-color-activa"
+          )
+        );
+
+        boton.classList.add(
           "opcion-color-activa"
-        )
-      );
+        );
 
-      boton.classList.add(
-        "opcion-color-activa"
-      );
+        const color =
+          boton.dataset.color;
 
-      const color = boton.dataset.color;
+        const stock = Number(
+          boton.dataset.stock || 0
+        );
 
-      const stock = Number(
-        boton.dataset.stock || 0
-      );
+        disponibilidad.textContent =
+          `Disponibles en ${color}: ${stock} unidades`;
 
-      disponibilidad.textContent =
-        `Disponibles en ${color}: ${stock} unidades`;
-
-      sessionStorage.setItem(
-        "insuvenir_color_seleccionado",
-        color
-      );
-    });
+        sessionStorage.setItem(
+          "insuvenir_color_seleccionado",
+          color
+        );
+      }
+    );
   });
 }
 
 
 function obtenerFotos(producto) {
-  const ids = Array.isArray(producto.fotos)
-    ? producto.fotos
-    : [];
+  const ids =
+    Array.isArray(producto.fotos)
+      ? [...producto.fotos]
+      : [];
 
   if (
     ids.length === 0 &&
@@ -344,46 +414,57 @@ function obtenerFotos(producto) {
   }
 
   if (ids.length === 0) {
-    return [
-      crearPlaceholder()
-    ];
+    return [crearPlaceholder()];
   }
 
   return ids.map(id =>
-    `https://drive.google.com/thumbnail?id=${encodeURIComponent(id)}&sz=w1400`
+    `https://drive.google.com/thumbnail?id=${encodeURIComponent(
+      id
+    )}&sz=w1400`
   );
 }
 
 
 function activarMiniaturas() {
   const principal =
-    document.getElementById("foto-principal");
+    document.getElementById(
+      "foto-principal"
+    );
 
   const miniaturas =
-    document.querySelectorAll(".miniatura");
+    document.querySelectorAll(
+      ".miniatura"
+    );
+
+  if (!principal) {
+    return;
+  }
 
   miniaturas.forEach(boton => {
-    boton.addEventListener("click", () => {
+    boton.addEventListener(
+      "click",
+      () => {
+        principal.src =
+          boton.dataset.foto;
 
-      principal.src =
-        boton.dataset.foto;
+        miniaturas.forEach(item =>
+          item.classList.remove(
+            "miniatura-activa"
+          )
+        );
 
-      miniaturas.forEach(item =>
-        item.classList.remove(
+        boton.classList.add(
           "miniatura-activa"
-        )
-      );
-
-      boton.classList.add(
-        "miniatura-activa"
-      );
-    });
+        );
+      }
+    );
   });
 }
 
 
 function crearPlaceholder() {
-  return "data:image/svg+xml;charset=UTF-8," +
+  return (
+    "data:image/svg+xml;charset=UTF-8," +
     encodeURIComponent(`
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -420,18 +501,23 @@ function crearPlaceholder() {
           Próximamente foto
         </text>
       </svg>
-    `);
+    `)
+  );
 }
 
 
 function mostrarError(mensaje) {
   const contenedor =
-    document.getElementById("ficha-producto");
+    document.getElementById(
+      "ficha-producto"
+    );
 
   contenedor.innerHTML = `
     <div class="mensaje-error">
 
-      <strong>${mensaje}</strong>
+      <strong>
+        ${escaparHTML(mensaje)}
+      </strong>
 
       <a
         href="index.html"
@@ -446,8 +532,7 @@ function mostrarError(mensaje) {
 
 
 function formatearPrecio(valor) {
-  const numero =
-    Number(valor || 0);
+  const numero = Number(valor || 0);
 
   return new Intl.NumberFormat(
     "es-AR",
