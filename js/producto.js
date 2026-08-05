@@ -124,35 +124,74 @@ function mostrarFicha(producto) {
   const contenedor =
     document.getElementById("ficha-producto");
 
-  const nombre =
-    escaparHTML(
-      producto.producto || "Producto"
-    );
+  const nombre = escaparHTML(
+    producto.producto || "Producto"
+  );
 
-  const descripcion =
-    escaparHTML(
-      producto.descripcion ||
-      "Insumo para souvenirs."
-    );
+  const descripcion = escaparHTML(
+    producto.descripcion ||
+    "Insumo para souvenirs."
+  );
 
-  const fotos =
-    obtenerFotos(producto);
+  const fotos = obtenerFotos(producto);
 
-  const stock =
-    Number(producto.stock || 0);
+  const stock = Number(producto.stock || 0);
 
-  const estado =
-    escaparHTML(
-      producto.estado ||
-      (stock > 0
-        ? "En Stock"
-        : "Sin Stock")
-    );
+  const colores = Array.isArray(producto.colores)
+    ? producto.colores
+    : [];
+
+  const colorInicial =
+    colores.length > 0 ? colores[0] : null;
+
+  const estado = escaparHTML(
+    producto.estado ||
+    (stock > 0 ? "En Stock" : "Sin Stock")
+  );
 
   const claseEstado =
     stock > 0
       ? "estado-disponible"
       : "estado-sin-stock";
+
+  const selectorColores =
+    colores.length > 0
+      ? `
+        <section class="selector-colores">
+
+          <h2>Elegí un color</h2>
+
+          <div class="lista-colores">
+
+            ${colores
+              .map((color, indice) => `
+                <button
+                  type="button"
+                  class="opcion-color ${
+                    indice === 0
+                      ? "opcion-color-activa"
+                      : ""
+                  }"
+                  data-color="${escaparHTML(color.nombre)}"
+                  data-stock="${Number(color.stock || 0)}"
+                >
+                  ${escaparHTML(color.nombre)}
+                </button>
+              `)
+              .join("")}
+
+          </div>
+
+        </section>
+      `
+      : "";
+
+  const textoDisponibilidad =
+    colorInicial
+      ? `Disponibles en ${escaparHTML(colorInicial.nombre)}: ${Number(colorInicial.stock)} unidades`
+      : stock > 0
+        ? `Disponibilidad estimada: ${stock} unidades`
+        : "Producto momentáneamente sin stock";
 
   contenedor.innerHTML = `
     <div class="ficha-galeria">
@@ -206,50 +245,40 @@ function mostrarFicha(producto) {
         ${descripcion}
       </p>
 
+      ${selectorColores}
+
       <div class="tabla-precios">
 
         <h2>Precios por cantidad</h2>
 
         <div class="fila-precio">
-
           <span>1 a 19 unidades</span>
-
           <strong>
             ${formatearPrecio(producto.precio1)}
           </strong>
-
         </div>
 
         <div class="fila-precio">
-
           <span>20 a 49 unidades</span>
-
           <strong>
             ${formatearPrecio(producto.precio2)}
           </strong>
-
         </div>
 
         <div class="fila-precio destacado-precio">
-
           <span>50 unidades o más</span>
-
           <strong>
             ${formatearPrecio(producto.precio3)}
           </strong>
-
         </div>
 
       </div>
 
-      <p class="stock-ficha">
-
-        ${
-          stock > 0
-            ? `Disponibilidad estimada: ${stock} unidades`
-            : "Producto momentáneamente sin stock"
-        }
-
+      <p
+        class="stock-ficha"
+        id="stock-ficha"
+      >
+        ${textoDisponibilidad}
       </p>
 
       <a
@@ -263,6 +292,41 @@ function mostrarFicha(producto) {
   `;
 
   activarMiniaturas();
+  function activarColores() {
+  const botones =
+    document.querySelectorAll(".opcion-color");
+
+  const disponibilidad =
+    document.getElementById("stock-ficha");
+
+  botones.forEach(boton => {
+    boton.addEventListener("click", () => {
+      botones.forEach(item =>
+        item.classList.remove(
+          "opcion-color-activa"
+        )
+      );
+
+      boton.classList.add(
+        "opcion-color-activa"
+      );
+
+      const color = boton.dataset.color;
+      const stock = Number(
+        boton.dataset.stock || 0
+      );
+
+      disponibilidad.textContent =
+        `Disponibles en ${color}: ${stock} unidades`;
+
+      sessionStorage.setItem(
+        "insuvenir_color_seleccionado",
+        color
+      );
+    });
+  });
+}
+  activarColores();
 }
 
 
@@ -402,4 +466,51 @@ function escaparHTML(texto) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
+}
+/* ==================================
+   SELECTOR DE COLORES
+================================== */
+
+.selector-colores {
+    margin-top: 30px;
+}
+
+.selector-colores h2 {
+    margin-bottom: 14px;
+    color: #40373c;
+    font-size: 20px;
+}
+
+.lista-colores {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.opcion-color {
+    padding: 10px 15px;
+
+    border: 2px solid #eadde4;
+    border-radius: 999px;
+
+    background: #ffffff;
+    color: #61565c;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.opcion-color:hover {
+    border-color: #d96ca6;
+    transform: translateY(-2px);
+}
+
+.opcion-color-activa {
+    border-color: #d96ca6;
+    background: #d96ca6;
+    color: #ffffff;
+    box-shadow: 0 6px 16px rgba(217,108,166,.22);
 }
