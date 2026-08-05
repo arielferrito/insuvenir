@@ -293,27 +293,88 @@ function mostrarFicha(producto) {
 
       </div>
 
-      <p
-        class="stock-ficha"
-        id="stock-ficha"
-      >
-        ${textoDisponibilidad}
-      </p>
+   <p
+  class="stock-ficha"
+  id="stock-ficha"
+>
+  ${textoDisponibilidad}
+</p>
 
-      <a
-        href="index.html#productos"
-        class="boton boton-principal boton-volver"
-      >
-        Volver al catálogo
-      </a>
+<div class="compra-producto">
+
+  <label for="cantidad">
+    Cantidad
+  </label>
+
+  <input
+    id="cantidad"
+    type="number"
+    min="1"
+    value="1"
+  >
+
+  <button
+    id="btn-whatsapp"
+    class="boton boton-principal"
+  >
+    Consultar por WhatsApp
+  </button>
+
+</div>
+
+<a
+  href="index.html#productos"
+  class="boton boton-secundario boton-volver"
+>
+  ← Volver al catálogo
+</a>
 
     </div>
   `;
 
   activarMiniaturas();
   activarColores();
+  activarWhatsapp(producto);
 }
+function activarWhatsapp(producto) {
+  const boton = document.getElementById("btn-whatsapp");
+  const cantidadInput = document.getElementById("cantidad");
 
+  if (!boton || !cantidadInput) return;
+
+  boton.addEventListener("click", () => {
+    const cantidad = Math.max(
+      1,
+      Number(cantidadInput.value) || 1
+    );
+
+    const colorSeleccionado =
+      document.querySelector(".opcion-color-activa");
+
+    const color = colorSeleccionado
+      ? colorSeleccionado.dataset.color
+      : "";
+
+    const mensaje = [
+      "Hola, quiero consultar por:",
+      "",
+      `Producto: ${producto.producto}`,
+      color ? `Color: ${color}` : "",
+      `Cantidad: ${cantidad} unidades`,
+      "",
+      "Sé que la disponibilidad y el pedido serán confirmados por Insuvenir."
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    const numeroWhatsapp = "5492233464815";
+
+    const url =
+      `https://wa.me/${numeroWhatsapp}?text=${encodeURIComponent(mensaje)}`;
+
+    window.open(url, "_blank");
+  });
+}
 
 function crearSelectorColores_(colores) {
   if (colores.length === 0) {
