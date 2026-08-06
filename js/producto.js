@@ -1,18 +1,14 @@
 const API_URL =
   "https://script.google.com/macros/s/AKfycbyAl92YO1VnX5yzVG2ueFYCKtP6lGhmB0K4V7CiEDbtCNuCjknRBnB9YhyMTjyJt55O/exec";
 
-const CLAVE_CATALOGO = "insuvenir_productos_v3";
+const CLAVE_CATALOGO = "insuvenir_productos_v2";
+const NUMERO_WHATSAPP = "5492233464815";
 
-document.addEventListener(
-  "DOMContentLoaded",
-  cargarProducto
-);
+document.addEventListener("DOMContentLoaded", cargarProducto);
 
 
 async function cargarProducto() {
-  const parametros =
-    new URLSearchParams(window.location.search);
-
+  const parametros = new URLSearchParams(window.location.search);
   const familia = parametros.get("familia");
 
   if (!familia) {
@@ -20,31 +16,20 @@ async function cargarProducto() {
     return;
   }
 
-  /*
-   * Primero busca un catálogo actualizado
-   * dentro del almacenamiento de la sesión.
-   */
-  const productoGuardado =
-    obtenerProductoGuardado_(familia);
+  const productoGuardado = obtenerProductoGuardado_(familia);
 
   if (productoGuardado) {
     mostrarFicha(productoGuardado);
     return;
   }
 
-  /*
-   * Si no existe o pertenece a una versión vieja,
-   * vuelve a consultar la API.
-   */
   try {
     const respuesta = await fetch(API_URL, {
       cache: "no-store"
     });
 
     if (!respuesta.ok) {
-      throw new Error(
-        "No se pudo consultar la API."
-      );
+      throw new Error("No se pudo consultar la API.");
     }
 
     const productos = await respuesta.json();
@@ -61,16 +46,13 @@ async function cargarProducto() {
       JSON.stringify(productos)
     );
 
-    const producto =
-      buscarProductoPorFamilia_(
-        productos,
-        familia
-      );
+    const producto = buscarProductoPorFamilia_(
+      productos,
+      familia
+    );
 
     if (!producto) {
-      mostrarError(
-        "No encontramos este producto."
-      );
+      mostrarError("No encontramos este producto.");
       return;
     }
 
@@ -78,75 +60,58 @@ async function cargarProducto() {
 
   } catch (error) {
     console.error(error);
-
-    mostrarError(
-      "No pudimos cargar el producto."
-    );
+    mostrarError("No pudimos cargar el producto.");
   }
 }
 
 
 function obtenerProductoGuardado_(familia) {
-  const clavesPosibles = [
-    CLAVE_CATALOGO,
-    "insuvenir_productos_v2",
-    "insuvenir_productos"
-  ];
+  const contenido = sessionStorage.getItem(CLAVE_CATALOGO);
 
-  for (const clave of clavesPosibles) {
-    const contenido =
-      sessionStorage.getItem(clave);
-
-    if (!contenido) {
-      continue;
-    }
-
-    try {
-      const productos = JSON.parse(contenido);
-
-      const producto =
-        buscarProductoPorFamilia_(
-          productos,
-          familia
-        );
-
-      if (!producto) {
-        continue;
-      }
-
-      /*
-       * Si el producto guardado no tiene todavía
-       * la propiedad "colores", pertenece a una
-       * versión anterior y no debe utilizarse.
-       */
-      const tieneDatosDeColores =
-        Object.prototype.hasOwnProperty.call(
-          producto,
-          "colores"
-        );
-
-      if (!tieneDatosDeColores) {
-        continue;
-      }
-
-      return producto;
-
-    } catch (error) {
-      console.warn(
-        `No se pudo leer ${clave}.`,
-        error
-      );
-    }
+  if (!contenido) {
+    return null;
   }
 
-  return null;
+  try {
+    const productos = JSON.parse(contenido);
+
+    const producto = buscarProductoPorFamilia_(
+      productos,
+      familia
+    );
+
+    if (!producto) {
+      return null;
+    }
+
+    /*
+     * Evita usar una versión antigua del catálogo
+     * que todavía no incluía colores.
+     */
+    if (
+      !Object.prototype.hasOwnProperty.call(
+        producto,
+        "colores"
+      )
+    ) {
+      return null;
+    }
+
+    return producto;
+
+  } catch (error) {
+    console.warn(
+      "No se pudo leer el catálogo guardado.",
+      error
+    );
+
+    sessionStorage.removeItem(CLAVE_CATALOGO);
+    return null;
+  }
 }
 
 
-function buscarProductoPorFamilia_(
-  productos,
-  familia
-) {
+function buscarProductoPorFamilia_(productos, familia) {
   if (!Array.isArray(productos)) {
     return null;
   }
@@ -172,30 +137,22 @@ function mostrarFicha(producto) {
   );
 
   const fotos = obtenerFotos(producto);
+  const stock = Number(producto.stock || 0);
 
-  const stock = Number(
-    producto.stock || 0
-  );
-
-  const colores =
-    Array.isArray(producto.colores)
-      ? producto.colores.filter(color =>
-          color &&
-          color.nombre &&
-          Number(color.stock || 0) > 0
-        )
-      : [];
+  const colores = Array.isArray(producto.colores)
+    ? producto.colores.filter(color =>
+        color &&
+        color.nombre &&
+        Number(color.stock || 0) > 0
+      )
+    : [];
 
   const colorInicial =
-    colores.length > 0
-      ? colores[0]
-      : null;
+    colores.length > 0 ? colores[0] : null;
 
   const estado = escaparHTML(
     producto.estado ||
-    (stock > 0
-      ? "En Stock"
-      : "Sin Stock")
+    (stock > 0 ? "En Stock" : "Sin Stock")
   );
 
   const claseEstado =
@@ -210,9 +167,7 @@ function mostrarFicha(producto) {
     colorInicial
       ? `Disponibles en ${escaparHTML(
           colorInicial.nombre
-        )}: ${Number(
-          colorInicial.stock
-        )} unidades`
+        )}: ${Number(colorInicial.stock)} unidades`
       : stock > 0
         ? `Disponibilidad estimada: ${stock} unidades`
         : "Producto momentáneamente sin stock";
@@ -293,88 +248,115 @@ function mostrarFicha(producto) {
 
       </div>
 
-   <p
-  class="stock-ficha"
-  id="stock-ficha"
->
-  ${textoDisponibilidad}
-</p>
+      <p
+        class="stock-ficha"
+        id="stock-ficha"
+      >
+        ${textoDisponibilidad}
+      </p>
 
-<div class="compra-producto">
+      <section class="modulo-cotizacion">
 
-  <label for="cantidad">
-    Cantidad
-  </label>
+        <h2>Calculá tu pedido</h2>
 
-  <input
-    id="cantidad"
-    type="number"
-    min="1"
-    value="1"
-  >
+        <label
+          class="etiqueta-cantidad"
+          for="cantidad"
+        >
+          Cantidad
+        </label>
 
-  <button
-    id="btn-whatsapp"
-    class="boton boton-principal"
-  >
-    Consultar por WhatsApp
-  </button>
+        <div class="selector-cantidad">
 
-</div>
+          <button
+            type="button"
+            id="restar-cantidad"
+            class="boton-cantidad"
+            aria-label="Restar una unidad"
+          >
+            −
+          </button>
 
-<a
-  href="index.html#productos"
-  class="boton boton-secundario boton-volver"
->
-  ← Volver al catálogo
-</a>
+          <input
+            id="cantidad"
+            class="campo-cantidad"
+            type="number"
+            inputmode="numeric"
+            min="1"
+            step="1"
+            value="1"
+          >
+
+          <button
+            type="button"
+            id="sumar-cantidad"
+            class="boton-cantidad"
+            aria-label="Sumar una unidad"
+          >
+            +
+          </button>
+
+        </div>
+
+        <p
+          class="mensaje-escala"
+          id="mensaje-escala"
+        ></p>
+
+        <div class="resumen-cotizacion">
+
+          <div class="dato-cotizacion">
+            <span>Precio unitario</span>
+            <strong id="precio-unitario"></strong>
+          </div>
+
+          <div class="dato-cotizacion total-cotizacion">
+            <span>Total estimado</span>
+            <strong id="total-estimado"></strong>
+          </div>
+
+        </div>
+
+        <button
+          type="button"
+          id="btn-whatsapp"
+          class="boton-whatsapp"
+        >
+          <svg
+            viewBox="0 0 32 32"
+            aria-hidden="true"
+          >
+            <path
+              fill="currentColor"
+              d="M16.04 3C8.85 3 3 8.78 3 15.9c0 2.52.74 4.98 2.14 7.07L3 29l6.28-2.02a13.2 13.2 0 0 0 6.75 1.83h.01C23.22 28.81 29 23.03 29 15.9 29 8.78 23.22 3 16.04 3Zm0 23.63h-.01a11 11 0 0 1-5.61-1.53l-.4-.24-3.73 1.2 1.22-3.61-.26-.42A10.69 10.69 0 0 1 5.18 15.9c0-5.92 4.87-10.73 10.86-10.73 2.9 0 5.63 1.12 7.68 3.15a10.62 10.62 0 0 1 3.1 7.58c0 5.92-4.83 10.73-10.78 10.73Zm5.96-8.04c-.33-.16-1.94-.95-2.24-1.06-.3-.11-.52-.16-.74.16-.22.33-.85 1.06-1.04 1.28-.19.22-.38.25-.71.08-.33-.16-1.38-.5-2.63-1.61a9.7 9.7 0 0 1-1.82-2.24c-.19-.33-.02-.5.14-.66.15-.15.33-.38.49-.57.16-.19.22-.33.33-.55.11-.22.05-.41-.03-.57-.08-.16-.74-1.77-1.01-2.42-.27-.64-.54-.55-.74-.56h-.63c-.22 0-.57.08-.87.41-.3.33-1.14 1.11-1.14 2.7 0 1.59 1.17 3.13 1.33 3.35.16.22 2.3 3.47 5.57 4.87.78.33 1.38.53 1.85.68.78.24 1.49.21 2.05.13.63-.09 1.94-.79 2.21-1.55.27-.76.27-1.41.19-1.55-.08-.14-.3-.22-.63-.38Z"
+            />
+          </svg>
+
+          Consultar por WhatsApp
+        </button>
+
+        <p class="aclaracion-cotizacion">
+          El pedido y la disponibilidad serán confirmados
+          por nuestro equipo antes de procesarlo.
+        </p>
+
+      </section>
+
+      <a
+        href="index.html#productos"
+        class="enlace-volver"
+      >
+        ← Volver al catálogo
+      </a>
 
     </div>
   `;
 
   activarMiniaturas();
   activarColores();
-  activarWhatsapp(producto);
+  activarCotizador(producto);
 }
-function activarWhatsapp(producto) {
-  const boton = document.getElementById("btn-whatsapp");
-  const cantidadInput = document.getElementById("cantidad");
 
-  if (!boton || !cantidadInput) return;
-
-  boton.addEventListener("click", () => {
-    const cantidad = Math.max(
-      1,
-      Number(cantidadInput.value) || 1
-    );
-
-    const colorSeleccionado =
-      document.querySelector(".opcion-color-activa");
-
-    const color = colorSeleccionado
-      ? colorSeleccionado.dataset.color
-      : "";
-
-    const mensaje = [
-      "Hola, quiero consultar por:",
-      "",
-      `Producto: ${producto.producto}`,
-      color ? `Color: ${color}` : "",
-      `Cantidad: ${cantidad} unidades`,
-      "",
-      "Sé que la disponibilidad y el pedido serán confirmados por Insuvenir."
-    ]
-      .filter(Boolean)
-      .join("\n");
-
-    const numeroWhatsapp = "5492233464815";
-
-    const url =
-      `https://wa.me/${numeroWhatsapp}?text=${encodeURIComponent(mensaje)}`;
-
-    window.open(url, "_blank");
-  });
-}
 
 function crearSelectorColores_(colores) {
   if (colores.length === 0) {
@@ -414,58 +396,202 @@ function crearSelectorColores_(colores) {
 
 function activarColores() {
   const botones =
-    document.querySelectorAll(
-      ".opcion-color"
-    );
+    document.querySelectorAll(".opcion-color");
 
   const disponibilidad =
-    document.getElementById(
-      "stock-ficha"
-    );
-
-  if (!disponibilidad) {
-    return;
-  }
+    document.getElementById("stock-ficha");
 
   botones.forEach(boton => {
-    boton.addEventListener(
-      "click",
-      () => {
-        botones.forEach(item =>
-          item.classList.remove(
-            "opcion-color-activa"
-          )
-        );
-
-        boton.classList.add(
+    boton.addEventListener("click", () => {
+      botones.forEach(item =>
+        item.classList.remove(
           "opcion-color-activa"
-        );
+        )
+      );
 
-        const color =
-          boton.dataset.color;
+      boton.classList.add(
+        "opcion-color-activa"
+      );
 
-        const stock = Number(
-          boton.dataset.stock || 0
-        );
+      const color = boton.dataset.color;
+      const stock = Number(
+        boton.dataset.stock || 0
+      );
 
+      if (disponibilidad) {
         disponibilidad.textContent =
           `Disponibles en ${color}: ${stock} unidades`;
-
-        sessionStorage.setItem(
-          "insuvenir_color_seleccionado",
-          color
-        );
       }
-    );
+
+      sessionStorage.setItem(
+        "insuvenir_color_seleccionado",
+        color
+      );
+    });
   });
 }
 
 
+function activarCotizador(producto) {
+  const campoCantidad =
+    document.getElementById("cantidad");
+
+  const botonRestar =
+    document.getElementById("restar-cantidad");
+
+  const botonSumar =
+    document.getElementById("sumar-cantidad");
+
+  const botonWhatsapp =
+    document.getElementById("btn-whatsapp");
+
+  if (
+    !campoCantidad ||
+    !botonRestar ||
+    !botonSumar ||
+    !botonWhatsapp
+  ) {
+    return;
+  }
+
+  function obtenerCantidadValida() {
+    const cantidad = Math.floor(
+      Number(campoCantidad.value)
+    );
+
+    return Number.isFinite(cantidad) && cantidad >= 1
+      ? cantidad
+      : 1;
+  }
+
+  function actualizarCotizacion() {
+    const cantidad = obtenerCantidadValida();
+
+    campoCantidad.value = cantidad;
+
+    const cotizacion =
+      calcularCotizacion_(producto, cantidad);
+
+    document.getElementById(
+      "precio-unitario"
+    ).textContent = formatearPrecio(
+      cotizacion.precioUnitario
+    );
+
+    document.getElementById(
+      "total-estimado"
+    ).textContent = formatearPrecio(
+      cotizacion.total
+    );
+
+    document.getElementById(
+      "mensaje-escala"
+    ).textContent = cotizacion.mensajeEscala;
+  }
+
+  botonRestar.addEventListener("click", () => {
+    campoCantidad.value =
+      Math.max(1, obtenerCantidadValida() - 1);
+
+    actualizarCotizacion();
+  });
+
+  botonSumar.addEventListener("click", () => {
+    campoCantidad.value =
+      obtenerCantidadValida() + 1;
+
+    actualizarCotizacion();
+  });
+
+  campoCantidad.addEventListener(
+    "input",
+    actualizarCotizacion
+  );
+
+  campoCantidad.addEventListener("blur", () => {
+    campoCantidad.value = obtenerCantidadValida();
+    actualizarCotizacion();
+  });
+
+  botonWhatsapp.addEventListener("click", () => {
+    const cantidad = obtenerCantidadValida();
+
+    const cotizacion =
+      calcularCotizacion_(producto, cantidad);
+
+    const colorSeleccionado =
+      document.querySelector(
+        ".opcion-color-activa"
+      );
+
+    const color = colorSeleccionado
+      ? colorSeleccionado.dataset.color
+      : "";
+
+    const mensaje = [
+      "¡Hola! 😊",
+      "",
+      "Quisiera consultar por el siguiente producto:",
+      "",
+      `📦 Producto: ${producto.producto}`,
+      color ? `🎨 Color: ${color}` : "",
+      `🔢 Cantidad: ${cantidad} unidades`,
+      `💰 Precio estimado: ${formatearPrecio(
+        cotizacion.total
+      )}`,
+      "",
+      "Quedo atento a la confirmación de disponibilidad.",
+      "",
+      "¡Muchas gracias!"
+    ]
+      .filter(linea => linea !== "")
+      .join("\n");
+
+    const url =
+      `https://wa.me/${NUMERO_WHATSAPP}` +
+      `?text=${encodeURIComponent(mensaje)}`;
+
+    window.open(
+      url,
+      "_blank",
+      "noopener,noreferrer"
+    );
+  });
+
+  actualizarCotizacion();
+}
+
+
+function calcularCotizacion_(producto, cantidad) {
+  let precioUnitario;
+  let mensajeEscala;
+
+  if (cantidad >= 50) {
+    precioUnitario = Number(producto.precio3 || 0);
+    mensajeEscala =
+      "✓ Se aplica el mejor precio: 50 unidades o más";
+  } else if (cantidad >= 20) {
+    precioUnitario = Number(producto.precio2 || 0);
+    mensajeEscala =
+      "✓ Se aplica el precio de 20 a 49 unidades";
+  } else {
+    precioUnitario = Number(producto.precio1 || 0);
+    mensajeEscala =
+      "✓ Se aplica el precio de 1 a 19 unidades";
+  }
+
+  return {
+    precioUnitario,
+    total: precioUnitario * cantidad,
+    mensajeEscala
+  };
+}
+
+
 function obtenerFotos(producto) {
-  const ids =
-    Array.isArray(producto.fotos)
-      ? [...producto.fotos]
-      : [];
+  const ids = Array.isArray(producto.fotos)
+    ? [...producto.fotos]
+    : [];
 
   if (
     ids.length === 0 &&
@@ -488,37 +614,29 @@ function obtenerFotos(producto) {
 
 function activarMiniaturas() {
   const principal =
-    document.getElementById(
-      "foto-principal"
-    );
+    document.getElementById("foto-principal");
 
   const miniaturas =
-    document.querySelectorAll(
-      ".miniatura"
-    );
+    document.querySelectorAll(".miniatura");
 
   if (!principal) {
     return;
   }
 
   miniaturas.forEach(boton => {
-    boton.addEventListener(
-      "click",
-      () => {
-        principal.src =
-          boton.dataset.foto;
+    boton.addEventListener("click", () => {
+      principal.src = boton.dataset.foto;
 
-        miniaturas.forEach(item =>
-          item.classList.remove(
-            "miniatura-activa"
-          )
-        );
-
-        boton.classList.add(
+      miniaturas.forEach(item =>
+        item.classList.remove(
           "miniatura-activa"
-        );
-      }
-    );
+        )
+      );
+
+      boton.classList.add(
+        "miniatura-activa"
+      );
+    });
   });
 }
 
@@ -569,9 +687,7 @@ function crearPlaceholder() {
 
 function mostrarError(mensaje) {
   const contenedor =
-    document.getElementById(
-      "ficha-producto"
-    );
+    document.getElementById("ficha-producto");
 
   contenedor.innerHTML = `
     <div class="mensaje-error">
