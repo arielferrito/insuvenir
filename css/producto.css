@@ -32,7 +32,6 @@
 
     overflow: hidden;
     border-radius: 28px;
-
     background: #ffffff;
 
     box-shadow:
@@ -43,10 +42,8 @@
 .foto-principal img {
     width: 100%;
     height: 100%;
-
     display: block;
     object-fit: contain;
-
     padding: 18px;
 }
 
@@ -54,19 +51,16 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 13px;
-
     margin-top: 20px;
 }
 
 .miniatura {
     aspect-ratio: 1 / 1;
     padding: 4px;
-
     overflow: hidden;
 
     border: 2px solid transparent;
     border-radius: 15px;
-
     background: #ffffff;
 
     box-shadow: 0 5px 15px rgba(65, 45, 57, .07);
@@ -83,10 +77,8 @@
 .miniatura img {
     width: 100%;
     height: 100%;
-
     display: block;
     object-fit: cover;
-
     border-radius: 10px;
 }
 
@@ -133,7 +125,6 @@
     gap: 8px;
 
     padding: 8px 14px;
-
     border-radius: 999px;
 
     font-size: 13px;
@@ -148,8 +139,60 @@
     height: 8px;
 
     border-radius: 50%;
-
     background: currentColor;
+}
+
+
+/* ==================================
+   SELECTOR DE COLORES
+================================== */
+
+.selector-colores {
+    margin-top: 30px;
+}
+
+.selector-colores h2 {
+    margin-bottom: 14px;
+
+    color: #40373c;
+
+    font-size: 20px;
+}
+
+.lista-colores {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.opcion-color {
+    padding: 10px 15px;
+
+    border: 2px solid #eadde4;
+    border-radius: 999px;
+
+    background: #ffffff;
+    color: #61565c;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.opcion-color:hover {
+    border-color: #d96ca6;
+    transform: translateY(-2px);
+}
+
+.opcion-color-activa {
+    border-color: #d96ca6;
+    background: #d96ca6;
+    color: #ffffff;
+
+    box-shadow:
+        0 6px 16px rgba(217, 108, 166, .22);
 }
 
 
@@ -166,7 +209,8 @@
 
     background: #ffffff;
 
-    box-shadow: 0 14px 38px rgba(65, 45, 57, .08);
+    box-shadow:
+        0 14px 38px rgba(65, 45, 57, .08);
 }
 
 .tabla-precios h2 {
@@ -230,7 +274,7 @@
 
 
 /* ==================================
-   STOCK Y BOTÓN
+   DISPONIBILIDAD
 ================================== */
 
 .stock-ficha {
@@ -239,11 +283,219 @@
     color: #71666c;
 
     font-size: 15px;
+    font-weight: 600;
 }
 
-.boton-volver {
-    margin: 30px 0 0;
+
+/* ==================================
+   MÓDULO DE COTIZACIÓN
+================================== */
+
+.modulo-cotizacion {
+    margin-top: 28px;
+    padding: 26px;
+
+    border: 1px solid #eee4e9;
+    border-radius: 22px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 14px 38px rgba(65, 45, 57, .08);
+}
+
+.modulo-cotizacion h2 {
+    margin-bottom: 20px;
+
+    color: #40373c;
+
+    font-size: 22px;
+}
+
+.etiqueta-cantidad {
+    display: block;
+    margin-bottom: 10px;
+
+    color: #62575d;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.selector-cantidad {
+    display: grid;
+    grid-template-columns: 48px minmax(90px, 1fr) 48px;
+    gap: 10px;
+
+    max-width: 260px;
+}
+
+.boton-cantidad {
+    height: 48px;
+
+    border: 1px solid #e5d9df;
+    border-radius: 12px;
+
+    background: #f9f5f7;
+    color: #554a50;
+
+    font-size: 25px;
+    font-weight: 700;
+
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.boton-cantidad:hover {
+    border-color: #d96ca6;
+    background: #fbeef5;
+    color: #d96ca6;
+}
+
+.campo-cantidad {
+    width: 100%;
+    height: 48px;
+
+    border: 2px solid #e5d9df;
+    border-radius: 12px;
+
+    background: #ffffff;
+    color: #342d31;
+
     text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+
+    outline: none;
+}
+
+.campo-cantidad:focus {
+    border-color: #d96ca6;
+
+    box-shadow:
+        0 0 0 4px rgba(217, 108, 166, .12);
+}
+
+.campo-cantidad::-webkit-inner-spin-button,
+.campo-cantidad::-webkit-outer-spin-button {
+    margin: 0;
+    appearance: none;
+}
+
+.mensaje-escala {
+    margin-top: 13px;
+
+    color: #6d6067;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.resumen-cotizacion {
+    margin-top: 20px;
+    padding: 16px 0;
+
+    border-top: 1px solid #eee6ea;
+    border-bottom: 1px solid #eee6ea;
+}
+
+.dato-cotizacion {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+
+    padding: 8px 0;
+
+    color: #665b61;
+}
+
+.dato-cotizacion strong {
+    color: #453a40;
+
+    font-size: 19px;
+    white-space: nowrap;
+}
+
+.total-cotizacion {
+    margin-top: 4px;
+}
+
+.total-cotizacion span {
+    font-weight: 800;
+}
+
+.total-cotizacion strong {
+    color: #d96ca6;
+
+    font-size: 25px;
+}
+
+.boton-whatsapp {
+    width: 100%;
+    min-height: 54px;
+    margin-top: 22px;
+    padding: 14px 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    border: none;
+    border-radius: 14px;
+
+    background: #25d366;
+    color: #ffffff;
+
+    font-size: 16px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 24px rgba(37, 211, 102, .24);
+
+    transition: .2s ease;
+}
+
+.boton-whatsapp svg {
+    width: 24px;
+    height: 24px;
+    flex: 0 0 auto;
+}
+
+.boton-whatsapp:hover {
+    background: #1fbd59;
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 13px 28px rgba(37, 211, 102, .30);
+}
+
+.aclaracion-cotizacion {
+    margin-top: 14px;
+
+    color: #81747b;
+
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.enlace-volver {
+    display: inline-block;
+    margin-top: 25px;
+
+    color: #8a727f;
+
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.enlace-volver:hover {
+    color: #d96ca6;
 }
 
 
@@ -273,7 +525,8 @@
         grid-template-columns: repeat(4, 1fr);
     }
 
-    .tabla-precios {
+    .tabla-precios,
+    .modulo-cotizacion {
         padding: 22px;
     }
 }
@@ -306,47 +559,19 @@
     .fila-precio strong {
         font-size: 22px;
     }
-}
-/* ==================================
-   SELECTOR DE COLORES
-================================== */
 
-.selector-colores {
-    margin-top: 30px;
-}
+    .selector-cantidad {
+        max-width: none;
+        grid-template-columns: 46px minmax(80px, 1fr) 46px;
+    }
 
-.selector-colores h2 {
-    margin-bottom: 14px;
-    color: #40373c;
-    font-size: 20px;
-}
+    .dato-cotizacion {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 4px;
+    }
 
-.lista-colores {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.opcion-color {
-    padding: 10px 15px;
-    border: 2px solid #eadde4;
-    border-radius: 999px;
-    background: #ffffff;
-    color: #61565c;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: .2s ease;
-}
-
-.opcion-color:hover {
-    border-color: #d96ca6;
-    transform: translateY(-2px);
-}
-
-.opcion-color-activa {
-    border-color: #d96ca6;
-    background: #d96ca6;
-    color: #ffffff;
-    box-shadow: 0 6px 16px rgba(217, 108, 166, .22);
+    .boton-whatsapp {
+        font-size: 15px;
+    }
 }
