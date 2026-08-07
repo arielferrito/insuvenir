@@ -726,3 +726,38 @@ body{
         line-height: 1.2;
     }
 }
+   @media (max-width: 600px) {
+
+    .categorias {
+        margin: 40px auto 25px;
+        padding: 0 16px;
+    }
+
+    .categorias h2 {
+        font-size: 27px;
+        margin-bottom: 20px;
+    }
+
+    .grilla-categorias {
+        gap: 10px;
+    }
+
+    .tarjeta-categoria {
+        min-height: 95px;
+        padding: 14px 8px;
+    }
+
+    .icono-categoria {
+        font-size: 27px;
+    }
+
+    .buscador-productos {
+        margin: 22px auto 28px;
+        padding: 0 4px;
+    }
+
+    .buscador-productos input {
+        padding: 13px 15px;
+        font-size: 16px;
+    }
+}
