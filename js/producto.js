@@ -135,6 +135,11 @@ function mostrarFicha(producto) {
     producto.descripcion ||
     "Insumo para souvenirs."
   );
+  
+  actualizarSEOProducto(
+  producto.producto,
+  producto.descripcion
+);
 
   const fotos = obtenerFotos(producto);
   const stock = Number(producto.stock || 0);
@@ -745,4 +750,29 @@ function escaparHTML(texto) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
+}
+function actualizarSEOProducto(nombre, descripcion) {
+  const nombreProducto =
+    String(nombre || "Producto").trim();
+
+  const descripcionProducto =
+    String(
+      descripcion ||
+      "Insumos para souvenirs disponibles en Insuvenir."
+    ).trim();
+
+  document.title =
+    `${nombreProducto} | Insuvenir`;
+
+  const metaDescripcion =
+    document.getElementById(
+      "meta-description"
+    );
+
+  if (metaDescripcion) {
+    metaDescripcion.setAttribute(
+      "content",
+      descripcionProducto
+    );
+  }
 }
