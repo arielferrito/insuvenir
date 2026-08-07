@@ -468,7 +468,13 @@ function activarCotizador(producto) {
     const cantidad = obtenerCantidadValida();
 
     campoCantidad.value = cantidad;
+   campoCantidad.addEventListener("focus", () => {
+  campoCantidad.select();
 
+     campoCantidad.addEventListener("click", () => {
+  campoCantidad.select();
+});
+});
     const cotizacion =
       calcularCotizacion_(producto, cantidad);
 
