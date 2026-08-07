@@ -3,6 +3,7 @@ const API_URL =
 
 const CLAVE_CATALOGO = "insuvenir_productos_v2";
 
+let categoriaSeleccionada = "";
 let todosLosProductos = [];
 let productosDestacados = [];
 
@@ -49,6 +50,7 @@ async function cargarProductos() {
     }
 
     todosLosProductos = productos;
+    crearCategorias();
 
     productosDestacados =
       todosLosProductos.filter(
@@ -80,7 +82,145 @@ async function cargarProductos() {
   }
 }
 
+function crearCategorias() {
+  const contenedor =
+    document.getElementById("grilla-categorias");
 
+  if (!contenedor) {
+    return;
+  }
+
+  const categorias = [
+    ...new Set(
+      todosLosProductos
+        .map(producto =>
+          String(producto.categoria || "").trim()
+        )
+        .filter(Boolean)
+    )
+  ].sort((a, b) =>
+    a.localeCompare(b, "es")
+  );
+
+  if (categorias.length === 0) {
+    contenedor.innerHTML = "";
+    return;
+  }
+
+  contenedor.innerHTML = `
+    <button
+      type="button"
+      class="tarjeta-categoria categoria-activa"
+      data-categoria=""
+    >
+      <span class="icono-categoria">
+        ✨
+      </span>
+
+      <strong>
+        TODOS
+      </strong>
+    </button>
+
+    ${categorias
+      .map(categoria => `
+        <button
+          type="button"
+          class="tarjeta-categoria"
+          data-categoria="${escaparHTML(categoria)}"
+        >
+          <span class="icono-categoria">
+            ${obtenerIconoCategoria(categoria)}
+          </span>
+
+          <strong>
+            ${escaparHTML(categoria)}
+          </strong>
+        </button>
+      `)
+      .join("")}
+  `;
+
+  activarCategorias();
+}
+
+
+function activarCategorias() {
+  const botones =
+    document.querySelectorAll(
+      ".tarjeta-categoria"
+    );
+
+  botones.forEach(boton => {
+    boton.addEventListener("click", () => {
+
+      botones.forEach(item =>
+        item.classList.remove(
+          "categoria-activa"
+        )
+      );
+
+      boton.classList.add(
+        "categoria-activa"
+      );
+
+      categoriaSeleccionada =
+        boton.dataset.categoria || "";
+
+      const buscador =
+        document.getElementById("buscador");
+
+      if (buscador) {
+        buscador.value = "";
+      }
+
+      actualizarTituloResultados("");
+
+      if (!categoriaSeleccionada) {
+        mostrarProductos(
+          todosLosProductos,
+          "No hay productos disponibles."
+        );
+        return;
+      }
+
+      const productosCategoria =
+        todosLosProductos.filter(producto =>
+          normalizarTexto(producto.categoria) ===
+          normalizarTexto(categoriaSeleccionada)
+        );
+
+      mostrarProductos(
+        productosCategoria,
+        "No hay productos en esta categoría."
+      );
+
+      document
+        .getElementById("productos")
+        ?.scrollIntoView({
+          behavior: "smooth"
+        });
+    });
+  });
+}
+
+
+function obtenerIconoCategoria(categoria) {
+  const iconos = {
+    VASOS: "🥤",
+    VALIJITAS: "💼",
+    BOTELLAS: "🧴",
+    BALDECITOS: "🪣",
+    BOLSITAS: "🛍️",
+    LUNCHERAS: "🍱",
+    INSUMOS: "🎨",
+    COMBOS: "🎁"
+  };
+
+  return iconos[
+    normalizarTexto(categoria).toUpperCase()
+  ] || "✨";
+}
 function prepararBuscador() {
   const buscador =
     document.getElementById("buscador");
