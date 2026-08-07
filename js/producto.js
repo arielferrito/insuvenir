@@ -576,7 +576,87 @@ function activarCotizador(producto) {
   actualizarCotizacion();
 }
 
+function calcularCotizacion_(producto, cantidad) {
+  let precioUnitario;
+  let mensajeEscala;
 
+  if (cantidad >= 50) {
+    precioUnitario = Number(producto.precio3 || 0);
+    mensajeEscala =
+      "✓ Se aplica el mejor precio: 50 unidades o más";
+
+  } else if (cantidad >= 20) {
+    precioUnitario = Number(producto.precio2 || 0);
+    mensajeEscala =
+      "✓ Se aplica el precio de 20 a 49 unidades";
+
+  } else {
+    precioUnitario = Number(producto.precio1 || 0);
+    mensajeEscala =
+      "✓ Se aplica el precio de 1 a 19 unidades";
+  }
+
+  return {
+    precioUnitario,
+    total: precioUnitario * cantidad,
+    mensajeEscala
+  };
+}
+
+
+function obtenerFotos(producto) {
+  const ids = Array.isArray(producto.fotos)
+    ? [...producto.fotos]
+    : [];
+
+  if (
+    ids.length === 0 &&
+    producto.idFoto
+  ) {
+    ids.push(producto.idFoto);
+  }
+
+  if (ids.length === 0) {
+    return [crearPlaceholder()];
+  }
+
+  return ids.map(id =>
+    `https://drive.google.com/thumbnail?id=${encodeURIComponent(
+      id
+    )}&sz=w1400`
+  );
+}
+
+
+function activarMiniaturas() {
+  const principal =
+    document.getElementById("foto-principal");
+
+  const miniaturas =
+    document.querySelectorAll(".miniatura");
+
+  if (!principal) {
+    return;
+  }
+
+  miniaturas.forEach(boton => {
+    boton.addEventListener("click", () => {
+
+      principal.src =
+        boton.dataset.foto;
+
+      miniaturas.forEach(item =>
+        item.classList.remove(
+          "miniatura-activa"
+        )
+      );
+
+      boton.classList.add(
+        "miniatura-activa"
+      );
+    });
+  });
+}
 function crearPlaceholder() {
   return (
     "data:image/svg+xml;charset=UTF-8," +
