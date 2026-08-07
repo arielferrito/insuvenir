@@ -1,10 +1,25 @@
 const API_URL =
   "https://script.google.com/macros/s/AKfycbyAl92YO1VnX5yzVG2ueFYCKtP6lGhmB0K4V7CiEDbtCNuCjknRBnB9YhyMTjyJt55O/exec";
 
-document.addEventListener("DOMContentLoaded", cargarProductos);
+const CLAVE_CATALOGO = "insuvenir_productos_v2";
+
+let todosLosProductos = [];
+let productosDestacados = [];
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  cargarProductos();
+  prepararBuscador();
+});
+
 
 async function cargarProductos() {
-  const grilla = document.getElementById("grilla-productos");
+  const grilla =
+    document.getElementById("grilla-productos");
+
+  if (!grilla) {
+    return;
+  }
 
   grilla.innerHTML = `
     <p class="mensaje-catalogo">
@@ -13,58 +28,176 @@ async function cargarProductos() {
   `;
 
   try {
-    const respuesta = await fetch(API_URL);
+    const respuesta = await fetch(API_URL, {
+      cache: "no-store"
+    });
 
     if (!respuesta.ok) {
-      throw new Error("No se pudo consultar la API.");
+      throw new Error(
+        "No se pudo consultar la API."
+      );
     }
 
-   const productos = await respuesta.json();
+    const productos =
+      await respuesta.json();
 
-sessionStorage.setItem(
-  "insuvenir_productos_v2",
-  JSON.stringify(productos)
-);
+    if (!Array.isArray(productos)) {
+      throw new Error(
+        productos.error ||
+        "La API devolvió un formato incorrecto."
+      );
+    }
 
-if (!Array.isArray(productos)) {
-  throw new Error(
-    productos.error ||
-    "La API devolvió un formato incorrecto."
-  );
-}
+    todosLosProductos = productos;
 
-    const destacados = productos.filter(
-      producto => producto.destacado === true
+    productosDestacados =
+      todosLosProductos.filter(
+        producto =>
+          producto.destacado === true
+      );
+
+    sessionStorage.setItem(
+      CLAVE_CATALOGO,
+      JSON.stringify(todosLosProductos)
     );
 
-    // Mientras configuramos los destacados, muestra los primeros productos.
-    const productosAMostrar =
-      destacados.length > 0
-        ? destacados
-        : productos.slice(0, 6);
-
-    mostrarProductos(productosAMostrar);
+    mostrarDestacados();
 
   } catch (error) {
     console.error(error);
 
     grilla.innerHTML = `
       <div class="mensaje-error">
-        <strong>No pudimos cargar los productos.</strong>
-        <span>Actualizá la página dentro de unos segundos.</span>
+        <strong>
+          No pudimos cargar los productos.
+        </strong>
+
+        <span>
+          Actualizá la página dentro de unos segundos.
+        </span>
       </div>
     `;
   }
 }
 
 
-function mostrarProductos(productos) {
-  const grilla = document.getElementById("grilla-productos");
+function prepararBuscador() {
+  const buscador =
+    document.getElementById("buscador");
+
+  if (!buscador) {
+    return;
+  }
+
+  buscador.addEventListener(
+    "input",
+    () => {
+      const consulta =
+        normalizarTexto(
+          buscador.value
+        );
+
+      if (!consulta) {
+        mostrarDestacados();
+        return;
+      }
+
+      const resultados =
+        todosLosProductos.filter(
+          producto => {
+            const nombre =
+              normalizarTexto(
+                producto.producto
+              );
+
+            const descripcion =
+              normalizarTexto(
+                producto.descripcion
+              );
+
+            const familia =
+              normalizarTexto(
+                producto.familia
+              );
+
+            return (
+              nombre.includes(consulta) ||
+              descripcion.includes(consulta) ||
+              familia.includes(consulta)
+            );
+          }
+        );
+
+      mostrarResultadosBusqueda(
+        resultados,
+        buscador.value.trim()
+      );
+    }
+  );
+}
+
+
+function mostrarDestacados() {
+  const productosAMostrar =
+    productosDestacados.length > 0
+      ? productosDestacados
+      : todosLosProductos.slice(0, 6);
+
+  actualizarTituloResultados("");
+
+  mostrarProductos(
+    productosAMostrar,
+    "Todavía no hay productos destacados."
+  );
+}
+
+
+function mostrarResultadosBusqueda(
+  productos,
+  consulta
+) {
+  actualizarTituloResultados(
+    productos.length === 1
+      ? `1 resultado para “${consulta}”`
+      : `${productos.length} resultados para “${consulta}”`
+  );
+
+  mostrarProductos(
+    productos,
+    "No encontramos productos con esa búsqueda."
+  );
+}
+
+
+function actualizarTituloResultados(texto) {
+  const resultado =
+    document.getElementById(
+      "resultado-busqueda"
+    );
+
+  if (resultado) {
+    resultado.textContent = texto;
+  }
+}
+
+
+function mostrarProductos(
+  productos,
+  mensajeVacio
+) {
+  const grilla =
+    document.getElementById(
+      "grilla-productos"
+    );
+
+  if (!grilla) {
+    return;
+  }
 
   if (productos.length === 0) {
     grilla.innerHTML = `
       <p class="mensaje-catalogo">
-        Todavía no hay productos destacados.
+        ${escaparHTML(mensajeVacio)}
       </p>
     `;
     return;
@@ -82,7 +215,8 @@ function crearTarjetaProducto(producto) {
   );
 
   const descripcion = escaparHTML(
-    producto.descripcion || "Insumo para souvenirs."
+    producto.descripcion ||
+    "Insumo para souvenirs."
   );
 
   const precio = formatearPrecio(
@@ -95,7 +229,9 @@ function crearTarjetaProducto(producto) {
 
   const estado = escaparHTML(
     producto.estado ||
-    (stock > 0 ? "Disponible" : "Sin stock")
+    (stock > 0
+      ? "Disponible"
+      : "Sin stock")
   );
 
   const claseEstado =
@@ -109,7 +245,9 @@ function crearTarjetaProducto(producto) {
   );
 
   const urlProducto =
-    `producto.html?familia=${encodeURIComponent(producto.familia)}`;
+    `producto.html?familia=${encodeURIComponent(
+      producto.familia
+    )}`;
 
   return `
     <article class="producto">
@@ -161,7 +299,9 @@ function crearTarjetaProducto(producto) {
 
 
 function obtenerImagen(idFoto, nombre) {
-  const id = String(idFoto || "").trim();
+  const id = String(
+    idFoto || ""
+  ).trim();
 
   if (!id) {
     return `
@@ -173,28 +313,49 @@ function obtenerImagen(idFoto, nombre) {
   }
 
   const url =
-    `https://drive.google.com/thumbnail?id=${encodeURIComponent(id)}&sz=w1000`;
+    `https://drive.google.com/thumbnail?id=${encodeURIComponent(
+      id
+    )}&sz=w1000`;
 
   return `
     <img
       src="${url}"
       alt="${nombre}"
       loading="lazy"
-      onerror="this.parentElement.innerHTML=
-        '<div class=&quot;foto-placeholder&quot;><span>INSUVENIR</span><small>Foto no disponible</small></div>'"
+      onerror="
+        this.parentElement.innerHTML =
+        '<div class=&quot;foto-placeholder&quot;><span>INSUVENIR</span><small>Foto no disponible</small></div>'
+      "
     >
   `;
 }
 
 
 function formatearPrecio(valor) {
-  const numero = Number(valor || 0);
+  const numero = Number(
+    valor || 0
+  );
 
-  return new Intl.NumberFormat("es-AR", {
-    style: "currency",
-    currency: "ARS",
-    maximumFractionDigits: 0
-  }).format(numero);
+  return new Intl.NumberFormat(
+    "es-AR",
+    {
+      style: "currency",
+      currency: "ARS",
+      maximumFractionDigits: 0
+    }
+  ).format(numero);
+}
+
+
+function normalizarTexto(valor) {
+  return String(valor || "")
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(
+      /[\u0300-\u036f]/g,
+      ""
+    );
 }
 
 
