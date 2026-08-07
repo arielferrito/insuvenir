@@ -667,7 +667,38 @@ body{
 ================================== */
 
 @media (max-width: 600px) {
+@media (max-width: 600px) {
 
+    .hero {
+        padding: 34px 18px 28px;
+        min-height: auto;
+    }
+
+    .hero-contenido {
+        max-width: 100%;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+        line-height: 1.08;
+        margin-bottom: 14px;
+    }
+
+    .hero p {
+        font-size: 16px;
+        line-height: 1.5;
+        margin-bottom: 22px;
+    }
+
+    .hero-botones {
+        gap: 10px;
+    }
+
+    .hero-botones .boton {
+        padding: 12px 18px;
+        font-size: 14px;
+    }
+}
     .header {
         height: auto;
         padding: 14px 16px;
