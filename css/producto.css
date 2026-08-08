@@ -9,7 +9,10 @@
     padding: 0 28px;
 
     display: grid;
-    grid-template-columns: minmax(0, 1.08fr) minmax(350px, .92fr);
+    grid-template-columns:
+        minmax(0, 1.08fr)
+        minmax(350px, .92fr);
+
     gap: 72px;
 }
 
@@ -31,7 +34,9 @@
     justify-content: center;
 
     overflow: hidden;
+
     border-radius: 28px;
+
     background: #ffffff;
 
     box-shadow:
@@ -42,43 +47,57 @@
 .foto-principal img {
     width: 100%;
     height: 100%;
+
     display: block;
+
     object-fit: contain;
+
     padding: 18px;
 }
 
 .miniaturas {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
+
     gap: 13px;
+
     margin-top: 20px;
 }
 
 .miniatura {
     aspect-ratio: 1 / 1;
+
     padding: 4px;
+
     overflow: hidden;
 
     border: 2px solid transparent;
     border-radius: 15px;
+
     background: #ffffff;
 
-    box-shadow: 0 5px 15px rgba(65, 45, 57, .07);
+    box-shadow:
+        0 5px 15px rgba(65, 45, 57, .07);
 
     cursor: pointer;
+
     transition: .2s ease;
 }
 
 .miniatura:hover {
     transform: translateY(-2px);
+
     border-color: #e9b5d1;
 }
 
 .miniatura img {
     width: 100%;
     height: 100%;
+
     display: block;
+
     object-fit: cover;
+
     border-radius: 10px;
 }
 
@@ -102,6 +121,7 @@
 
     font-size: clamp(36px, 4vw, 54px);
     line-height: 1.08;
+
     letter-spacing: -1.5px;
 }
 
@@ -122,13 +142,16 @@
 .ficha-informacion .estado-producto {
     display: inline-flex;
     align-items: center;
+
     gap: 8px;
 
     padding: 8px 14px;
+
     border-radius: 999px;
 
     font-size: 13px;
     font-weight: 800;
+
     letter-spacing: .3px;
 }
 
@@ -139,6 +162,7 @@
     height: 8px;
 
     border-radius: 50%;
+
     background: currentColor;
 }
 
@@ -162,37 +186,60 @@
 .lista-colores {
     display: flex;
     flex-wrap: wrap;
+
     gap: 10px;
 }
 
 .opcion-color {
     padding: 10px 15px;
 
-    border: 2px solid #eadde4;
+    border:
+        2px solid
+        var(--color-borde, #eadde4);
+
     border-radius: 999px;
 
-    background: #ffffff;
-    color: #61565c;
+    background:
+        var(--color-fondo, #ffffff);
+
+    color:
+        var(--color-texto, #61565c);
 
     font-size: 13px;
     font-weight: 700;
 
     cursor: pointer;
+
     transition: .2s ease;
 }
 
 .opcion-color:hover {
-    border-color: #d96ca6;
     transform: translateY(-2px);
 }
 
 .opcion-color-activa {
-    border-color: #d96ca6;
-    background: #d96ca6;
-    color: #ffffff;
+    transform: translateY(-2px);
 
     box-shadow:
-        0 6px 16px rgba(217, 108, 166, .22);
+        0 0 0 3px #ffffff,
+        0 0 0 5px #d96ca6,
+        0 6px 16px rgba(65, 45, 57, .16);
+}
+
+
+/* ==================================
+   DISPONIBILIDAD
+================================== */
+
+.stock-ficha {
+    margin-top: 18px;
+
+    color: #61565c;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    line-height: 1.5;
 }
 
 
@@ -201,7 +248,8 @@
 ================================== */
 
 .tabla-precios {
-    margin-top: 34px;
+    margin-top: 26px;
+
     padding: 28px;
 
     border: 1px solid #f0e6ec;
@@ -225,6 +273,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     gap: 22px;
 
     padding: 17px 4px;
@@ -246,25 +295,29 @@
     color: #d96ca6;
 
     font-size: 21px;
+
     white-space: nowrap;
 }
 
 .destacado-precio {
     margin: 8px -10px -8px;
+
     padding: 18px 14px;
 
     border: none;
     border-radius: 14px;
 
-    background: linear-gradient(
-        135deg,
-        #fbeef5,
-        #f4edf9
-    );
+    background:
+        linear-gradient(
+            135deg,
+            #fbeef5,
+            #f4edf9
+        );
 }
 
 .destacado-precio span {
     color: #4d4147;
+
     font-weight: 700;
 }
 
@@ -274,25 +327,12 @@
 
 
 /* ==================================
-   DISPONIBILIDAD
-================================== */
-
-.stock-ficha {
-    margin-top: 24px;
-
-    color: #71666c;
-
-    font-size: 15px;
-    font-weight: 600;
-}
-
-
-/* ==================================
    MÓDULO DE COTIZACIÓN
 ================================== */
 
 .modulo-cotizacion {
     margin-top: 28px;
+
     padding: 26px;
 
     border: 1px solid #eee4e9;
@@ -314,6 +354,7 @@
 
 .etiqueta-cantidad {
     display: block;
+
     margin-bottom: 10px;
 
     color: #62575d;
@@ -324,7 +365,12 @@
 
 .selector-cantidad {
     display: grid;
-    grid-template-columns: 48px minmax(90px, 1fr) 48px;
+
+    grid-template-columns:
+        48px
+        minmax(90px, 1fr)
+        48px;
+
     gap: 10px;
 
     max-width: 260px;
@@ -343,11 +389,13 @@
     font-weight: 700;
 
     cursor: pointer;
+
     transition: .2s ease;
 }
 
 .boton-cantidad:hover {
     border-color: #d96ca6;
+
     background: #fbeef5;
     color: #d96ca6;
 }
@@ -363,6 +411,7 @@
     color: #342d31;
 
     text-align: center;
+
     font-size: 18px;
     font-weight: 700;
 
@@ -373,12 +422,14 @@
     border-color: #d96ca6;
 
     box-shadow:
-        0 0 0 4px rgba(217, 108, 166, .12);
+        0 0 0 4px
+        rgba(217, 108, 166, .12);
 }
 
 .campo-cantidad::-webkit-inner-spin-button,
 .campo-cantidad::-webkit-outer-spin-button {
     margin: 0;
+
     appearance: none;
 }
 
@@ -393,6 +444,7 @@
 
 .resumen-cotizacion {
     margin-top: 20px;
+
     padding: 16px 0;
 
     border-top: 1px solid #eee6ea;
@@ -403,6 +455,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     gap: 18px;
 
     padding: 8px 0;
@@ -414,6 +467,7 @@
     color: #453a40;
 
     font-size: 19px;
+
     white-space: nowrap;
 }
 
@@ -431,15 +485,23 @@
     font-size: 25px;
 }
 
+
+/* ==================================
+   WHATSAPP DEL PRODUCTO
+================================== */
+
 .boton-whatsapp {
     width: 100%;
     min-height: 54px;
+
     margin-top: 22px;
+
     padding: 14px 20px;
 
     display: flex;
     align-items: center;
     justify-content: center;
+
     gap: 10px;
 
     border: none;
@@ -454,7 +516,8 @@
     cursor: pointer;
 
     box-shadow:
-        0 10px 24px rgba(37, 211, 102, .24);
+        0 10px 24px
+        rgba(37, 211, 102, .24);
 
     transition: .2s ease;
 }
@@ -462,15 +525,18 @@
 .boton-whatsapp svg {
     width: 24px;
     height: 24px;
+
     flex: 0 0 auto;
 }
 
 .boton-whatsapp:hover {
     background: #1fbd59;
+
     transform: translateY(-2px);
 
     box-shadow:
-        0 13px 28px rgba(37, 211, 102, .30);
+        0 13px 28px
+        rgba(37, 211, 102, .30);
 }
 
 .aclaracion-cotizacion {
@@ -479,17 +545,25 @@
     color: #81747b;
 
     text-align: center;
+
     font-size: 12px;
     line-height: 1.5;
 }
 
+
+/* ==================================
+   VOLVER
+================================== */
+
 .enlace-volver {
     display: inline-block;
+
     margin-top: 25px;
 
     color: #8a727f;
 
     text-decoration: none;
+
     font-size: 14px;
     font-weight: 700;
 }
@@ -500,16 +574,18 @@
 
 
 /* ==================================
-   RESPONSIVE
+   RESPONSIVE TABLET
 ================================== */
 
 @media (max-width: 900px) {
 
     .ficha-producto {
         grid-template-columns: 1fr;
+
         gap: 38px;
 
         margin: 35px auto 65px;
+
         padding: 0 18px;
     }
 
@@ -522,7 +598,8 @@
     }
 
     .miniaturas {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns:
+            repeat(4, 1fr);
     }
 
     .tabla-precios,
@@ -530,6 +607,11 @@
         padding: 22px;
     }
 }
+
+
+/* ==================================
+   RESPONSIVE MOBILE
+================================== */
 
 @media (max-width: 520px) {
 
@@ -546,13 +628,32 @@
     }
 
     .miniaturas {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns:
+            repeat(4, 1fr);
+
         gap: 9px;
+    }
+
+    .lista-colores {
+        gap: 8px;
+    }
+
+    .opcion-color {
+        padding: 9px 12px;
+
+        font-size: 12px;
+    }
+
+    .stock-ficha {
+        margin-top: 16px;
+
+        font-size: 14px;
     }
 
     .fila-precio {
         align-items: flex-start;
         flex-direction: column;
+
         gap: 6px;
     }
 
@@ -562,12 +663,17 @@
 
     .selector-cantidad {
         max-width: none;
-        grid-template-columns: 46px minmax(80px, 1fr) 46px;
+
+        grid-template-columns:
+            46px
+            minmax(80px, 1fr)
+            46px;
     }
 
     .dato-cotizacion {
         align-items: flex-start;
         flex-direction: column;
+
         gap: 4px;
     }
 
