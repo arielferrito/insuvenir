@@ -258,13 +258,13 @@ function activarCategorias() {
 function obtenerIconoCategoria(categoria) {
 
     const imagenes = {
-        VASOS: "img/categorias/VASOS.jpg",
-        VALIJITAS: "img/categorias/VALIJITAS.jpg",
-        BOTELLITAS: "img/categorias/BOTELLAS.jpg",
-        BALDECITOS: "img/categorias/BALDECITOS.jpg",
-        BOLSITAS: "img/categorias/BOLSITAS.jpg",
-        LUNCHERAS: "img/categorias/LUNCHERAS.jpg",
-        ACCESORIOS: "img/categorias/ACCESORIOS.jpg"
+        VASOS: "img/VASOS.jpg",
+        VALIJITAS: "img/VALIJITAS.jpg",
+        BOTELLITAS: "img/BOTELLAS.jpg",
+        BALDECITOS: "img/BALDECITOS.jpg",
+        BOLSITAS: "img/BOLSITAS.jpg",
+        LUNCHERAS: "img/LUNCHERAS.jpg",
+        ACCESORIOS: "img/ACCESORIOS.jpg"
     };
 
     const clave =
@@ -287,7 +287,6 @@ function obtenerIconoCategoria(categoria) {
         >
     `;
 }
-
 
 /* ===========================
    BUSCADOR
