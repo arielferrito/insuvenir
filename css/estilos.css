@@ -662,12 +662,29 @@ body{
             repeat(2,1fr);
     }
 
-   /* ==================================
-   HEADER MOBILE
+  /* ==================================
+   RESPONSIVE MOBILE
 ================================== */
 
 @media (max-width: 600px) {
-@media (max-width: 600px) {
+
+    .header {
+        height: auto;
+        padding: 14px 16px;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .menu {
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px 16px;
+    }
+
+    .menu a {
+        font-size: 14px;
+    }
 
     .hero {
         padding: 34px 18px 28px;
@@ -698,35 +715,6 @@ body{
         padding: 12px 18px;
         font-size: 14px;
     }
-}
-    .header {
-        height: auto;
-        padding: 14px 16px;
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    .logo {
-        font-size: 24px;
-        line-height: 1;
-        text-align: center;
-    }
-
-    .nav {
-        width: 100%;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px 12px;
-        text-align: center;
-    }
-
-    .nav a {
-        padding: 4px 2px;
-        font-size: 14px;
-        line-height: 1.2;
-    }
-}
-   @media (max-width: 600px) {
 
     .categorias {
         margin: 40px auto 25px;
@@ -739,6 +727,7 @@ body{
     }
 
     .grilla-categorias {
+        grid-template-columns: repeat(2, 1fr);
         gap: 10px;
     }
 
