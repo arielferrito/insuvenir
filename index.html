@@ -1,41 +1,53 @@
-<meta charset="UTF-8">
+<!DOCTYPE html>
+<html lang="es">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<head>
 
-<title>Insuvenir | Insumos para Souvenirs</title>
+    <meta charset="UTF-8">
 
-<meta
-    name="description"
-    content="Insumos para souvenirs, vasos, botellas, baldecitos, valijitas, luncheras y más. Consultá stock, colores y precios por cantidad en Insuvenir."
->
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<meta
-    name="robots"
-    content="index, follow"
->
+    <title>Insuvenir | Insumos para Souvenirs</title>
 
-<link
-    rel="canonical"
-    href="https://insuvenir.com.ar/"
->
+    <meta
+        name="description"
+        content="Insumos para souvenirs, vasos, botellas, baldecitos, valijitas, luncheras y más. Consultá stock, colores y precios por cantidad en Insuvenir."
+    >
 
-<link rel="icon" 
-    type="image/png" 
-    href="/img/favicon.png"
->
+    <meta
+        name="robots"
+        content="index, follow"
+    >
 
-<link
-    rel="stylesheet"
-    href="css/estilos.css?v=19"
->
+    <link
+        rel="canonical"
+        href="https://insuvenir.com.ar/"
+    >
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="/img/favicon.png"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/estilos.css?v=19"
+    >
+
+</head>
+
+
+<body>
 
 
 <!-- ================= HEADER ================= -->
 
 <header class="header header-centrado">
+
 
     <nav class="menu menu-izquierda">
 
@@ -132,8 +144,10 @@
             </a>
 
             <a
-                href="#"
+                href="https://wa.me/5492233464815?text=Hola%21%20Estaba%20viendo%20la%20pagina%2C%20quiero%20mas%20informaci%C3%B3n%20sobre%20los%20productos"
                 class="boton boton-secundario"
+                target="_blank"
+                rel="noopener"
             >
                 WhatsApp
             </a>
@@ -145,80 +159,89 @@
 </section>
 
 
-    <!-- ================= CATEGORIAS ================= -->
+<!-- ================= CATEGORIAS ================= -->
 
-    <section
-        class="categorias"
-        id="categorias"
+<section
+    class="categorias"
+    id="categorias"
+>
+
+    <h2>
+        Explorá por categoría
+    </h2>
+
+    <div
+        class="grilla-categorias"
+        id="grilla-categorias"
     >
 
-        <h2>
-            Explorá por categoría
-        </h2>
+        <p>
+            Cargando categorías...
+        </p>
 
-        <div
-            class="grilla-categorias"
-            id="grilla-categorias"
+    </div>
+
+</section>
+
+
+<!-- ================= BUSCADOR ================= -->
+
+<section class="seccion-buscador">
+
+    <div class="buscador-productos">
+
+        <label for="buscador">
+            Buscar productos
+        </label>
+
+        <input
+            type="search"
+            id="buscador"
+            placeholder="Ejemplo: vaso, botellita, glitter..."
+            autocomplete="off"
         >
-            <p>
-                Cargando categorías...
-            </p>
-        </div>
 
-    </section>
+        <p id="resultado-busqueda"></p>
 
+    </div>
 
-
-<div class="buscador-productos">
-
-            <label for="buscador">
-                Buscar productos
-            </label>
-
-            <input
-                type="search"
-                id="buscador"
-                placeholder="Ejemplo: vaso, botellita, glitter..."
-                autocomplete="off"
-            >
-
-            <p id="resultado-busqueda"></p>
-
-        </div>
+</section>
 
 
-    <!-- ================= PRODUCTOS ================= -->
+<!-- ================= PRODUCTOS ================= -->
 
-    <section
-        class="productos"
-        id="productos"
+<section
+    class="productos"
+    id="productos"
+>
+
+    <h2>
+        Productos destacados
+    </h2>
+
+    <div
+        class="grilla"
+        id="grilla-productos"
     >
 
-        <h2>
-            Productos destacados
-        </h2>
+        <p class="mensaje-catalogo">
+            Cargando productos...
+        </p>
 
-        
+    </div>
 
-        <div
-            class="grilla"
-            id="grilla-productos"
-        >
-
-            <p class="mensaje-catalogo">
-                Cargando productos...
-            </p>
-
-        </div>
-
-    </section>
+</section>
 
 
-    <!-- ================= FOOTER ================= -->
+<!-- ================= FOOTER ================= -->
 
-    <footer class="footer" id="contacto">
+<footer
+    class="footer"
+    id="contacto"
+>
 
     <div class="footer-contenido">
+
 
         <div class="footer-marca">
 
@@ -288,6 +311,7 @@
 
         </div>
 
+
     </div>
 
 
@@ -300,3 +324,13 @@
     </div>
 
 </footer>
+
+
+<!-- ================= JS ================= -->
+
+<script src="js/app.js?v=5"></script>
+
+
+</body>
+
+</html>
