@@ -762,7 +762,7 @@ body{
     }
 }
 
-   /* ==================================
+/* ==================================
    LOGO HEADER
 ================================== */
 
@@ -770,6 +770,7 @@ body{
     display: flex;
     align-items: center;
     flex-shrink: 0;
+    text-decoration: none;
 }
 
 .logo-imagen {
@@ -790,6 +791,8 @@ body{
         width: 145px;
     }
 }
+
+
 /* ==================================
    MENU DESPLEGABLE
 ================================== */
@@ -805,11 +808,13 @@ body{
     align-items: center;
     gap: 6px;
 
+    padding: 0;
     border: none;
     background: transparent;
 
     color: inherit;
     font: inherit;
+    font-weight: 600;
 
     cursor: pointer;
 }
@@ -840,11 +845,13 @@ body{
     box-shadow:
         0 14px 34px rgba(65, 45, 57, .12);
 
-    z-index: 100;
+    z-index: 1000;
 }
 
 .menu-desplegable-contenido a {
+    display: block;
     padding: 10px 12px;
+
     border-radius: 9px;
 
     white-space: nowrap;
@@ -860,17 +867,18 @@ body{
     color: #d96ca6;
 }
 
-.menu-desplegable:hover
-.menu-desplegable-contenido {
+.menu-desplegable:hover .menu-desplegable-contenido {
     display: flex;
 }
 
-.menu-desplegable:hover
-.menu-desplegable-boton span {
+.menu-desplegable:hover .menu-desplegable-boton span {
     transform: rotate(180deg);
 }
 
-/* MOBILE */
+
+/* ==================================
+   MENU DESPLEGABLE MOBILE
+================================== */
 
 @media (max-width: 600px) {
 
@@ -879,13 +887,12 @@ body{
     }
 
     .menu-desplegable-contenido {
-        position: static;
-        transform: none;
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
 
-        width: 100%;
-        margin-top: 8px;
-
-        box-shadow: none;
+        width: 180px;
+        margin-top: 6px;
     }
-
 }
