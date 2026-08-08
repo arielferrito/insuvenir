@@ -258,13 +258,13 @@ function activarCategorias() {
 function obtenerIconoCategoria(categoria) {
 
     const imagenes = {
-        VASOS: "img/categorias/vasos.jpg",
-        VALIJITAS: "img/categorias/valijitas.jpg",
-        BOTELLAS: "img/categorias/botellas.jpg",
-        BALDECITOS: "img/categorias/baldecitos.jpg",
-        BOLSITAS: "img/categorias/bolsitas.jpg",
-        LUNCHERAS: "img/categorias/luncheras.jpg",
-        ACCESORIOS: "img/categorias/accesorios.jpg"
+        VASOS: "img/categorias/VASOS.jpg",
+        VALIJITAS: "img/categorias/VALIJITAS.jpg",
+        BOTELLITAS: "img/categorias/BOTELLAS.jpg",
+        BALDECITOS: "img/categorias/BALDECITOS.jpg",
+        BOLSITAS: "img/categorias/BOLSITAS.jpg",
+        LUNCHERAS: "img/categorias/LUNCHERAS.jpg",
+        ACCESORIOS: "img/categorias/ACCESORIOS.jpg"
     };
 
     const clave =
