@@ -1552,5 +1552,50 @@ function actualizarSEOProducto(
             "content",
             descripcionProducto
         );
+
+        /* ===========================
+   HEADER MOBILE AL SCROLL
+=========================== */
+
+function activarHeaderMobileScroll() {
+
+    const header =
+        document.querySelector(".header");
+
+    if (!header) return;
+
+    window.addEventListener(
+        "scroll",
+        () => {
+
+            if (window.innerWidth > 600) {
+                header.classList.remove(
+                    "header-mobile-reducido"
+                );
+
+                return;
+            }
+
+            if (window.scrollY > 120) {
+
+                header.classList.add(
+                    "header-mobile-reducido"
+                );
+
+            } else {
+
+                header.classList.remove(
+                    "header-mobile-reducido"
+                );
+            }
+        }
+    );
+}
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    activarHeaderMobileScroll
+);
     }
 }
