@@ -1280,3 +1280,28 @@ body {
         height: 46px;
     }
 }
+/* ===========================
+   HEADER MOBILE REDUCIDO
+=========================== */
+
+@media (max-width: 600px) {
+
+    .header {
+        transition:
+            padding .25s ease,
+            gap .25s ease;
+    }
+
+    .header-mobile-reducido {
+        padding: 8px 16px;
+        gap: 0;
+    }
+
+    .header-mobile-reducido .menu {
+        display: none;
+    }
+
+    .header-mobile-reducido .logo-imagen {
+        width: 115px;
+    }
+}
