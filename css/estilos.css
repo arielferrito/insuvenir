@@ -1260,3 +1260,23 @@ body {
 .bloque-institucional-sin-numero {
     grid-template-columns: 1fr;
 }
+/* ===========================
+   IMAGENES CATEGORIAS
+=========================== */
+
+.imagen-categoria {
+    width: 54px;
+    height: 54px;
+
+    object-fit: contain;
+
+    display: block;
+}
+
+@media (max-width: 600px) {
+
+    .imagen-categoria {
+        width: 46px;
+        height: 46px;
+    }
+}
