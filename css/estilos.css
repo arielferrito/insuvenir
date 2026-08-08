@@ -608,17 +608,104 @@ body {
 .footer {
     margin-top: 80px;
 
-    padding: 40px;
+    padding: 55px 40px 25px;
 
     background: #ffffff;
 
     border-top: 1px solid #ececec;
 
-    text-align: center;
-
-    color: #777;
+    color: #666;
 }
 
+.footer-contenido {
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+
+    gap: 50px;
+}
+
+.footer-logo {
+    width: 180px;
+    height: auto;
+
+    margin-bottom: 15px;
+}
+
+.footer-marca p {
+    line-height: 1.6;
+}
+
+.footer-bloque {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+.footer-bloque h3 {
+    margin-bottom: 6px;
+
+    color: #40373c;
+
+    font-size: 17px;
+}
+
+.footer-bloque a {
+    color: #666;
+
+    text-decoration: none;
+
+    transition: .2s;
+}
+
+.footer-bloque a:hover {
+    color: #d96ca6;
+}
+
+.footer-inferior {
+    max-width: 1200px;
+
+    margin: 40px auto 0;
+
+    padding-top: 22px;
+
+    border-top: 1px solid #eee;
+
+    text-align: center;
+
+    font-size: 13px;
+    color: #999;
+}
+
+@media (max-width: 700px) {
+
+    .footer {
+        padding: 40px 20px 22px;
+    }
+
+    .footer-contenido {
+        grid-template-columns: 1fr;
+
+        gap: 30px;
+
+        text-align: center;
+    }
+
+    .footer-logo {
+        width: 150px;
+
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .footer-bloque {
+        align-items: center;
+    }
+}
 /* ===========================
    BUSCADOR HOME
 =========================== */
