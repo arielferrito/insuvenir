@@ -681,3 +681,52 @@
         font-size: 15px;
     }
 }
+/* ==================================
+   INFORMACIÓN DE COMPRA
+================================== */
+
+.info-compra-ficha {
+    margin-top: 28px;
+    padding: 24px;
+
+    border: 1px solid #eee4e9;
+    border-radius: 22px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 10px 30px rgba(65, 45, 57, .06);
+}
+
+.info-compra-ficha h2 {
+    margin-bottom: 18px;
+
+    color: #40373c;
+    font-size: 20px;
+}
+
+.info-compra-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    padding: 13px 0;
+
+    border-bottom: 1px solid #f0eaed;
+}
+
+.info-compra-item:last-child {
+    border-bottom: none;
+}
+
+.info-compra-item strong {
+    color: #4d4147;
+    font-size: 14px;
+}
+
+.info-compra-item span {
+    color: #70666b;
+
+    font-size: 14px;
+    line-height: 1.5;
+}
