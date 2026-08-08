@@ -257,23 +257,35 @@ function activarCategorias() {
 
 function obtenerIconoCategoria(categoria) {
 
-    const iconos = {
-        VASOS: "🥤",
-        VALIJITAS: "💼",
-        BOTELLAS: "🧴",
-        BALDECITOS: "🪣",
-        BOLSITAS: "🛍️",
-        LUNCHERAS: "🍱",
-        ACCESORIOS: "🎨",
-        COMBOS: "🎁"
+    const imagenes = {
+        VASOS: "img/categorias/vasos.jpg",
+        VALIJITAS: "img/categorias/valijitas.jpg",
+        BOTELLAS: "img/categorias/botellas.jpg",
+        BALDECITOS: "img/categorias/baldecitos.jpg",
+        BOLSITAS: "img/categorias/bolsitas.jpg",
+        LUNCHERAS: "img/categorias/luncheras.jpg",
+        ACCESORIOS: "img/categorias/accesorios.jpg"
     };
 
-    return (
-        iconos[
-            normalizarTexto(categoria)
-                .toUpperCase()
-        ] || "✨"
-    );
+    const clave =
+        normalizarTexto(categoria)
+            .toUpperCase();
+
+    const imagen =
+        imagenes[clave];
+
+    if (!imagen) {
+        return "✨";
+    }
+
+    return `
+        <img
+            src="${imagen}"
+            alt="${escaparHTML(categoria)}"
+            class="imagen-categoria"
+            loading="lazy"
+        >
+    `;
 }
 
 
