@@ -728,6 +728,12 @@ function obtenerEstiloColor_(nombre) {
       "#40535b",
       "#70c1df"
     ],
+    
+    "CELESTE PASTEL": [
+     "#c9eaf6",
+     "#40535b",
+     "#a9dced"
+   ],
 
     TURQUESA: [
       "#47c5bf",
@@ -751,6 +757,12 @@ function obtenerEstiloColor_(nombre) {
       "#f6d85d",
       "#594f28",
       "#e6c642"
+    ],
+
+    "AMARILLO PASTEL": [
+  "#fff0a8",
+  "#594f28",
+  "#eadb82"
     ],
 
     NARANJA: [
