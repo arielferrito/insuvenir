@@ -71,7 +71,6 @@ async function cargarProductos() {
         );
 
         crearCategorias();
-
         mostrarDestacados();
 
     } catch (error) {
@@ -358,14 +357,9 @@ function textoCoincide(
         return false;
     }
 
-    /* Coincidencia normal */
-
     if (texto.includes(consulta)) {
         return true;
     }
-
-
-    /* Buscar palabra por palabra */
 
     const palabrasTexto =
         texto.split(/\s+/);
@@ -387,7 +381,7 @@ function textoCoincide(
 
 
 /* ===========================
-   SIMILITUD DE PALABRAS
+   SIMILITUD
 =========================== */
 
 function palabrasSimilares(
@@ -436,10 +430,6 @@ function palabrasSimilares(
 }
 
 
-/* ===========================
-   PLURALES
-=========================== */
-
 function quitarPlural(palabra) {
 
     if (
@@ -459,10 +449,6 @@ function quitarPlural(palabra) {
     return palabra;
 }
 
-
-/* ===========================
-   DISTANCIA LEVENSHTEIN
-=========================== */
 
 function distanciaLevenshtein(a, b) {
 
@@ -686,24 +672,12 @@ function crearTarjetaProducto(producto) {
                     ${precio}
                 </p>
 
-                ${
-                    stock > 0
-                        ? `
-                            <a
-                                class="boton-producto"
-                                href="${urlProducto}"
-                            >
-                                Ver producto
-                            </a>
-                        `
-                        : `
-                            <span
-                                class="boton-producto boton-producto-desactivado"
-                            >
-                                Sin stock
-                            </span>
-                        `
-                }
+                <a
+                    class="boton-producto"
+                    href="${urlProducto}"
+                >
+                    Ver producto
+                </a>
 
             </div>
 
@@ -800,7 +774,7 @@ function normalizarTexto(valor) {
 
 
 /* ===========================
-   SEGURIDAD HTML
+   HTML SEGURO
 =========================== */
 
 function escaparHTML(texto) {
