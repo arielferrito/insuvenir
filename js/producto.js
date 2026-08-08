@@ -553,10 +553,43 @@ function mostrarFicha(producto) {
             </section>
 
 
-            <a
-                href="index.html#productos"
-                class="enlace-volver"
-            >
+            </section>
+
+
+<section class="info-compra-ficha">
+
+    <h2>
+        Información de compra
+    </h2>
+
+    <div class="info-compra-item">
+        <strong>🚚 Envíos</strong>
+        <span>
+            Realizamos envíos a todo el país por Correo Argentino.
+        </span>
+    </div>
+
+    <div class="info-compra-item">
+        <strong>📍 Mar del Plata</strong>
+        <span>
+            Retiro, entrega o envío dentro de la ciudad a coordinar.
+        </span>
+    </div>
+
+    <div class="info-compra-item">
+        <strong>💳 Medios de pago</strong>
+        <span>
+            Efectivo o transferencia bancaria.
+        </span>
+    </div>
+
+</section>
+
+
+<a
+    href="index.html#productos"
+    class="enlace-volver"
+>
                 ← Volver al catálogo
             </a>
 
