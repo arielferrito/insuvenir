@@ -1,73 +1,127 @@
-<!DOCTYPE html>
-<html lang="es">
+<meta charset="UTF-8">
 
-<head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Producto | Insuvenir</title>
-
-    <link rel="stylesheet" href="css/estilos.css" >
-    <link rel="stylesheet" href="css/producto.css?v=2">
-  
 <meta
-  name="description"
-  id="meta-description"
-  content="Insumos para souvenirs en Insuvenir."
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
 >
-    
-</head>
 
-<body>
+<title>Producto | Insuvenir</title>
 
-    <header class="header">
+<meta
+    name="description"
+    id="meta-description"
+    content="Insumos para souvenirs en Insuvenir."
+>
 
-        <a
-            href="index.html"
-            class="logo"
+<link
+    rel="canonical"
+    href="https://insuvenir.com.ar/producto.html"
+>
+
+<link
+    rel="icon"
+    type="image/png"
+    href="/img/favicon.png"
+>
+
+<link
+    rel="stylesheet"
+    href="css/estilos.css?v=16"
+>
+
+<link
+    rel="stylesheet"
+    href="css/producto.css?v=2"
+>
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <a
+        href="/"
+        class="logo-link"
+        aria-label="Insuvenir - Inicio"
+    >
+        <img
+            src="img/logo-insuvenir.png"
+            alt="Insuvenir - Tienda de insumos"
+            class="logo-imagen"
         >
-            INSUVENIR
+    </a>
+
+    <nav class="menu">
+
+        <a href="/">
+            Inicio
         </a>
 
-        <nav class="menu">
+        <a href="/#productos">
+            Productos
+        </a>
 
-            <a href="index.html">
-                Inicio
-            </a>
+        <div class="menu-desplegable">
 
-            <a href="index.html#productos">
-                Productos
-            </a>
+            <button
+                type="button"
+                class="menu-desplegable-boton"
+            >
+                Categorías
+                <span>⌄</span>
+            </button>
 
-        </nav>
+            <div class="menu-desplegable-contenido">
 
-    </header>
+                <a href="/vasos/">Vasos</a>
+                <a href="/valijitas/">Valijitas</a>
+                <a href="/botellas/">Botellas</a>
+                <a href="/baldecitos/">Baldecitos</a>
+                <a href="/bolsitas/">Bolsitas</a>
+                <a href="/luncheras/">Luncheras</a>
+                <a href="/accesorios/">Accesorios</a>
 
-    <main
-        class="ficha-producto"
-        id="ficha-producto"
-    >
+            </div>
 
-        <p class="mensaje-catalogo">
-            Cargando producto...
-        </p>
+        </div>
 
-    </main>
+        <a href="/nosotros/">
+            Nosotros
+        </a>
 
-    <footer class="footer">
+        <a href="/como-comprar/">
+            Cómo comprar
+        </a>
 
-        <p>
-            © 2026 Insuvenir · Insumos para souvenirs
-        </p>
+        <a href="/#contacto">
+            Contacto
+        </a>
 
-    </footer>
+    </nav>
 
-<script src="js/producto.js?v=15"></script>
-</body>
+</header>
 
-</html>
+
+<!-- ================= PRODUCTO ================= -->
+
+<main
+    class="ficha-producto"
+    id="ficha-producto"
+>
+
+    <p class="mensaje-catalogo">
+        Cargando producto...
+    </p>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    <p>
+        © 2026 Insuvenir · Insumos para souvenirs
+    </p>
+
+</footer>
