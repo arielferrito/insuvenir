@@ -10,7 +10,10 @@ const NUMERO_WHATSAPP =
 
 document.addEventListener(
     "DOMContentLoaded",
-    cargarProducto
+    () => {
+        cargarProducto();
+        activarHeaderMobileScroll();
+    }
 );
 
 
@@ -1592,10 +1595,3 @@ function activarHeaderMobileScroll() {
     );
 }
 
-
-document.addEventListener(
-    "DOMContentLoaded",
-    activarHeaderMobileScroll
-);
-    }
-}
