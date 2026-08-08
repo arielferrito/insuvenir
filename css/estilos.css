@@ -121,10 +121,10 @@ body {
 
 .menu-desplegable-contenido {
     position: absolute;
-    top: 100%;
-
+    top: calc(100% - 2px);
+    left: 50%;
     transform: translateX(-50%);
-
+    margin-top: 0;  
     min-width: 185px;
 
     padding: 10px;
