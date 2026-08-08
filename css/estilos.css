@@ -1257,42 +1257,6 @@ body {
    NOSOTROS
 =========================== */
 
-.bloque-nosotros {
-    padding: 30px 0;
-
-    border-bottom: 1px solid #eee5ea;
-}
-
-.bloque-nosotros h2 {
-    margin-bottom: 12px;
-
-    color: #40373c;
-
-    font-size: 24px;
-}
-
-.bloque-nosotros p {
-    color: #70666b;
-
-    font-size: 16px;
-    line-height: 1.75;
-}
-
-.bloque-nosotros p + p {
-    margin-top: 10px;
-}
-
-@media (max-width: 600px) {
-
-    .bloque-nosotros {
-        padding: 24px 0;
-    }
-
-    .bloque-nosotros h2 {
-        font-size: 21px;
-    }
-
-    .bloque-nosotros p {
-        font-size: 15px;
-    }
+.bloque-institucional-sin-numero {
+    grid-template-columns: 1fr;
 }
