@@ -1070,3 +1070,186 @@ body {
         height: 28px;
     }
 }
+
+/* ===========================
+   PAGINAS INSTITUCIONALES
+=========================== */
+
+.pagina-institucional {
+    min-height: 70vh;
+}
+
+.banner-institucional {
+    padding: 75px 25px 65px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff,
+            #f8edf4
+        );
+}
+
+.etiqueta-institucional {
+    display: inline-block;
+
+    margin-bottom: 16px;
+    padding: 7px 12px;
+
+    border-radius: 999px;
+
+    background: #fbeef5;
+    color: #d96ca6;
+
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.banner-institucional h1 {
+    margin-bottom: 18px;
+
+    color: #342d31;
+
+    font-size: 48px;
+}
+
+.banner-institucional p {
+    max-width: 650px;
+
+    margin: 0 auto;
+
+    color: #70666b;
+
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.contenido-institucional {
+    max-width: 900px;
+
+    margin: 60px auto 90px;
+
+    padding: 0 25px;
+}
+
+.bloque-institucional {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+
+    gap: 22px;
+
+    padding: 28px 0;
+
+    border-bottom: 1px solid #eee5ea;
+}
+
+.numero-paso {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #d96ca6;
+    color: #ffffff;
+
+    font-weight: 800;
+}
+
+.bloque-institucional h2 {
+    margin-bottom: 10px;
+
+    color: #40373c;
+
+    font-size: 22px;
+}
+
+.bloque-institucional p,
+.bloque-institucional li {
+    color: #70666b;
+
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+.bloque-institucional p + p {
+    margin-top: 10px;
+}
+
+.bloque-institucional ul {
+    margin: 10px 0 10px 20px;
+}
+
+.cta-institucional {
+    margin-top: 45px;
+    padding: 35px 25px;
+
+    text-align: center;
+
+    border-radius: 24px;
+
+    background: #f8edf4;
+}
+
+.cta-institucional h2 {
+    margin-bottom: 10px;
+
+    color: #40373c;
+}
+
+.cta-institucional p {
+    margin-bottom: 18px;
+
+    color: #70666b;
+}
+
+@media (max-width: 600px) {
+
+    .banner-institucional {
+        padding: 50px 20px 42px;
+    }
+
+    .banner-institucional h1 {
+        font-size: 36px;
+    }
+
+    .banner-institucional p {
+        font-size: 16px;
+    }
+
+    .contenido-institucional {
+        margin: 35px auto 60px;
+
+        padding: 0 18px;
+    }
+
+    .bloque-institucional {
+        grid-template-columns: 38px 1fr;
+
+        gap: 15px;
+
+        padding: 22px 0;
+    }
+
+    .numero-paso {
+        width: 36px;
+        height: 36px;
+
+        font-size: 14px;
+    }
+
+    .bloque-institucional h2 {
+        font-size: 19px;
+    }
+
+    .bloque-institucional p,
+    .bloque-institucional li {
+        font-size: 15px;
+    }
+}
