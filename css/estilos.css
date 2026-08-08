@@ -619,6 +619,66 @@ body {
     color: #777;
 }
 
+/* ===========================
+   BUSCADOR HOME
+=========================== */
+
+.seccion-buscador {
+    max-width: 1200px;
+    margin: 35px auto 20px;
+    padding: 0 20px;
+}
+
+.buscador-productos {
+    max-width: 680px;
+    margin: 0 auto;
+}
+
+.buscador-productos label {
+    display: block;
+    margin-bottom: 10px;
+
+    text-align: center;
+
+    color: #40373c;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.buscador-productos input {
+    width: 100%;
+
+    padding: 16px 20px;
+
+    border: 2px solid #eadde4;
+    border-radius: 16px;
+
+    background: #fff;
+
+    font-size: 16px;
+
+    outline: none;
+
+    box-shadow: 0 8px 24px rgba(65,45,57,.06);
+
+    transition: .2s ease;
+}
+
+.buscador-productos input:focus {
+    border-color: #d96ca6;
+
+    box-shadow:
+        0 0 0 4px rgba(217,108,166,.12);
+}
+
+#resultado-busqueda {
+    margin-top: 10px;
+
+    text-align: center;
+
+    color: #777;
+    font-size: 14px;
+}
 
 /* ===========================
    RESPONSIVE TABLET
