@@ -899,6 +899,12 @@ function obtenerEstiloColor_(
             "#b693d1"
         ],
 
+        "LILA PASTEL": [
+            "#e4d0ef",
+            "#584b60",
+            "#d2b5e2"
+        ],
+
         GRIS: [
             "#aaa7a9",
             "#ffffff",
@@ -1014,6 +1020,22 @@ function activarCotizador(
         Number(
             producto.stock || 0
         ) <= 0;
+
+
+    const ICONO_SALUDO =
+        "\uD83D\uDE0A";
+
+    const ICONO_PRODUCTO =
+        "\uD83D\uDCE6";
+
+    const ICONO_COLOR =
+        "\uD83C\uDFA8";
+
+    const ICONO_CANTIDAD =
+        "\uD83D\uDD22";
+
+    const ICONO_PRECIO =
+        "\uD83D\uDCB0";
 
 
     function obtenerCantidadValida() {
@@ -1147,12 +1169,17 @@ function activarCotizador(
                     ? colorSeleccionado.dataset.color
                     : "";
 
+
             const textoColorWhatsapp =
+                color
+                    ? `${ICONO_COLOR} Color: ${color}`
+                    : "";
+
+
+            const aclaracionSurtido =
                 color === "SURTIDO"
-                    ? "🎨 Color: SURTIDO (combinación a coordinar según disponibilidad)"
-                    : color
-                        ? `🎨 Color: ${color}`
-                        : "";
+                    ? "La combinación de colores del surtido se coordina según disponibilidad."
+                    : "";
 
 
             let mensaje;
@@ -1162,7 +1189,7 @@ function activarCotizador(
 
                 mensaje = [
 
-                    "¡Hola! 😊",
+                    `¡Hola! ${ICONO_SALUDO}`,
 
                     "",
 
@@ -1170,11 +1197,15 @@ function activarCotizador(
 
                     "",
 
-                    `📦 Producto: ${producto.producto}`,
+                    `${ICONO_PRODUCTO} Producto: ${producto.producto}`,
 
                     textoColorWhatsapp,
 
-                    `🔢 Cantidad que necesito: ${cantidad} unidades`,
+                    `${ICONO_CANTIDAD} Cantidad que necesito: ${cantidad} unidades`,
+
+                    "",
+
+                    aclaracionSurtido,
 
                     "",
 
@@ -1190,7 +1221,7 @@ function activarCotizador(
 
                 mensaje = [
 
-                    "¡Hola! 😊",
+                    `¡Hola! ${ICONO_SALUDO}`,
 
                     "",
 
@@ -1198,15 +1229,19 @@ function activarCotizador(
 
                     "",
 
-                    `📦 Producto: ${producto.producto}`,
+                    `${ICONO_PRODUCTO} Producto: ${producto.producto}`,
 
                     textoColorWhatsapp,
 
-                    `🔢 Cantidad: ${cantidad} unidades`,
+                    `${ICONO_CANTIDAD} Cantidad: ${cantidad} unidades`,
 
-                    `💰 Precio estimado: ${formatearPrecio(
+                    `${ICONO_PRECIO} Precio estimado: ${formatearPrecio(
                         cotizacion.total
                     )}`,
+
+                    "",
+
+                    aclaracionSurtido,
 
                     "",
 
@@ -1247,7 +1282,6 @@ function activarCotizador(
 
     actualizarCotizacion();
 }
-
 
 /* ===========================
    CALCULAR COTIZACION
