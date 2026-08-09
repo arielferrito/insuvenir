@@ -1546,7 +1546,6 @@ function actualizarSEOProducto(
         );
 
     if (metaDescripcion) {
-
         metaDescripcion.setAttribute(
             "content",
             descripcionProducto
@@ -1569,22 +1568,17 @@ function activarHeaderMobileScroll() {
     function actualizarHeader() {
 
         if (window.innerWidth > 600) {
-
             header.classList.remove(
                 "header-mobile-reducido"
             );
-
             return;
         }
 
         if (window.scrollY > 120) {
-
             header.classList.add(
                 "header-mobile-reducido"
             );
-
         } else {
-
             header.classList.remove(
                 "header-mobile-reducido"
             );
