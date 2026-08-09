@@ -1,23 +1,6 @@
 const API_URL =
 "https://script.google.com/macros/s/AKfycbyAl92YO1VnX5yzVG2ueFYCKtP6lGhmB0K4V7CiEDbtCNuCjknRBnB9YhyMTjyJt55O/exec";
 
-const CATEGORIAS = {
-
-    vasos: "VASOS",
-
-    botellitas: "BOTELLITAS",
-
-    baldecitos: "BALDECITOS",
-
-    valijitas: "VALIJITAS",
-
-    bolsitas: "BOLSITAS",
-
-    luncheras: "LUNCHERAS",
-
-    accesorios: "ACCESORIOS"
-};
-
 
 document.addEventListener(
     "DOMContentLoaded",
@@ -27,19 +10,23 @@ document.addEventListener(
 
 async function cargarCategoria() {
 
-    const slug =
-        obtenerSlugCategoria();
+   const slug =
+    obtenerSlugCategoria();
 
-    const categoria =
-        CATEGORIAS[slug];
+if (!slug) {
 
-    if (!categoria) {
+    mostrarError(
+        "No encontramos esta categoría."
+    );
 
-        mostrarError(
-            "No encontramos esta categoría."
-        );
+    return;
+}
 
-        return;
+const categoria =
+    slug
+        .replaceAll("-", " ")
+        .trim()
+        .toUpperCase();
     }
 
 
