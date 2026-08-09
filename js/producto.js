@@ -1531,23 +1531,19 @@ function actualizarSEOProducto(
             nombre || "Producto"
         ).trim();
 
-
     const descripcionProducto =
         String(
             descripcion ||
             "Insumos para souvenirs disponibles en Insuvenir."
         ).trim();
 
-
     document.title =
         `${nombreProducto} | Insuvenir`;
-
 
     const metaDescripcion =
         document.getElementById(
             "meta-description"
         );
-
 
     if (metaDescripcion) {
 
@@ -1555,8 +1551,11 @@ function actualizarSEOProducto(
             "content",
             descripcionProducto
         );
+    }
+}
 
-        /* ===========================
+
+/* ===========================
    HEADER MOBILE AL SCROLL
 =========================== */
 
@@ -1567,31 +1566,40 @@ function activarHeaderMobileScroll() {
 
     if (!header) return;
 
+    function actualizarHeader() {
+
+        if (window.innerWidth > 600) {
+
+            header.classList.remove(
+                "header-mobile-reducido"
+            );
+
+            return;
+        }
+
+        if (window.scrollY > 120) {
+
+            header.classList.add(
+                "header-mobile-reducido"
+            );
+
+        } else {
+
+            header.classList.remove(
+                "header-mobile-reducido"
+            );
+        }
+    }
+
     window.addEventListener(
         "scroll",
-        () => {
-
-            if (window.innerWidth > 600) {
-                header.classList.remove(
-                    "header-mobile-reducido"
-                );
-
-                return;
-            }
-
-            if (window.scrollY > 120) {
-
-                header.classList.add(
-                    "header-mobile-reducido"
-                );
-
-            } else {
-
-                header.classList.remove(
-                    "header-mobile-reducido"
-                );
-            }
-        }
+        actualizarHeader
     );
-}
 
+    window.addEventListener(
+        "resize",
+        actualizarHeader
+    );
+
+    actualizarHeader();
+}
