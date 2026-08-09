@@ -1147,6 +1147,13 @@ function activarCotizador(
                     ? colorSeleccionado.dataset.color
                     : "";
 
+            const textoColorWhatsapp =
+                color === "SURTIDO"
+                    ? "🎨 Color: SURTIDO (combinación a coordinar según disponibilidad)"
+                    : color
+                        ? `🎨 Color: ${color}`
+                        : "";
+
 
             let mensaje;
 
@@ -1165,9 +1172,7 @@ function activarCotizador(
 
                     `📦 Producto: ${producto.producto}`,
 
-                    color
-                        ? `🎨 Color: ${color}`
-                        : "",
+                    textoColorWhatsapp,
 
                     `🔢 Cantidad que necesito: ${cantidad} unidades`,
 
@@ -1195,9 +1200,7 @@ function activarCotizador(
 
                     `📦 Producto: ${producto.producto}`,
 
-                    color
-                        ? `🎨 Color: ${color}`
-                        : "",
+                    textoColorWhatsapp,
 
                     `🔢 Cantidad: ${cantidad} unidades`,
 
