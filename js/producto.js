@@ -248,11 +248,32 @@ function mostrarFicha(producto) {
                     ) > 0
             )
             : [];
+    const stockSurtido =
+    colores.reduce(
+        (total, color) =>
+            total +
+            Number(
+                color.stock || 0
+            ),
+        0
+    );
+
+
+   const coloresSelector =
+    colores.length > 1
+        ? [
+            ...colores,
+            {
+                nombre: "SURTIDO",
+                stock: stockSurtido
+            }
+        ]
+        : colores;
 
     const colorInicial =
-        colores.length > 0
-            ? colores[0]
-            : null;
+    coloresSelector.length > 0
+        ? coloresSelector[0]
+        : null;
 
     const estado =
         sinStock
@@ -268,9 +289,9 @@ function mostrarFicha(producto) {
             : "estado-disponible";
 
     const selectorColores =
-        crearSelectorColores_(
-            colores
-        );
+    crearSelectorColores_(
+        coloresSelector
+    );
 
     const textoDisponibilidad =
         colorInicial
