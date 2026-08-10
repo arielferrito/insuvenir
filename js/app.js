@@ -261,7 +261,7 @@ function obtenerIconoCategoria(categoria) {
         VASOS: "img/VASOS.jpg",
         VALIJITAS: "img/VALIJITAS.jpg",
         BOTELLITAS: "img/BOTELLAS.jpg",
-        BALDECITOS: "img/BALDECITOS.jpg",
+        BALDECITOS: "img/prueba2.png",
         BOLSITAS: "img/BOLSITAS.jpg",
         LUNCHERAS: "img/LUNCHERAS.jpg",
         ACCESORIOS: "img/prueba.png"
