@@ -1305,3 +1305,17 @@ body {
         width: 115px;
     }
 }
+/* ===========================
+   BANNER HOME
+=========================== */
+
+.banner-home {
+    width: 100%;
+    overflow: hidden;
+}
+
+.banner-home-imagen {
+    display: block;
+    width: 100%;
+    height: auto;
+}
