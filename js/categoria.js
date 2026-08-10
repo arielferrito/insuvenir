@@ -10,24 +10,24 @@ document.addEventListener(
 
 async function cargarCategoria() {
 
-   const slug =
-    obtenerSlugCategoria();
+    const slug =
+        obtenerSlugCategoria();
 
-if (!slug) {
+    if (!slug) {
 
-    mostrarError(
-        "No encontramos esta categoría."
-    );
+        mostrarError(
+            "No encontramos esta categoría."
+        );
 
-    return;
-}
-
-const categoria =
-    slug
-        .replaceAll("-", " ")
-        .trim()
-        .toUpperCase();
+        return;
     }
+
+
+    const categoria =
+        slug
+            .replaceAll("-", " ")
+            .trim()
+            .toUpperCase();
 
 
     actualizarEncabezado(
