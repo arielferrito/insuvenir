@@ -264,7 +264,7 @@ function obtenerIconoCategoria(categoria) {
         BALDECITOS: "img/BALDECITOS.jpg",
         BOLSITAS: "img/BOLSITAS.jpg",
         LUNCHERAS: "img/LUNCHERAS.jpg",
-        ACCESORIOS: "img/ACCESORIOS.jpg"
+        ACCESORIOS: "img/prueba.png"
     };
 
     const clave =
