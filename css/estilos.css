@@ -406,9 +406,10 @@ body {
 
 .foto img {
     width: 100%;
-    height: 100%;
-
-    object-fit: cover;
+    height: 260px;
+    object-fit: contain;
+    object-position: center;
+    background: #ffffff;
 }
 
 .producto-contenido {
