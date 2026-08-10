@@ -1307,11 +1307,14 @@ body {
 
 .banner-home {
     width: 100%;
+    aspect-ratio: 16 / 5;
     overflow: hidden;
 }
 
 .banner-home-imagen {
-    display: block;
     width: 100%;
-    height: auto;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
 }
