@@ -797,3 +797,150 @@ function escaparHTML(texto) {
         .replaceAll('"', "&quot;")
         .replaceAll("'", "&#039;");
 }
+/* ===========================
+   SLIDER HOME
+=========================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    activarSliderHome
+);
+
+
+function activarSliderHome() {
+
+    const slides =
+        document.querySelectorAll(
+            ".slide"
+        );
+
+    const puntos =
+        document.querySelectorAll(
+            ".slider-punto"
+        );
+
+    const anterior =
+        document.querySelector(
+            ".slider-anterior"
+        );
+
+    const siguiente =
+        document.querySelector(
+            ".slider-siguiente"
+        );
+
+
+    if (
+        slides.length === 0 ||
+        !anterior ||
+        !siguiente
+    ) {
+        return;
+    }
+
+
+    let indiceActual = 0;
+
+
+    function mostrarSlide(
+        indice
+    ) {
+
+        slides.forEach(
+            slide =>
+                slide.classList.remove(
+                    "activo"
+                )
+        );
+
+        puntos.forEach(
+            punto =>
+                punto.classList.remove(
+                    "activo"
+                )
+        );
+
+
+        slides[indice].classList.add(
+            "activo"
+        );
+
+
+        if (puntos[indice]) {
+
+            puntos[indice].classList.add(
+                "activo"
+            );
+        }
+
+
+        indiceActual =
+            indice;
+    }
+
+
+    function siguienteSlide() {
+
+        const nuevoIndice =
+            (
+                indiceActual + 1
+            ) % slides.length;
+
+        mostrarSlide(
+            nuevoIndice
+        );
+    }
+
+
+    function anteriorSlide() {
+
+        const nuevoIndice =
+            (
+                indiceActual - 1 +
+                slides.length
+            ) % slides.length;
+
+        mostrarSlide(
+            nuevoIndice
+        );
+    }
+
+
+    siguiente.addEventListener(
+        "click",
+        siguienteSlide
+    );
+
+
+    anterior.addEventListener(
+        "click",
+        anteriorSlide
+    );
+
+
+    puntos.forEach(
+        punto => {
+
+            punto.addEventListener(
+                "click",
+                () => {
+
+                    const indice =
+                        Number(
+                            punto.dataset.slide
+                        );
+
+                    mostrarSlide(
+                        indice
+                    );
+                }
+            );
+        }
+    );
+
+
+    setInterval(
+        siguienteSlide,
+        5000
+    );
+}
