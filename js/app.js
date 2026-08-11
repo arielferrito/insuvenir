@@ -819,24 +819,10 @@ function activarSliderHome() {
             ".slider-punto"
         );
 
-    const anterior =
-        document.querySelector(
-            ".slider-anterior"
-        );
-
-    const siguiente =
-        document.querySelector(
-            ".slider-siguiente"
-        );
-
-
-    if (
-        slides.length === 0 ||
-        !anterior ||
-        !siguiente
-    ) {
-        return;
-    }
+ 
+   if (slides.length === 0) {
+    return;
+}
 
 
     let indiceActual = 0;
