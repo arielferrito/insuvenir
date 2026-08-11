@@ -1302,112 +1302,115 @@ body {
     }
 }
 /* ===========================
-SLIDER HOME
+   SLIDER HOME
 =========================== */
 
 .hero-slider {
     position: relative;
     width: 100%;
-    max-width: 1100px;
-    margin: 0 auto 30px;
-    aspect-ratio: 16 / 6;
+    margin: 0;
+    padding: 0;
     overflow: hidden;
-    border-radius: 24px;
 }
+
+
+/* CONTENEDOR DE LOS BANNERS */
 
 .slider-home {
     position: relative;
     width: 100%;
-    height: 100%;
+    aspect-ratio: 8 / 3;
+    overflow: hidden;
 }
+
+
+/* CADA BANNER */
 
 .slide {
     position: absolute;
     inset: 0;
+
+    width: 100%;
+    height: 100%;
+
     opacity: 0;
     visibility: hidden;
+
     transition:
-        opacity .8s ease,
-        transform .8s ease;
-    transform: scale(1.02);
+        opacity 0.8s ease;
+
+    z-index: 0;
 }
+
+
+/* BANNER ACTIVO */
 
 .slide.activo {
     opacity: 1;
     visibility: visible;
-    transform: scale(1);
-    z-index: 2;
+    z-index: 1;
 }
 
+
+/* IMAGEN */
+
 .slide img {
+    display: block;
+
     width: 100%;
     height: 100%;
-    display: block;
+
     object-fit: cover;
     object-position: center;
 }
 
+
+/* PUNTOS */
+
 .slider-puntos {
     position: absolute;
+
     left: 50%;
     bottom: 18px;
+
     transform: translateX(-50%);
-    z-index: 5;
 
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
 
-    padding: 8px 14px;
-    border-radius: 999px;
+    gap: 9px;
 
-    background: rgba(255, 255, 255, 0.35);
-    backdrop-filter: blur(4px);
+    z-index: 10;
 }
+
+
+/* CADA PUNTO */
 
 .slider-punto {
     width: 11px;
     height: 11px;
+
     padding: 0;
 
-    border: none;
+    border: 2px solid rgba(255, 255, 255, 0.95);
     border-radius: 50%;
 
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.65);
+
     cursor: pointer;
 
     transition:
-        transform .25s ease,
-        background .25s ease,
-        opacity .25s ease;
-
-    opacity: .9;
+        background 0.25s ease,
+        transform 0.25s ease;
 }
+
 
 .slider-punto:hover {
-    transform: scale(1.12);
+    transform: scale(1.15);
 }
+
 
 .slider-punto.activo {
     background: #d96ca6;
-    opacity: 1;
-}
-
-@media (max-width: 768px) {
-    .hero-slider {
-        aspect-ratio: 4 / 5;
-        border-radius: 18px;
-    }
-
-    .slider-puntos {
-        bottom: 12px;
-        gap: 8px;
-        padding: 6px 10px;
-    }
-
-    .slider-punto {
-        width: 10px;
-        height: 10px;
-    }
 }
