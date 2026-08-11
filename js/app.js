@@ -1,5 +1,5 @@
 const API_URL =
-"https://script.google.com/macros/s/AKfycbyAl92YO1VnX5yzVG2ueFYCKtP6lGhmB0K4V7CiEDbtCNuCjknRBnB9YhyMTjyJt55O/exec";
+    "https://script.google.com/macros/s/AKfycbyAl92YO1VnX5yzVG2ueFYCKtP6lGhmB0K4V7CiEDbtCNuCjknRBnB9YhyMTjyJt55O/exec";
 
 const CLAVE_CATALOGO = "insuvenir_productos_v2";
 
@@ -15,6 +15,7 @@ let productosDestacados = [];
 document.addEventListener("DOMContentLoaded", () => {
     cargarProductos();
     prepararBuscador();
+    activarSliderHome();
 });
 
 
@@ -25,7 +26,9 @@ document.addEventListener("DOMContentLoaded", () => {
 async function cargarProductos() {
 
     const grilla =
-        document.getElementById("grilla-productos");
+        document.getElementById(
+            "grilla-productos"
+        );
 
     if (!grilla) return;
 
@@ -37,11 +40,16 @@ async function cargarProductos() {
 
     try {
 
-        const respuesta = await fetch(API_URL, {
-            cache: "no-store"
-        });
+        const respuesta =
+            await fetch(
+                API_URL,
+                {
+                    cache: "no-store"
+                }
+            );
 
         if (!respuesta.ok) {
+
             throw new Error(
                 "No se pudo consultar la API."
             );
@@ -51,13 +59,15 @@ async function cargarProductos() {
             await respuesta.json();
 
         if (!Array.isArray(productos)) {
+
             throw new Error(
                 productos.error ||
                 "La API devolvió un formato incorrecto."
             );
         }
 
-        todosLosProductos = productos;
+        todosLosProductos =
+            productos;
 
         productosDestacados =
             todosLosProductos.filter(
@@ -67,7 +77,9 @@ async function cargarProductos() {
 
         sessionStorage.setItem(
             CLAVE_CATALOGO,
-            JSON.stringify(todosLosProductos)
+            JSON.stringify(
+                todosLosProductos
+            )
         );
 
         crearCategorias();
@@ -110,20 +122,27 @@ function crearCategorias() {
     const categorias = [
         ...new Set(
             todosLosProductos
-                .map(producto =>
-                    String(
-                        producto.categoria || ""
-                    ).trim()
+                .map(
+                    producto =>
+                        String(
+                            producto.categoria || ""
+                        ).trim()
                 )
                 .filter(Boolean)
         )
     ].sort(
         (a, b) =>
-            a.localeCompare(b, "es")
+            a.localeCompare(
+                b,
+                "es"
+            )
     );
 
     if (categorias.length === 0) {
-        contenedor.innerHTML = "";
+
+        contenedor.innerHTML =
+            "";
+
         return;
     }
 
@@ -145,26 +164,35 @@ function crearCategorias() {
 
         </button>
 
+
         ${categorias
-            .map(categoria => `
+            .map(
+                categoria => `
 
-                <button
-                    type="button"
-                    class="tarjeta-categoria"
-                    data-categoria="${escaparHTML(categoria)}"
-                >
+                    <button
+                        type="button"
+                        class="tarjeta-categoria"
+                        data-categoria="${escaparHTML(
+                            categoria
+                        )}"
+                    >
 
-                    <span class="icono-categoria">
-                        ${obtenerIconoCategoria(categoria)}
-                    </span>
+                        <span class="icono-categoria">
+                            ${obtenerIconoCategoria(
+                                categoria
+                            )}
+                        </span>
 
-                    <strong>
-                        ${escaparHTML(categoria)}
-                    </strong>
+                        <strong>
+                            ${escaparHTML(
+                                categoria
+                            )}
+                        </strong>
 
-                </button>
+                    </button>
 
-            `)
+                `
+            )
             .join("")
         }
     `;
@@ -184,70 +212,82 @@ function activarCategorias() {
             ".tarjeta-categoria"
         );
 
-    botones.forEach(boton => {
+    botones.forEach(
+        boton => {
 
-        boton.addEventListener(
-            "click",
-            () => {
+            boton.addEventListener(
+                "click",
+                () => {
 
-                botones.forEach(item =>
-                    item.classList.remove(
-                        "categoria-activa"
-                    )
-                );
-
-                boton.classList.add(
-                    "categoria-activa"
-                );
-
-                categoriaSeleccionada =
-                    boton.dataset.categoria || "";
-
-                const buscador =
-                    document.getElementById(
-                        "buscador"
-                    );
-
-                if (buscador) {
-                    buscador.value = "";
-                }
-
-                actualizarTituloResultados("");
-
-                if (!categoriaSeleccionada) {
-
-                    mostrarProductos(
-                        todosLosProductos,
-                        "No hay productos disponibles."
-                    );
-
-                    return;
-                }
-
-                const productosCategoria =
-                    todosLosProductos.filter(
-                        producto =>
-                            normalizarTexto(
-                                producto.categoria
-                            ) ===
-                            normalizarTexto(
-                                categoriaSeleccionada
+                    botones.forEach(
+                        item =>
+                            item.classList.remove(
+                                "categoria-activa"
                             )
                     );
 
-                mostrarProductos(
-                    productosCategoria,
-                    "No hay productos en esta categoría."
-                );
+                    boton.classList.add(
+                        "categoria-activa"
+                    );
 
-                document
-                    .getElementById("productos")
-                    ?.scrollIntoView({
-                        behavior: "smooth"
-                    });
-            }
-        );
-    });
+                    categoriaSeleccionada =
+                        boton.dataset.categoria ||
+                        "";
+
+                    const buscador =
+                        document.getElementById(
+                            "buscador"
+                        );
+
+                    if (buscador) {
+
+                        buscador.value =
+                            "";
+                    }
+
+                    actualizarTituloResultados(
+                        ""
+                    );
+
+                    if (
+                        !categoriaSeleccionada
+                    ) {
+
+                        mostrarProductos(
+                            todosLosProductos,
+                            "No hay productos disponibles."
+                        );
+
+                        return;
+                    }
+
+                    const productosCategoria =
+                        todosLosProductos.filter(
+                            producto =>
+                                normalizarTexto(
+                                    producto.categoria
+                                ) ===
+                                normalizarTexto(
+                                    categoriaSeleccionada
+                                )
+                        );
+
+                    mostrarProductos(
+                        productosCategoria,
+                        "No hay productos en esta categoría."
+                    );
+
+                    document
+                        .getElementById(
+                            "productos"
+                        )
+                        ?.scrollIntoView({
+                            behavior: "smooth"
+                        });
+                }
+            );
+        }
+    );
 }
 
 
@@ -255,38 +295,59 @@ function activarCategorias() {
    ICONOS CATEGORIAS
 =========================== */
 
-function obtenerIconoCategoria(categoria) {
+function obtenerIconoCategoria(
+    categoria
+) {
 
     const imagenes = {
-        VASOS: "img/VASOS.jpg",
-        VALIJITAS: "img/VALIJITAS.jpg",
-        BOTELLITAS: "img/BOTELLAS.jpg",
-        BALDECITOS: "img/prueba2.png",
-        BOLSITAS: "img/BOLSITAS.jpg",
-        LUNCHERAS: "img/LUNCHERAS.jpg",
-        ACCESORIOS: "img/prueba.png"
+
+        VASOS:
+            "img/VASOS.jpg",
+
+        VALIJITAS:
+            "img/VALIJITAS.jpg",
+
+        BOTELLITAS:
+            "img/BOTELLAS.jpg",
+
+        BALDECITOS:
+            "img/prueba2.png",
+
+        BOLSITAS:
+            "img/BOLSITAS.jpg",
+
+        LUNCHERAS:
+            "img/LUNCHERAS.jpg",
+
+        ACCESORIOS:
+            "img/prueba.png"
     };
 
     const clave =
-        normalizarTexto(categoria)
-            .toUpperCase();
+        normalizarTexto(
+            categoria
+        ).toUpperCase();
 
     const imagen =
         imagenes[clave];
 
     if (!imagen) {
+
         return "✨";
     }
 
     return `
         <img
             src="${imagen}"
-            alt="${escaparHTML(categoria)}"
+            alt="${escaparHTML(
+                categoria
+            )}"
             class="imagen-categoria"
             loading="lazy"
         >
     `;
 }
+
 
 /* ===========================
    BUSCADOR
@@ -295,7 +356,9 @@ function obtenerIconoCategoria(categoria) {
 function prepararBuscador() {
 
     const buscador =
-        document.getElementById("buscador");
+        document.getElementById(
+            "buscador"
+        );
 
     if (!buscador) return;
 
@@ -312,7 +375,9 @@ function prepararBuscador() {
                 );
 
             if (!consulta) {
+
                 mostrarDestacados();
+
                 return;
             }
 
@@ -350,11 +415,14 @@ function productoCoincide(
         producto.categoria
     ];
 
-    return campos.some(campo =>
-        textoCoincide(
-            normalizarTexto(campo),
-            consulta
-        )
+    return campos.some(
+        campo =>
+            textoCoincide(
+                normalizarTexto(
+                    campo
+                ),
+                consulta
+            )
     );
 }
 
@@ -364,19 +432,32 @@ function textoCoincide(
     consulta
 ) {
 
-    if (!texto || !consulta) {
+    if (
+        !texto ||
+        !consulta
+    ) {
+
         return false;
     }
 
-    if (texto.includes(consulta)) {
+    if (
+        texto.includes(
+            consulta
+        )
+    ) {
+
         return true;
     }
 
     const palabrasTexto =
-        texto.split(/\s+/);
+        texto.split(
+            /\s+/
+        );
 
     const palabrasConsulta =
-        consulta.split(/\s+/);
+        consulta.split(
+            /\s+/
+        );
 
     return palabrasConsulta.every(
         palabraBuscada =>
@@ -401,19 +482,32 @@ function palabrasSimilares(
 ) {
 
     if (
-        palabra1.includes(palabra2) ||
-        palabra2.includes(palabra1)
+        palabra1.includes(
+            palabra2
+        ) ||
+        palabra2.includes(
+            palabra1
+        )
     ) {
+
         return true;
     }
 
     const singular1 =
-        quitarPlural(palabra1);
+        quitarPlural(
+            palabra1
+        );
 
     const singular2 =
-        quitarPlural(palabra2);
+        quitarPlural(
+            palabra2
+        );
 
-    if (singular1 === singular2) {
+    if (
+        singular1 ===
+        singular2
+    ) {
+
         return true;
     }
 
@@ -429,11 +523,17 @@ function palabrasSimilares(
             palabra2.length
         );
 
-    if (largo <= 4) {
+    if (
+        largo <= 4
+    ) {
+
         return distancia <= 1;
     }
 
-    if (largo <= 8) {
+    if (
+        largo <= 8
+    ) {
+
         return distancia <= 2;
     }
 
@@ -441,31 +541,51 @@ function palabrasSimilares(
 }
 
 
-function quitarPlural(palabra) {
+function quitarPlural(
+    palabra
+) {
 
     if (
         palabra.length > 4 &&
-        palabra.endsWith("es")
+        palabra.endsWith(
+            "es"
+        )
     ) {
-        return palabra.slice(0, -2);
+
+        return palabra.slice(
+            0,
+            -2
+        );
     }
 
     if (
         palabra.length > 3 &&
-        palabra.endsWith("s")
+        palabra.endsWith(
+            "s"
+        )
     ) {
-        return palabra.slice(0, -1);
+
+        return palabra.slice(
+            0,
+            -1
+        );
     }
 
     return palabra;
 }
 
 
-function distanciaLevenshtein(a, b) {
+function distanciaLevenshtein(
+    a,
+    b
+) {
 
     const matriz =
         Array.from(
-            { length: b.length + 1 },
+            {
+                length:
+                    b.length + 1
+            },
             () =>
                 new Array(
                     a.length + 1
@@ -477,7 +597,9 @@ function distanciaLevenshtein(a, b) {
         i <= b.length;
         i++
     ) {
-        matriz[i][0] = i;
+
+        matriz[i][0] =
+            i;
     }
 
     for (
@@ -485,7 +607,9 @@ function distanciaLevenshtein(a, b) {
         j <= a.length;
         j++
     ) {
-        matriz[0][j] = j;
+
+        matriz[0][j] =
+            j;
     }
 
     for (
@@ -506,21 +630,43 @@ function distanciaLevenshtein(a, b) {
             ) {
 
                 matriz[i][j] =
-                    matriz[i - 1][j - 1];
+                    matriz[
+                        i - 1
+                    ][
+                        j - 1
+                    ];
 
             } else {
 
                 matriz[i][j] =
                     Math.min(
-                        matriz[i - 1][j - 1] + 1,
-                        matriz[i][j - 1] + 1,
-                        matriz[i - 1][j] + 1
+                        matriz[
+                            i - 1
+                        ][
+                            j - 1
+                        ] + 1,
+
+                        matriz[
+                            i
+                        ][
+                            j - 1
+                        ] + 1,
+
+                        matriz[
+                            i - 1
+                        ][
+                            j
+                        ] + 1
                     );
             }
         }
     }
 
-    return matriz[b.length][a.length];
+    return matriz[
+        b.length
+    ][
+        a.length
+    ];
 }
 
 
@@ -533,9 +679,14 @@ function mostrarDestacados() {
     const productosAMostrar =
         productosDestacados.length > 0
             ? productosDestacados
-            : todosLosProductos.slice(0, 6);
+            : todosLosProductos.slice(
+                0,
+                6
+            );
 
-    actualizarTituloResultados("");
+    actualizarTituloResultados(
+        ""
+    );
 
     mostrarProductos(
         productosAMostrar,
@@ -566,7 +717,9 @@ function mostrarResultadosBusqueda(
 }
 
 
-function actualizarTituloResultados(texto) {
+function actualizarTituloResultados(
+    texto
+) {
 
     const resultado =
         document.getElementById(
@@ -574,7 +727,9 @@ function actualizarTituloResultados(texto) {
         );
 
     if (resultado) {
-        resultado.textContent = texto;
+
+        resultado.textContent =
+            texto;
     }
 }
 
@@ -595,11 +750,15 @@ function mostrarProductos(
 
     if (!grilla) return;
 
-    if (productos.length === 0) {
+    if (
+        productos.length === 0
+    ) {
 
         grilla.innerHTML = `
             <p class="mensaje-catalogo">
-                ${escaparHTML(mensajeVacio)}
+                ${escaparHTML(
+                    mensajeVacio
+                )}
             </p>
         `;
 
@@ -608,7 +767,9 @@ function mostrarProductos(
 
     grilla.innerHTML =
         productos
-            .map(crearTarjetaProducto)
+            .map(
+                crearTarjetaProducto
+            )
             .join("");
 }
 
@@ -617,7 +778,9 @@ function mostrarProductos(
    TARJETA PRODUCTO
 =========================== */
 
-function crearTarjetaProducto(producto) {
+function crearTarjetaProducto(
+    producto
+) {
 
     const nombre =
         escaparHTML(
@@ -632,7 +795,8 @@ function crearTarjetaProducto(producto) {
 
     const stock =
         Number(
-            producto.stock || 0
+            producto.stock ||
+            0
         );
 
     const estado =
@@ -671,7 +835,9 @@ function crearTarjetaProducto(producto) {
 
             <div class="producto-contenido">
 
-                <span class="estado-producto ${claseEstado}">
+                <span
+                    class="estado-producto ${claseEstado}"
+                >
                     ${estado}
                 </span>
 
@@ -708,7 +874,8 @@ function obtenerImagen(
 
     const id =
         String(
-            idFoto || ""
+            idFoto ||
+            ""
         ).trim();
 
     if (!id) {
@@ -751,10 +918,15 @@ function obtenerImagen(
    PRECIO
 =========================== */
 
-function formatearPrecio(valor) {
+function formatearPrecio(
+    valor
+) {
 
     const numero =
-        Number(valor || 0);
+        Number(
+            valor ||
+            0
+        );
 
     return new Intl.NumberFormat(
         "es-AR",
@@ -763,7 +935,9 @@ function formatearPrecio(valor) {
             currency: "ARS",
             maximumFractionDigits: 0
         }
-    ).format(numero);
+    ).format(
+        numero
+    );
 }
 
 
@@ -771,12 +945,19 @@ function formatearPrecio(valor) {
    NORMALIZAR TEXTO
 =========================== */
 
-function normalizarTexto(valor) {
+function normalizarTexto(
+    valor
+) {
 
-    return String(valor || "")
+    return String(
+        valor ||
+        ""
+    )
         .trim()
         .toLowerCase()
-        .normalize("NFD")
+        .normalize(
+            "NFD"
+        )
         .replace(
             /[\u0300-\u036f]/g,
             ""
@@ -788,24 +969,39 @@ function normalizarTexto(valor) {
    HTML SEGURO
 =========================== */
 
-function escaparHTML(texto) {
+function escaparHTML(
+    texto
+) {
 
-    return String(texto)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+    return String(
+        texto
+    )
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
 }
+
+
 /* ===========================
    SLIDER HOME
 =========================== */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    activarSliderHome
-);
-
 
 function activarSliderHome() {
 
@@ -819,18 +1015,31 @@ function activarSliderHome() {
             ".slider-punto"
         );
 
- 
-   if (slides.length === 0) {
-    return;
-}
+    if (
+        slides.length === 0
+    ) {
 
+        return;
+    }
 
-    let indiceActual = 0;
+    let indiceActual =
+        0;
+
+    let temporizador =
+        null;
 
 
     function mostrarSlide(
         indice
     ) {
+
+        if (
+            indice < 0 ||
+            indice >= slides.length
+        ) {
+
+            return;
+        }
 
         slides.forEach(
             slide =>
@@ -846,19 +1055,20 @@ function activarSliderHome() {
                 )
         );
 
-
-        slides[indice].classList.add(
-            "activo"
-        );
-
-
-        if (puntos[indice]) {
-
-            puntos[indice].classList.add(
+        slides[indice]
+            .classList.add(
                 "activo"
             );
-        }
 
+        if (
+            puntos[indice]
+        ) {
+
+            puntos[indice]
+                .classList.add(
+                    "activo"
+                );
+        }
 
         indiceActual =
             indice;
@@ -878,6 +1088,32 @@ function activarSliderHome() {
     }
 
 
+    function iniciarCambioAutomatico() {
+
+        if (
+            temporizador
+        ) {
+
+            clearInterval(
+                temporizador
+            );
+        }
+
+        if (
+            slides.length <= 1
+        ) {
+
+            return;
+        }
+
+        temporizador =
+            setInterval(
+                siguienteSlide,
+                5000
+            );
+    }
+
+
     puntos.forEach(
         punto => {
 
@@ -890,17 +1126,29 @@ function activarSliderHome() {
                             punto.dataset.slide
                         );
 
+                    if (
+                        !Number.isInteger(
+                            indice
+                        )
+                    ) {
+
+                        return;
+                    }
+
                     mostrarSlide(
                         indice
                     );
+
+                    iniciarCambioAutomatico();
                 }
             );
         }
     );
 
 
-    setInterval(
-        siguienteSlide,
-        5000
+    mostrarSlide(
+        0
     );
+
+    iniciarCambioAutomatico();
 }
