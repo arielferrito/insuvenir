@@ -1302,7 +1302,7 @@ body {
     }
 }
 /* ===========================
-   SLIDER HOME
+    HOME
 =========================== */
 
 .slider-home {
@@ -1350,14 +1350,6 @@ body {
     cursor: pointer;
 
     z-index: 5;
-}
-
-.slider-anterior {
-    left: 20px;
-}
-
-.slider-siguiente {
-    right: 20px;
 }
 
 .slider-indicadores {
