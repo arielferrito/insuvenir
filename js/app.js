@@ -878,32 +878,6 @@ function activarSliderHome() {
     }
 
 
-    function anteriorSlide() {
-
-        const nuevoIndice =
-            (
-                indiceActual - 1 +
-                slides.length
-            ) % slides.length;
-
-        mostrarSlide(
-            nuevoIndice
-        );
-    }
-
-
-    siguiente.addEventListener(
-        "click",
-        siguienteSlide
-    );
-
-
-    anterior.addEventListener(
-        "click",
-        anteriorSlide
-    );
-
-
     puntos.forEach(
         punto => {
 
