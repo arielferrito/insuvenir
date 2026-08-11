@@ -144,16 +144,77 @@
 
 <!-- ================= HERO ================= -->
 
-<section class="banner-home">
+<section class="slider-home">
 
-    <img
-        src="img/banner-home.jpg"
-        alt="Insuvenir - Tienda de insumos para souvenirs"
-        class="banner-home-imagen"
+    <div class="slider-contenedor">
+
+        <div class="slide activo">
+            <img
+                src="img/banner1.jpg"
+                alt="Banner Insuvenir 1"
+            >
+        </div>
+
+        <div class="slide">
+            <img
+                src="img/banner2.jpg"
+                alt="Banner Insuvenir 2"
+            >
+        </div>
+
+        <div class="slide">
+            <img
+                src="img/banner3.jpg"
+                alt="Banner Insuvenir 3"
+            >
+        </div>
+
+    </div>
+
+
+    <button
+        class="slider-flecha slider-anterior"
+        type="button"
+        aria-label="Banner anterior"
     >
+        ‹
+    </button>
+
+    <button
+        class="slider-flecha slider-siguiente"
+        type="button"
+        aria-label="Banner siguiente"
+    >
+        ›
+    </button>
+
+
+    <div class="slider-indicadores">
+
+        <button
+            class="slider-punto activo"
+            type="button"
+            data-slide="0"
+            aria-label="Ir al banner 1"
+        ></button>
+
+        <button
+            class="slider-punto"
+            type="button"
+            data-slide="1"
+            aria-label="Ir al banner 2"
+        ></button>
+
+        <button
+            class="slider-punto"
+            type="button"
+            data-slide="2"
+            aria-label="Ir al banner 3"
+        ></button>
+
+    </div>
 
 </section>
-
 
 <!-- ================= CATEGORIAS ================= -->
 
