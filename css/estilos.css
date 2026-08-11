@@ -1302,18 +1302,92 @@ body {
     }
 }
 /* ===========================
-   BANNER HOME
+   SLIDER HOME
 =========================== */
 
-.banner-home {
+.slider-home {
+    position: relative;
     width: 100%;
     overflow: hidden;
-    margin: 0;
-    padding: 0;
 }
 
-.banner-home-imagen {
+.slider-contenedor {
+    position: relative;
+    width: 100%;
+}
+
+.slide {
+    display: none;
+    width: 100%;
+}
+
+.slide.activo {
+    display: block;
+}
+
+.slide img {
+    display: block;
     width: 100%;
     height: auto;
-    display: block;
+}
+
+.slider-flecha {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 44px;
+    height: 44px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.85);
+
+    font-size: 32px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    z-index: 5;
+}
+
+.slider-anterior {
+    left: 20px;
+}
+
+.slider-siguiente {
+    right: 20px;
+}
+
+.slider-indicadores {
+    position: absolute;
+
+    left: 50%;
+    bottom: 16px;
+
+    transform: translateX(-50%);
+
+    display: flex;
+    gap: 8px;
+
+    z-index: 5;
+}
+
+.slider-punto {
+    width: 10px;
+    height: 10px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.65);
+
+    cursor: pointer;
+}
+
+.slider-punto.activo {
+    background: #d965a2;
 }
