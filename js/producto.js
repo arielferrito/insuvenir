@@ -1575,43 +1575,84 @@ function escaparHTML(
 }
 
 
-/* ===========================
-   SEO
-=========================== */
+function actualizarSEOProducto(producto) {
 
-function actualizarSEOProducto(
-    nombre,
-    descripcion
-) {
+    if (!producto) {
+        return;
+    }
 
-    const nombreProducto =
+    const nombre =
         String(
-            nombre || "Producto"
+            producto.nombreComercial ||
+            producto.producto ||
+            "Producto"
         ).trim();
 
-    const descripcionProducto =
+    const descripcion =
         String(
-            descripcion ||
-            "Insumos para souvenirs disponibles en Insuvenir."
+            producto.descripcion ||
+            ""
         ).trim();
+
+    const familia =
+        String(
+            producto.familia ||
+            ""
+        ).trim();
+
+
+    // =========================
+    // TITLE
+    // =========================
 
     document.title =
-        `${nombreProducto} | Insuvenir`;
+        `${nombre} | Insuvenir`;
 
-    const metaDescripcion =
+
+    // =========================
+    // META DESCRIPTION
+    // =========================
+
+    const metaDescription =
         document.getElementById(
             "meta-description"
         );
 
-    if (metaDescripcion) {
-        metaDescripcion.setAttribute(
+    if (metaDescription) {
+
+        const textoDescripcion =
+            descripcion
+                ? `${descripcion} Consultá stock, colores y precios por cantidad en Insuvenir.`
+                : `${nombre}. Consultá stock, colores y precios por cantidad en Insuvenir.`;
+
+        metaDescription.setAttribute(
             "content",
-            descripcionProducto
+            textoDescripcion
         );
     }
+
+
+    // =========================
+    // CANONICAL
+    // =========================
+
+    const canonical =
+        document.getElementById(
+            "canonical-producto"
+        );
+
+    if (
+        canonical &&
+        familia
+    ) {
+
+        canonical.setAttribute(
+            "href",
+            `https://insuvenir.com.ar/producto.html?familia=${encodeURIComponent(familia)}`
+        );
+    }
+
 }
-
-
 /* ===========================
    HEADER MOBILE AL SCROLL
 =========================== */
