@@ -221,10 +221,7 @@ function mostrarFicha(producto) {
             "Insumo para souvenirs."
         );
 
-    actualizarSEOProducto(
-        producto.producto,
-        producto.descripcion
-    );
+    actualizarSEOProducto();
 
     const fotos =
         obtenerFotos(producto);
