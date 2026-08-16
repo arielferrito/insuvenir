@@ -12,7 +12,6 @@ document.addEventListener(
     "DOMContentLoaded",
     () => {
         cargarProducto();
-        activarHeaderMobileScroll();
     }
 );
 
