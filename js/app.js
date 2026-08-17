@@ -13,7 +13,7 @@ let productosDestacados = [];
 =========================== */
 
 document.addEventListener("DOMContentLoaded", () => {
-    cargarProductos();
+    cargarProductos();rf
     prepararBuscador();
     activarSliderHome();
 });
@@ -308,7 +308,7 @@ function obtenerIconoCategoria(
             "img/VALIJITAS.jpg",
 
         BOTELLITAS:
-            "img/BOTELLAS.jpg",
+            "img/BOTELLITAS.jpg",
 
         BALDECITOS:
             "img/BALDECITOS.jpg",
