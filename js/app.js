@@ -311,7 +311,7 @@ function obtenerIconoCategoria(
             "img/BOTELLAS.jpg",
 
         BALDECITOS:
-            "img/prueba2.png",
+            "img/BALDECITOS.jpg",
 
         BOLSITAS:
             "img/BOLSITAS.jpg",
