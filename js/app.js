@@ -13,7 +13,7 @@ let productosDestacados = [];
 =========================== */
 
 document.addEventListener("DOMContentLoaded", () => {
-    cargarProductos();rf
+    cargarProductos();
     prepararBuscador();
     activarSliderHome();
 });
