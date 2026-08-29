@@ -1493,7 +1493,7 @@ footer span {
 /* Titulos del footer */
 footer h2,
 footer h3 {
-    font-size: 25px;
+    font-size: 32px;
     font-weight: 600;
     line-height: 1;
 }
@@ -1503,11 +1503,42 @@ footer h3 {
 footer p,
 footer a,
 footer span {
-    font-size: 20px;
+    font-size: 27px;
     font-weight: 400;
-    line-height: 1.15;
+    line-height: 1.1;
 }
 
+
+/* Copyright */
+footer .copyright,
+footer small {
+    font-size: 21px;
+}
+
+
+/* ===========================
+   FOOTER MOBILE
+=========================== */
+
+@media (max-width: 600px) {
+
+    footer h2,
+    footer h3 {
+        font-size: 29px;
+    }
+
+    footer p,
+    footer a,
+    footer span {
+        font-size: 25px;
+    }
+
+    footer .copyright,
+    footer small {
+        font-size: 20px;
+    }
+
+}
 
 /* ===========================
    DESCRIPCION DE PRODUCTOS
