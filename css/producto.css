@@ -730,3 +730,23 @@
     font-size: 14px;
     line-height: 1.5;
 }
+/* ===========================
+   DESCRIPCION PRODUCTO
+=========================== */
+
+.ficha-descripcion {
+    font-family: "Dongle", sans-serif;
+    font-size: 39px;
+    font-weight: 400;
+    line-height: 1.05;
+}
+
+
+/* MOBILE */
+@media (max-width: 600px) {
+
+    .ficha-descripcion {
+        font-size: 35px;
+    }
+
+}
