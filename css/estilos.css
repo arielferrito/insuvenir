@@ -1442,66 +1442,187 @@ h3,
 
 
 /* ===========================
-   FOOTER - DONGLE
+   FOOTER INSUVENIR
 =========================== */
 
-footer,
-footer h1,
-footer h2,
-footer h3,
-footer p,
-footer a,
-footer span {
+.footer {
+    background: #ffffff;
+    border-top: 1px solid #eeeeee;
     font-family: "Dongle", sans-serif;
 }
 
 
-/* Titulos del footer */
-footer h2,
-footer h3 {
-    font-size: 42px;
-    font-weight: 600;
-    line-height: 1;
-}
+/* CONTENEDOR PRINCIPAL */
 
+.footer-contenido {
+    width: min(1200px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 55px 0 45px;
 
-/* Textos y links del footer */
-footer p,
-footer a,
-footer span {
-    font-size: 31px;
-    font-weight: 400;
-    line-height: 1.08;
-}
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 70px;
 
-
-/* Copyright */
-footer .copyright,
-footer small {
-    font-size: 23px;
+    align-items: start;
 }
 
 
 /* ===========================
-   FOOTER MOBILE
+   MARCA
 =========================== */
 
-@media (max-width: 600px) {
+.footer-marca {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
 
-    footer h2,
-    footer h3 {
-        font-size: 38px;
+
+.footer-logo {
+    display: block;
+    width: 190px;
+    max-width: 100%;
+    height: auto;
+}
+
+
+.footer-marca p {
+    margin: 18px 0 0;
+
+    font-family: "Dongle", sans-serif;
+    font-size: 31px;
+    font-weight: 400;
+    line-height: 1;
+
+    color: #4d4549;
+}
+
+
+/* ===========================
+   COLUMNAS
+=========================== */
+
+.footer-bloque {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+
+.footer-bloque h3 {
+    margin: 0 0 10px;
+
+    font-family: "Dongle", sans-serif;
+    font-size: 44px;
+    font-weight: 600;
+    line-height: 1;
+
+    color: #31292d;
+}
+
+
+.footer-bloque a,
+.footer-bloque p {
+    margin: 0;
+
+    font-family: "Dongle", sans-serif;
+    font-size: 31px;
+    font-weight: 400;
+    line-height: 1.05;
+
+    color: #4d4549;
+}
+
+
+.footer-bloque a {
+    text-decoration: none;
+}
+
+
+.footer-bloque a:hover {
+    color: #f76fb6;
+}
+
+
+/* ===========================
+   PARTE INFERIOR
+=========================== */
+
+.footer-inferior {
+    width: min(1200px, calc(100% - 48px));
+    margin: 0 auto;
+
+    padding: 22px 0 28px;
+
+    border-top: 1px solid #eeeeee;
+}
+
+
+.footer-inferior p {
+    margin: 0;
+
+    font-family: "Dongle", sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1;
+
+    color: #756d71;
+}
+
+
+/* ===========================
+   FOOTER TABLET / MOBILE
+=========================== */
+
+@media (max-width: 700px) {
+
+    .footer-contenido {
+        width: min(100% - 36px, 520px);
+
+        grid-template-columns: 1fr;
+        gap: 32px;
+
+        padding: 40px 0 32px;
     }
 
-    footer p,
-    footer a,
-    footer span {
-        font-size: 29px;
+
+    .footer-logo {
+        width: 170px;
     }
 
-    footer .copyright,
-    footer small {
-        font-size: 22px;
+
+    .footer-marca p {
+        font-size: 28px;
+        margin-top: 14px;
+    }
+
+
+    .footer-bloque {
+        gap: 8px;
+    }
+
+
+    .footer-bloque h3 {
+        font-size: 39px;
+        margin-bottom: 6px;
+    }
+
+
+    .footer-bloque a,
+    .footer-bloque p {
+        font-size: 28px;
+    }
+
+
+    .footer-inferior {
+        width: calc(100% - 36px);
+        padding: 20px 0 24px;
+    }
+
+
+    .footer-inferior p {
+        font-size: 20px;
     }
 
 }
