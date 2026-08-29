@@ -598,109 +598,75 @@ body {
 
 
 /* ===========================
-   FOOTER
+   FOOTER - DONGLE
 =========================== */
 
 .footer {
-    margin-top: 80px;
-
-    padding: 55px 40px 25px;
-
-    background: #ffffff;
-
-    border-top: 1px solid #ececec;
-
-    color: #666;
+    font-family: "Dongle", sans-serif;
 }
 
-.footer-contenido {
-    max-width: 1200px;
 
-    margin: 0 auto;
-
-    display: grid;
-    grid-template-columns: 1.4fr 1fr 1fr;
-
-    gap: 50px;
-}
-
-.footer-logo {
-    width: 180px;
-    height: auto;
-
-    margin-bottom: 15px;
-}
-
+/* Marca / texto debajo del logo */
 .footer-marca p {
-    line-height: 1.6;
+    font-size: 31px;
+    font-weight: 400;
+    line-height: 1.05;
 }
 
-.footer-bloque {
-    display: flex;
-    flex-direction: column;
 
-    gap: 10px;
-}
-
+/* Titulos: Contacto / Información */
 .footer-bloque h3 {
-    margin-bottom: 6px;
-
-    color: #40373c;
-
-    font-size: 17px;
+    font-family: "Dongle", sans-serif;
+    font-size: 44px;
+    font-weight: 600;
+    line-height: 1;
+    margin-bottom: 14px;
 }
 
-.footer-bloque a {
-    color: #666;
 
-    text-decoration: none;
-
-    transition: .2s;
+/* Links y textos de las columnas */
+.footer-bloque a,
+.footer-bloque p {
+    font-family: "Dongle", sans-serif;
+    font-size: 31px;
+    font-weight: 400;
+    line-height: 1.05;
 }
 
-.footer-bloque a:hover {
-    color: #d96ca6;
+
+/* Parte inferior / copyright */
+.footer-inferior p {
+    font-family: "Dongle", sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1;
 }
 
-.footer-inferior {
-    max-width: 1200px;
 
-    margin: 40px auto 0;
+/* ===========================
+   FOOTER MOBILE
+=========================== */
 
-    padding-top: 22px;
+@media (max-width: 600px) {
 
-    border-top: 1px solid #eee;
-
-    text-align: center;
-
-    font-size: 13px;
-    color: #999;
-}
-
-@media (max-width: 700px) {
-
-    .footer {
-        padding: 40px 20px 22px;
+    .footer-marca p {
+        font-size: 27px;
     }
 
-    .footer-contenido {
-        grid-template-columns: 1fr;
-
-        gap: 30px;
-
-        text-align: center;
+    .footer-bloque h3 {
+        font-size: 39px;
+        margin-bottom: 10px;
     }
 
-    .footer-logo {
-        width: 150px;
-
-        margin-left: auto;
-        margin-right: auto;
+    .footer-bloque a,
+    .footer-bloque p {
+        font-size: 28px;
     }
 
-    .footer-bloque {
-        align-items: center;
+    .footer-inferior p {
+        font-size: 20px;
     }
+
 }
 /* ===========================
    BUSCADOR HOME
