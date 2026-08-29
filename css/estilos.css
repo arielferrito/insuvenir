@@ -1420,53 +1420,132 @@ body {
    TIPOGRAFIA INSUVENIR
 =========================== */
 
-/* TITULOS + NOMBRES DE PRODUCTO */
+
+/* ===========================
+   TITULOS - CHEWY
+=========================== */
+
 h1,
 h2,
 h3,
 .titulo-seccion,
 .banner-institucional h1,
 .contenido-institucional h2,
-.ficha-informacion h1,
 .tabla-precios h2,
 .modulo-cotizacion h2,
 .info-compra-ficha h2,
-.selector-colores h2,
-.card-producto h3,
-.nombre-producto {
+.selector-colores h2 {
     font-family: "Chewy", cursive;
     font-weight: 400;
 }
 
 
-/* NOMBRE / TITULO DE PRODUCTO */
+/* ===========================
+   NOMBRES DE PRODUCTOS
+=========================== */
+
 .ficha-informacion h1,
 .card-producto h3,
 .nombre-producto {
+    font-family: "Chewy", cursive;
+    font-weight: 400;
     color: #f76fb6;
 }
 
 
-/* HEADER */
+/* ===========================
+   HEADER - DONGLE
+=========================== */
+
 .header,
+.header nav,
 .header a,
-.header button,
-.header nav {
+.header button {
     font-family: "Dongle", sans-serif;
+    font-weight: 600;
 }
 
 
-/* FOOTER */
+/* Links principales del header */
+.header a,
+.header button {
+    font-size: 22px;
+    line-height: 1;
+}
+
+
+/* ===========================
+   FOOTER - DONGLE
+=========================== */
+
 footer,
-footer a,
+footer h1,
+footer h2,
+footer h3,
 footer p,
+footer a,
 footer span {
     font-family: "Dongle", sans-serif;
 }
 
 
-/* DESCRIPCION DE PRODUCTOS */
+/* Titulos del footer */
+footer h2,
+footer h3 {
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 1;
+}
+
+
+/* Textos y links del footer */
+footer p,
+footer a,
+footer span {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.15;
+}
+
+
+/* ===========================
+   DESCRIPCION DE PRODUCTOS
+=========================== */
+
 .ficha-descripcion,
 .descripcion-producto {
     font-family: "Dongle", sans-serif;
+    font-size: 27px;
+    font-weight: 400;
+    line-height: 1.15;
+}
+
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media (max-width: 600px) {
+
+    .header a,
+    .header button {
+        font-size: 21px;
+    }
+
+    footer h2,
+    footer h3 {
+        font-size: 24px;
+    }
+
+    footer p,
+    footer a,
+    footer span {
+        font-size: 20px;
+    }
+
+    .ficha-descripcion,
+    .descripcion-producto {
+        font-size: 25px;
+    }
+
 }
