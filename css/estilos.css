@@ -1417,9 +1417,10 @@ body {
 }
 
 /* ===========================
-   TIPOGRAFIA CHEWY
+   TIPOGRAFIA INSUVENIR
 =========================== */
 
+/* TITULOS + NOMBRES DE PRODUCTO */
 h1,
 h2,
 h3,
@@ -1430,7 +1431,42 @@ h3,
 .tabla-precios h2,
 .modulo-cotizacion h2,
 .info-compra-ficha h2,
-.selector-colores h2 {
+.selector-colores h2,
+.card-producto h3,
+.nombre-producto {
     font-family: "Chewy", cursive;
     font-weight: 400;
+}
+
+
+/* NOMBRE / TITULO DE PRODUCTO */
+.ficha-informacion h1,
+.card-producto h3,
+.nombre-producto {
+    color: #f76fb6;
+}
+
+
+/* HEADER */
+.header,
+.header a,
+.header button,
+.header nav {
+    font-family: "Dongle", sans-serif;
+}
+
+
+/* FOOTER */
+footer,
+footer a,
+footer p,
+footer span {
+    font-family: "Dongle", sans-serif;
+}
+
+
+/* DESCRIPCION DE PRODUCTOS */
+.ficha-descripcion,
+.descripcion-producto {
+    font-family: "Dongle", sans-serif;
 }
