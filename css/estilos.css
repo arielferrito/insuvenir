@@ -1469,8 +1469,9 @@ h3,
 /* Links principales del header */
 .header a,
 .header button {
-    font-size: 22px;
+    font-size: 30px;
     line-height: 1;
+    font-weight: 600;
 }
 
 
@@ -1515,9 +1516,9 @@ footer span {
 .ficha-descripcion,
 .descripcion-producto {
     font-family: "Dongle", sans-serif;
-    font-size: 27px;
+    font-size: 34px;
     font-weight: 400;
-    line-height: 1.15;
+    line-height: 1.05;
 }
 
 
@@ -1529,7 +1530,7 @@ footer span {
 
     .header a,
     .header button {
-        font-size: 21px;
+        font-size: 27px;
     }
 
     footer h2,
@@ -1545,7 +1546,7 @@ footer span {
 
     .ficha-descripcion,
     .descripcion-producto {
-        font-size: 25px;
+        font-size: 31px;
     }
 
 }
