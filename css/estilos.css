@@ -1415,3 +1415,22 @@ body {
 .slider-punto.activo {
     background: #d96ca6;
 }
+
+/* ===========================
+   TIPOGRAFIA CHEWY
+=========================== */
+
+h1,
+h2,
+h3,
+.titulo-seccion,
+.banner-institucional h1,
+.contenido-institucional h2,
+.ficha-informacion h1,
+.tabla-precios h2,
+.modulo-cotizacion h2,
+.info-compra-ficha h2,
+.selector-colores h2 {
+    font-family: "Chewy", cursive;
+    font-weight: 400;
+}
