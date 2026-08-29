@@ -1493,7 +1493,7 @@ footer span {
 /* Titulos del footer */
 footer h2,
 footer h3 {
-    font-size: 32px;
+    font-size: 36px;
     font-weight: 600;
     line-height: 1;
 }
@@ -1503,16 +1503,16 @@ footer h3 {
 footer p,
 footer a,
 footer span {
-    font-size: 27px;
+    font-size: 31px;
     font-weight: 400;
-    line-height: 1.1;
+    line-height: 1.08;
 }
 
 
 /* Copyright */
 footer .copyright,
 footer small {
-    font-size: 21px;
+    font-size: 23px;
 }
 
 
@@ -1524,18 +1524,18 @@ footer small {
 
     footer h2,
     footer h3 {
-        font-size: 29px;
+        font-size: 33px;
     }
 
     footer p,
     footer a,
     footer span {
-        font-size: 25px;
+        font-size: 29px;
     }
 
     footer .copyright,
     footer small {
-        font-size: 20px;
+        font-size: 22px;
     }
 
 }
