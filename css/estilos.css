@@ -1435,7 +1435,7 @@ h3,
 /* Links principales del header */
 .header a,
 .header button {
-    font-size: 30px;
+    font-size: 33px;
     line-height: 1;
     font-weight: 600;
 }
@@ -1648,7 +1648,7 @@ h3,
 
     .header a,
     .header button {
-        font-size: 27px;
+        font-size: 29px;
     }
 
     footer h2,
