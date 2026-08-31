@@ -444,3 +444,70 @@
     }
 
 }
+/* ===========================
+   CARRITO FLOTANTE MOBILE
+=========================== */
+
+.carrito-flotante {
+    display: none;
+}
+
+
+@media (max-width: 600px) {
+
+    /*
+     * En mobile ocultamos el carrito
+     * del header y usamos el flotante.
+     */
+
+    .carrito-header {
+        display: none;
+    }
+
+
+    .carrito-flotante {
+        position: fixed;
+
+        right: 18px;
+        bottom: 92px;
+
+        width: 58px;
+        height: 58px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 0;
+
+        border: 0;
+        border-radius: 50%;
+
+        background: #f76fb6;
+
+        color: #ffffff;
+
+        box-shadow:
+            0 8px 24px
+            rgba(0, 0, 0, .18);
+
+        cursor: pointer;
+
+        z-index: 1200;
+    }
+
+
+    .carrito-flotante-icono {
+        font-size: 25px;
+        line-height: 1;
+    }
+
+
+    .carrito-contador-flotante {
+        top: -4px;
+        right: -3px;
+
+        background: #30292d;
+    }
+
+}
