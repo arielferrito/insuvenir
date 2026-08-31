@@ -147,14 +147,14 @@ function obtenerProductoGuardado_(
         }
 
         if (
-            !Object.prototype
-                .hasOwnProperty
-                .call(
-                    producto,
-                    "colores"
-                )
+              !Object.prototype
+                  .hasOwnProperty
+                  .call(
+                      producto,
+                      "colores"
+                  )
         ) {
-            return null;
+              return null;
         }
 
         return producto;
@@ -190,9 +190,9 @@ function buscarProductoPorFamilia_(
 
     return (
         productos.find(item =>
-            String(item.familia).trim() ===
-            String(familia).trim()
-        ) || null
+             String(item.familia).trim() ===
+             String(familia).trim()
+         ) || null
     );
 }
 
@@ -220,7 +220,7 @@ function mostrarFicha(producto) {
             "Insumo para souvenirs."
         );
 
-    actualizarSEOProducto();
+    actualizarSEOProducto(producto);
 
     const fotos =
         obtenerFotos(producto);
@@ -240,7 +240,7 @@ function mostrarFicha(producto) {
                     color &&
                     color.nombre &&
                     Number(
-                        color.stock || 0
+                         color.stock || 0
                     ) > 0
             )
             : [];
@@ -255,371 +255,372 @@ function mostrarFicha(producto) {
     );
 
 
-   const coloresSelector =
-    colores.length > 1
-        ? [
-            ...colores,
-            {
-                nombre: "SURTIDO",
-                stock: stockSurtido
-            }
-        ]
-        : colores;
+const coloresSelector =
+ colores.length > 1
+     ? [
+         ...colores,
+         {
+             nombre: "SURTIDO",
+             stock: stockSurtido
+         }
+     ]
+     : colores;
 
-    const colorInicial =
-    coloresSelector.length > 0
-        ? coloresSelector[0]
-        : null;
+ const colorInicial =
+ coloresSelector.length > 0
+     ? coloresSelector[0]
+     : null;
 
-    const estado =
-        sinStock
-            ? "Sin stock"
-            : escaparHTML(
-                producto.estado ||
-                "En Stock"
-            );
+ const estado =
+     sinStock
+         ? "Sin stock"
+         : escaparHTML(
+              producto.estado ||
+              "En Stock"
+         );
 
-    const claseEstado =
-        sinStock
-            ? "estado-sin-stock"
-            : "estado-disponible";
+ const claseEstado =
+     sinStock
+         ? "estado-sin-stock"
+         : "estado-disponible";
 
-    const selectorColores =
-    crearSelectorColores_(
-        coloresSelector
-    );
+ const selectorColores =
+ crearSelectorColores_(
+     coloresSelector
+ );
 
-    const textoDisponibilidad =
-        colorInicial
-            ? crearTextoStock_(
-                colorInicial.nombre,
-                Number(
-                    colorInicial.stock
-                )
-            )
-            : stock > 0
-                ? crearTextoStock_(
-                    "",
-                    stock
-                )
-                : "Producto momentáneamente sin stock";
+ const textoDisponibilidad =
+     colorInicial
+         ? crearTextoStock_(
+             colorInicial.nombre,
+             Number(
+                  colorInicial.stock
+             )
+         )
+         : stock > 0
+             ? crearTextoStock_(
+                  "",
+                  stock
+             )
+             : "Producto momentáneamente sin stock";
 
-    const textoBotonWhatsapp =
-        sinStock
-            ? "Consultar disponibilidad por WhatsApp"
-            : "Consultar por WhatsApp";
+ const textoBotonAccion =
+     sinStock
+         ? "Consultar disponibilidad por WhatsApp"
+         : "Agregar al carrito";
 
 
-    contenedor.innerHTML = `
+ contenedor.innerHTML = `
 
-        <div class="ficha-galeria">
+     <div class="ficha-galeria">
 
-            <div class="foto-principal">
+         <div class="foto-principal">
 
-                <img
-                    id="foto-principal"
-                    src="${fotos[0]}"
-                    alt="${nombre}"
-                >
+             <img
+                 id="foto-principal"
+                  src="${fotos[0]}"
+                  alt="${nombre}"
+              >
+
+         </div>
+
+
+         <div class="miniaturas">
+
+              ${fotos
+                  .map(
+                      (foto, indice) => `
+
+                          <button
+                              type="button"
+                              class="miniatura ${
+                                  indice === 0
+                                      ? "miniatura-activa"
+                                      : ""
+                              }"
+                              data-foto="${foto}"
+                              aria-label="Ver imagen ${indice + 1}"
+                          >
+
+                              <img
+                                  src="${foto}"
+                                  alt="${nombre} ${indice + 1}"
+                              >
+
+                          </button>
+
+                      `
+                  )
+                  .join("")
+              }
+
+         </div>
+
+     </div>
+
+
+     <div class="ficha-informacion">
+
+         <span
+             class="estado-producto ${claseEstado}"
+         >
+             ${estado}
+         </span>
+
+
+         <h1>
+             ${nombre}
+         </h1>
+
+
+         <p class="ficha-descripcion">
+              ${descripcion}
+         </p>
+
+
+         ${selectorColores}
+
+
+         <p
+            class="stock-ficha"
+            id="stock-ficha"
+        >
+            ${textoDisponibilidad}
+        </p>
+
+
+        <div class="tabla-precios">
+
+            <h2>
+                Precios por cantidad
+            </h2>
+
+
+            <div class="fila-precio">
+
+                 <span>
+                     1 a 19 unidades
+                 </span>
+
+                 <strong>
+                     ${formatearPrecio(
+                          producto.precio1
+                     )}
+                 </strong>
 
             </div>
 
 
-            <div class="miniaturas">
+            <div class="fila-precio">
 
-                ${fotos
-                    .map(
-                        (foto, indice) => `
+                 <span>
+                     20 a 49 unidades
+                 </span>
 
-                            <button
-                                type="button"
-                                class="miniatura ${
-                                    indice === 0
-                                        ? "miniatura-activa"
-                                        : ""
-                                }"
-                                data-foto="${foto}"
-                                aria-label="Ver imagen ${indice + 1}"
-                            >
+                 <strong>
+                     ${formatearPrecio(
+                          producto.precio2
+                     )}
+                 </strong>
 
-                                <img
-                                    src="${foto}"
-                                    alt="${nombre} ${indice + 1}"
-                                >
+            </div>
 
-                            </button>
 
-                        `
-                    )
-                    .join("")
-                }
+            <div
+                 class="fila-precio destacado-precio"
+            >
+
+                 <span>
+                     50 unidades o más
+                 </span>
+
+                 <strong>
+                     ${formatearPrecio(
+                          producto.precio3
+                     )}
+                 </strong>
 
             </div>
 
         </div>
 
 
-        <div class="ficha-informacion">
+        <section class="modulo-cotizacion">
 
-            <span
-                class="estado-producto ${claseEstado}"
+            <h2>
+                 ${
+                      sinStock
+                          ? "Consultá disponibilidad"
+                          : "Calculá tu pedido"
+                }
+            </h2>
+
+
+            <label
+                class="etiqueta-cantidad"
+                for="cantidad"
             >
-                ${estado}
-            </span>
+                Cantidad
+            </label>
 
 
-            <h1>
-                ${nombre}
-            </h1>
+            <div class="selector-cantidad">
+
+                 <button
+                     type="button"
+                     id="restar-cantidad"
+                     class="boton-cantidad"
+                     aria-label="Restar una unidad"
+                 >
+                     −
+                 </button>
 
 
-            <p class="ficha-descripcion">
-                ${descripcion}
-            </p>
+                 <input
+                     id="cantidad"
+                     class="campo-cantidad"
+                     type="number"
+                     inputmode="numeric"
+                     min="1"
+                     step="1"
+                     value="1"
+                 >
 
 
-            ${selectorColores}
+                 <button
+                     type="button"
+                     id="sumar-cantidad"
+                     class="boton-cantidad"
+                     aria-label="Sumar una unidad"
+                 >
+                     +
+                 </button>
+
+            </div>
 
 
             <p
-                class="stock-ficha"
-                id="stock-ficha"
-            >
-                ${textoDisponibilidad}
-            </p>
+                class="mensaje-escala"
+                id="mensaje-escala"
+            ></p>
 
 
-            <div class="tabla-precios">
+            <div class="resumen-cotizacion">
 
-                <h2>
-                    Precios por cantidad
-                </h2>
+                 <div class="dato-cotizacion">
 
+                      <span>
+                         Precio unitario
+                     </span>
 
-                <div class="fila-precio">
-
-                    <span>
-                        1 a 19 unidades
-                    </span>
-
-                    <strong>
-                        ${formatearPrecio(
-                            producto.precio1
-                        )}
-                    </strong>
-
-                </div>
-
-
-                <div class="fila-precio">
-
-                    <span>
-                        20 a 49 unidades
-                    </span>
-
-                    <strong>
-                        ${formatearPrecio(
-                            producto.precio2
-                        )}
-                    </strong>
+                     <strong
+                         id="precio-unitario"
+                     ></strong>
 
                 </div>
 
 
                 <div
-                    class="fila-precio destacado-precio"
+                     class="dato-cotizacion total-cotizacion"
                 >
 
-                    <span>
-                        50 unidades o más
-                    </span>
+                     <span>
+                         Total estimado
+                     </span>
 
-                    <strong>
-                        ${formatearPrecio(
-                            producto.precio3
-                        )}
-                    </strong>
+                     <strong
+                         id="total-estimado"
+                     ></strong>
 
                 </div>
 
             </div>
 
 
-            <section class="modulo-cotizacion">
+            <button
+                type="button"
+                id="btn-accion-producto"
+                class="boton-whatsapp${sinStock ? "" : " boton-agregar-carrito"}"
+            >
 
-                <h2>
-                    ${
-                        sinStock
-                            ? "Consultá disponibilidad"
-                            : "Calculá tu pedido"
-                    }
-                </h2>
+                ${
+                     sinStock
+                         ? `
+                             <svg
+                                 viewBox="0 0 32 32"
+                                 aria-hidden="true"
+                             >
+                                <path
+                                    fill="currentColor"
+                                    d="M16.04 3C8.85 3 3 8.78 3 15.9c0 2.52.74 4.98 2.14 7.07L3 29l6.28-2.02a13.2 13.2 0 0 0 6.75 1.83h.01C23.22 28.81 29 23.03 29 15.9 29 8.78 23.22 3 16.04 3Zm0 23.63h-.01a11 11 0 0 1-5.61-1.53l-.4-.24-3.73 1.2 1.22-3.61-.26-.42A10.69 10.69 0 0 1 5.18 15.9c0-5.92 4.87-10.73 10.86-10.73 2.9 0 5.63 1.12 7.68 3.15a10.62 10.62 0 0 1 3.1 7.58c0 5.92-4.83 10.73-10.78 10.73Zm5.96-8.04c-.33-.16-1.94-.95-2.24-1.06-.3-.11-.52-.16-.74.16-.22.33-.85 1.06-1.04 1.28-.19.22-.38.25-.71.08-.33-.16-1.38-.5-2.63-1.61a9.7 9.7 0 0 1-1.82-2.24c-.19-.33-.02-.5.14-.66.15-.15.33-.38.49-.57.16-.19.22-.33.33-.55.11-.22.05-.41-.03-.57-.08-.16-.74-1.77-1.01-2.42-.27-.64-.54-.55-.74-.56h-.63c-.22 0-.57.08-.87.41-.3.33-1.14 1.11-1.14 2.7 0 1.59 1.17 3.13 1.33 3.35.16.22 2.3 3.47 5.57 4.87.78.33 1.38.53 1.85.68.78.24 1.49.21 2.05.13.63-.09 1.94-.79 2.21-1.55.27-.76.27-1.41.19-1.55-.08-.14-.3-.22-.63-.38Z"
+                                />
+                            </svg>
+                        `
+                        : `<span aria-hidden="true">■</span>`
+                }
 
+                ${textoBotonAccion}
 
-                <label
-                    class="etiqueta-cantidad"
-                    for="cantidad"
-                >
-                    Cantidad
-                </label>
-
-
-                <div class="selector-cantidad">
-
-                    <button
-                        type="button"
-                        id="restar-cantidad"
-                        class="boton-cantidad"
-                        aria-label="Restar una unidad"
-                    >
-                        −
-                    </button>
+            </button>
 
 
-                    <input
-                        id="cantidad"
-                        class="campo-cantidad"
-                        type="number"
-                        inputmode="numeric"
-                        min="1"
-                        step="1"
-                        value="1"
-                    >
+            <p class="aclaracion-cotizacion">
 
+                ${
+                     sinStock
+                              ? "Consultanos por WhatsApp para confirmar reposición o próxima disponibilidad."
+                              : "El pedido y la disponibilidad serán confirmados por nuestro equipo antes de procesarlo."
+                       }
 
-                    <button
-                        type="button"
-                        id="sumar-cantidad"
-                        class="boton-cantidad"
-                        aria-label="Sumar una unidad"
-                    >
-                        +
-                    </button>
+                   </p>
 
-                </div>
-
-
-                <p
-                    class="mensaje-escala"
-                    id="mensaje-escala"
-                ></p>
-
-
-                <div class="resumen-cotizacion">
-
-                    <div class="dato-cotizacion">
-
-                        <span>
-                            Precio unitario
-                        </span>
-
-                        <strong
-                            id="precio-unitario"
-                        ></strong>
-
-                    </div>
-
-
-                    <div
-                        class="dato-cotizacion total-cotizacion"
-                    >
-
-                        <span>
-                            Total estimado
-                        </span>
-
-                        <strong
-                            id="total-estimado"
-                        ></strong>
-
-                    </div>
-
-                </div>
-
-
-                <button
-                    type="button"
-                    id="btn-whatsapp"
-                    class="boton-whatsapp"
-                >
-
-                    <svg
-                        viewBox="0 0 32 32"
-                        aria-hidden="true"
-                    >
-
-                        <path
-                            fill="currentColor"
-                            d="M16.04 3C8.85 3 3 8.78 3 15.9c0 2.52.74 4.98 2.14 7.07L3 29l6.28-2.02a13.2 13.2 0 0 0 6.75 1.83h.01C23.22 28.81 29 23.03 29 15.9 29 8.78 23.22 3 16.04 3Zm0 23.63h-.01a11 11 0 0 1-5.61-1.53l-.4-.24-3.73 1.2 1.22-3.61-.26-.42A10.69 10.69 0 0 1 5.18 15.9c0-5.92 4.87-10.73 10.86-10.73 2.9 0 5.63 1.12 7.68 3.15a10.62 10.62 0 0 1 3.1 7.58c0 5.92-4.83 10.73-10.78 10.73Zm5.96-8.04c-.33-.16-1.94-.95-2.24-1.06-.3-.11-.52-.16-.74.16-.22.33-.85 1.06-1.04 1.28-.19.22-.38.25-.71.08-.33-.16-1.38-.5-2.63-1.61a9.7 9.7 0 0 1-1.82-2.24c-.19-.33-.02-.5.14-.66.15-.15.33-.38.49-.57.16-.19.22-.33.33-.55.11-.22.05-.41-.03-.57-.08-.16-.74-1.77-1.01-2.42-.27-.64-.54-.55-.74-.56h-.63c-.22 0-.57.08-.87.41-.3.33-1.14 1.11-1.14 2.7 0 1.59 1.17 3.13 1.33 3.35.16.22 2.3 3.47 5.57 4.87.78.33 1.38.53 1.85.68.78.24 1.49.21 2.05.13.63-.09 1.94-.79 2.21-1.55.27-.76.27-1.41.19-1.55-.08-.14-.3-.22-.63-.38Z"
-                        />
-
-                    </svg>
-
-                    ${textoBotonWhatsapp}
-
-                </button>
-
-
-                <p class="aclaracion-cotizacion">
-
-                    ${
-                        sinStock
-                            ? "Consultanos por WhatsApp para confirmar reposición o próxima disponibilidad."
-                            : "El pedido y la disponibilidad serán confirmados por nuestro equipo antes de procesarlo."
-                    }
-
-                </p>
-
-            </section>
-
-
-            </section>
+              </section>
 
 
 <section class="info-compra-ficha">
 
-    <h2>
-        Información de compra
-    </h2>
+     <h2>
+         Información de compra
+     </h2>
 
-    <div class="info-compra-item">
-        <strong>🚚 Envíos</strong>
-        <span>
-            Realizamos envíos a todo el país por Correo Argentino.
-        </span>
-    </div>
+     <div class="info-compra-item">
+         <strong>■ Envíos</strong>
+         <span>
+             Realizamos envíos a todo el país por Correo Argentino.
+         </span>
+     </div>
 
-    <div class="info-compra-item">
-        <strong>📍 Mar del Plata</strong>
-        <span>
-            Retiro, entrega o envío dentro de la ciudad a coordinar.
-        </span>
-    </div>
+     <div class="info-compra-item">
+         <strong>■ Mar del Plata</strong>
+         <span>
+             Retiro, entrega o envío dentro de la ciudad a coordinar.
+         </span>
+     </div>
 
-    <div class="info-compra-item">
-        <strong>💳 Medios de pago</strong>
-        <span>
-            Efectivo o transferencia bancaria.
-        </span>
-    </div>
+     <div class="info-compra-item">
+         <strong>■ Medios de pago</strong>
+         <span>
+             Efectivo o transferencia bancaria.
+         </span>
+     </div>
 
 </section>
 
 
 <a
-    href="index.html#productos"
-    class="enlace-volver"
+     href="index.html#productos"
+     class="enlace-volver"
 >
-                ← Volver al catálogo
-            </a>
+                   ← Volver al catálogo
+              </a>
 
-        </div>
-    `;
+          </div>
+     `;
 
 
-    activarMiniaturas();
-    activarColores();
-    activarCotizador(producto);
+     activarMiniaturas();
+     activarColores();
+     activarCotizador(producto);
 }
 
 
@@ -637,49 +638,49 @@ function crearSelectorColores_(
 
     return `
 
-        <section class="selector-colores">
+         <section class="selector-colores">
 
-            <h2>
-                Elegí un color
-            </h2>
+             <h2>
+                 Elegí un color
+             </h2>
 
 
-            <div class="lista-colores">
+             <div class="lista-colores">
 
-                ${colores
-                    .map(
-                        (color, indice) => `
+                 ${colores
+                     .map(
+                         (color, indice) => `
 
-                            <button
-                                type="button"
-                                class="opcion-color ${
-                                    indice === 0
-                                        ? "opcion-color-activa"
-                                        : ""
-                                }"
-                                data-color="${escaparHTML(
-                                    color.nombre
-                                )}"
-                                data-stock="${Number(
-                                    color.stock || 0
-                                )}"
-                                style="${obtenerEstiloColor_(
-                                    color.nombre
-                                )}"
-                            >
-                                ${escaparHTML(
-                                    color.nombre
-                                )}
-                            </button>
+                              <button
+                                  type="button"
+                                  class="opcion-color ${
+                                      indice === 0
+                                          ? "opcion-color-activa"
+                                          : ""
+                                  }"
+                                  data-color="${escaparHTML(
+                                      color.nombre
+                                  )}"
+                                  data-stock="${Number(
+                                      color.stock || 0
+                                  )}"
+                                  style="${obtenerEstiloColor_(
+                                      color.nombre
+                                  )}"
+                              >
+                                  ${escaparHTML(
+                                      color.nombre
+                                  )}
+                              </button>
 
-                        `
-                    )
-                    .join("")
-                }
+                          `
+                      )
+                      .join("")
+                 }
 
-            </div>
+             </div>
 
-        </section>
+         </section>
     `;
 }
 
@@ -702,43 +703,43 @@ function activarColores() {
 
     botones.forEach(boton => {
 
-        boton.addEventListener(
-            "click",
-            () => {
+          boton.addEventListener(
+              "click",
+              () => {
 
-                botones.forEach(item =>
-                    item.classList.remove(
-                        "opcion-color-activa"
-                    )
-                );
+                   botones.forEach(item =>
+                       item.classList.remove(
+                           "opcion-color-activa"
+                       )
+                   );
 
-                boton.classList.add(
-                    "opcion-color-activa"
-                );
+                   boton.classList.add(
+                       "opcion-color-activa"
+                   );
 
-                const color =
-                    boton.dataset.color;
+                   const color =
+                       boton.dataset.color;
 
-                const stock =
-                    Number(
-                        boton.dataset.stock || 0
-                    );
+                   const stock =
+                       Number(
+                           boton.dataset.stock || 0
+                       );
 
-                if (disponibilidad) {
+                   if (disponibilidad) {
 
-                    disponibilidad.textContent =
-                        crearTextoStock_(
-                            color,
-                            stock
-                        );
-                }
+                       disponibilidad.textContent =
+                           crearTextoStock_(
+                               color,
+                               stock
+                           );
+                   }
 
-                sessionStorage.setItem(
-                    "insuvenir_color_seleccionado",
-                    color
-                );
-            }
-        );
+                   sessionStorage.setItem(
+                       "insuvenir_color_seleccionado",
+                       color
+                   );
+               }
+          );
     });
 }
 
@@ -823,138 +824,138 @@ function obtenerEstiloColor_(
             "#f0aec7"
         ],
 
-        FUCSIA: [
-            "#dd3b91",
-            "#ffffff",
-            "#dd3b91"
-        ],
+     FUCSIA: [
+         "#dd3b91",
+         "#ffffff",
+         "#dd3b91"
+     ],
 
-        AZUL: [
-            "#3976d2",
-            "#ffffff",
-            "#3976d2"
-        ],
+     AZUL: [
+         "#3976d2",
+         "#ffffff",
+         "#3976d2"
+     ],
 
-        CELESTE: [
-            "#8ed4ee",
-            "#40535b",
-            "#70c1df"
-        ],
+     CELESTE: [
+         "#8ed4ee",
+         "#40535b",
+         "#70c1df"
+     ],
 
-        "CELESTE PASTEL": [
-            "#c9eaf6",
-            "#40535b",
-            "#a9dced"
-        ],
+     "CELESTE PASTEL": [
+         "#c9eaf6",
+         "#40535b",
+         "#a9dced"
+     ],
 
-        TURQUESA: [
-            "#47c5bf",
-            "#ffffff",
-            "#47c5bf"
-        ],
+     TURQUESA: [
+         "#47c5bf",
+         "#ffffff",
+         "#47c5bf"
+     ],
 
-        VERDE: [
-            "#58a95a",
-            "#ffffff",
-            "#58a95a"
-        ],
+     VERDE: [
+         "#58a95a",
+         "#ffffff",
+         "#58a95a"
+     ],
 
-        "VERDE PASTEL": [
-            "#b9dfbd",
-            "#425645",
-            "#9bcea1"
-        ],
+     "VERDE PASTEL": [
+         "#b9dfbd",
+         "#425645",
+         "#9bcea1"
+     ],
 
-        AMARILLO: [
-            "#f6d85d",
-            "#594f28",
-            "#e6c642"
-        ],
+     AMARILLO: [
+         "#f6d85d",
+         "#594f28",
+         "#e6c642"
+     ],
 
-        "AMARILLO PASTEL": [
-            "#fff0a8",
-            "#594f28",
-            "#eadb82"
-        ],
+     "AMARILLO PASTEL": [
+         "#fff0a8",
+         "#594f28",
+         "#eadb82"
+     ],
 
-        NARANJA: [
-            "#ee9746",
-            "#ffffff",
-            "#ee9746"
-        ],
+     NARANJA: [
+         "#ee9746",
+         "#ffffff",
+         "#ee9746"
+     ],
 
-        VIOLETA: [
-            "#8657b6",
-            "#ffffff",
-            "#8657b6"
-        ],
+     VIOLETA: [
+         "#8657b6",
+         "#ffffff",
+         "#8657b6"
+      ],
 
-        LILA: [
-            "#c6a5df",
-            "#51445b",
-            "#b693d1"
-        ],
+      LILA: [
+          "#c6a5df",
+          "#51445b",
+          "#b693d1"
+      ],
 
-        "LILA PASTEL": [
-            "#e4d0ef",
-            "#584b60",
-            "#d2b5e2"
-        ],
+      "LILA PASTEL": [
+          "#e4d0ef",
+          "#584b60",
+          "#d2b5e2"
+      ],
 
-        GRIS: [
-            "#aaa7a9",
-            "#ffffff",
-            "#aaa7a9"
-        ],
+      GRIS: [
+          "#aaa7a9",
+          "#ffffff",
+          "#aaa7a9"
+      ],
 
-        MARRON: [
-            "#956b54",
-            "#ffffff",
-            "#956b54"
-        ],
+      MARRON: [
+          "#956b54",
+          "#ffffff",
+          "#956b54"
+      ],
 
-        DORADO: [
-            "#d5ad52",
-            "#493d22",
-            "#c69b3b"
-        ],
+      DORADO: [
+          "#d5ad52",
+          "#493d22",
+          "#c69b3b"
+      ],
 
-        PLATEADO: [
-            "#c7c9cc",
-            "#45484b",
-            "#afb2b6"
-        ],
+      PLATEADO: [
+          "#c7c9cc",
+          "#45484b",
+          "#afb2b6"
+      ],
 
-        TRANSPARENTE: [
-            "rgba(255,255,255,.55)",
-            "#555555",
-            "#cfcfcf"
-        ],
+      TRANSPARENTE: [
+          "rgba(255,255,255,.55)",
+          "#555555",
+          "#cfcfcf"
+      ],
 
-        CRISTAL: [
-            "rgba(255,255,255,.55)",
-            "#555555",
-            "#cfcfcf"
-        ]
-    };
+      CRISTAL: [
+          "rgba(255,255,255,.55)",
+          "#555555",
+          "#cfcfcf"
+      ]
+ };
 
 
-    if (color === "SURTIDO") {
+ if (color === "SURTIDO") {
 
-        return `
-            --color-fondo:
-                linear-gradient(
-                    90deg,
-                    #ed86ae,
-                    #f6d85d,
-                    #8ed4ee,
-                    #b9dfbd,
-                    #c6a5df
-                );
+      return `
+          --color-fondo:
+               linear-gradient(
+                   90deg,
+                   #ed86ae,
+                   #f6d85d,
+                   #8ed4ee,
+                   #b9dfbd,
+                   #c6a5df
+               );
 
-            --color-texto: #40373c;
-            --color-borde: #d8cbd2;
-        `;
+               --color-texto: #40373c;
+               --color-borde: #d8cbd2;
+          `;
     }
 
 
@@ -996,286 +997,379 @@ function activarCotizador(
             "sumar-cantidad"
         );
 
-    const botonWhatsapp =
+    const botonAccion =
         document.getElementById(
-            "btn-whatsapp"
+            "btn-accion-producto"
         );
 
 
     if (
-        !campoCantidad ||
-        !botonRestar ||
-        !botonSumar ||
-        !botonWhatsapp
+          !campoCantidad ||
+          !botonRestar ||
+          !botonSumar ||
+          !botonAccion
     ) {
-        return;
+          return;
     }
 
 
     const sinStock =
         Number(
             producto.stock || 0
-        ) <= 0;
+     ) <= 0;
 
 
-    const ICONO_SALUDO =
-        "\uD83D\uDE0A";
+ function obtenerColorSeleccionado_() {
 
-    const ICONO_PRODUCTO =
-        "\uD83D\uDCE6";
+     const botonColor =
+         document.querySelector(
+             ".opcion-color-activa"
+         );
 
-    const ICONO_COLOR =
-        "\uD83C\uDFA8";
-
-    const ICONO_CANTIDAD =
-        "\uD83D\uDD22";
-
-    const ICONO_PRECIO =
-        "\uD83D\uDCB0";
-
-
-    function obtenerCantidadValida() {
-
-        const cantidad =
-            Math.floor(
-                Number(
-                    campoCantidad.value
-                )
-            );
-
-        return (
-            Number.isFinite(cantidad) &&
-            cantidad >= 1
-                ? cantidad
-                : 1
-        );
-    }
+     return botonColor
+         ? String(
+             botonColor.dataset.color || ""
+         ).trim()
+         : "";
+ }
 
 
-    function actualizarCotizacion() {
+ function obtenerStockSeleccionado_() {
 
-        const cantidad =
-            obtenerCantidadValida();
+     const botonColor =
+         document.querySelector(
+             ".opcion-color-activa"
+         );
 
-        const cotizacion =
-            calcularCotizacion_(
-                producto,
-                cantidad
-            );
+     if (botonColor) {
 
-        document.getElementById(
-            "precio-unitario"
-        ).textContent =
-            formatearPrecio(
-                cotizacion.precioUnitario
-            );
+         return Math.max(
+             0,
+             Number(
+                 botonColor.dataset.stock || 0
+             )
+         );
+     }
 
-        document.getElementById(
-            "total-estimado"
-        ).textContent =
-            formatearPrecio(
-                cotizacion.total
-            );
-
-        document.getElementById(
-            "mensaje-escala"
-        ).textContent =
-            cotizacion.mensajeEscala;
-    }
+     return Math.max(
+         0,
+         Number(
+             producto.stock || 0
+         )
+     );
+ }
 
 
-    campoCantidad.addEventListener(
-        "focus",
-        () => {
+ function obtenerCantidadValida() {
 
-            if (
+     const cantidad =
+         Math.floor(
+             Number(
+                 campoCantidad.value
+             )
+         );
+
+     const cantidadBase =
+         Number.isFinite(cantidad) &&
+         cantidad >= 1
+             ? cantidad
+             : 1;
+
+     if (sinStock) {
+         return cantidadBase;
+     }
+
+     const stockMax =
+           obtenerStockSeleccionado_();
+
+     return Math.min(
+         cantidadBase,
+         Math.max(1, stockMax)
+     );
+ }
+
+
+ function aplicarLimiteStock_() {
+
+     if (sinStock) {
+         campoCantidad.removeAttribute("max");
+         return;
+     }
+
+     const stockMax =
+         obtenerStockSeleccionado_();
+
+     campoCantidad.max =
+         String(stockMax);
+
+     const cantidadActual =
+         Math.floor(
+             Number(
+                 campoCantidad.value
+             )
+         );
+
+     if (
+           Number.isFinite(cantidadActual) &&
+           cantidadActual > stockMax
+     ) {
+           campoCantidad.value =
+               stockMax;
+     }
+ }
+
+
+ function actualizarCotizacion() {
+
+     aplicarLimiteStock_();
+
+     const cantidad =
+         obtenerCantidadValida();
+
+     const cotizacion =
+         calcularCotizacion_(
+             producto,
+             cantidad
+         );
+
+     document.getElementById(
+         "precio-unitario"
+     ).textContent =
+         formatearPrecio(
+             cotizacion.precioUnitario
+         );
+
+     document.getElementById(
+         "total-estimado"
+     ).textContent =
+         formatearPrecio(
+             cotizacion.total
+          );
+
+      document.getElementById(
+          "mensaje-escala"
+      ).textContent =
+          cotizacion.mensajeEscala;
+ }
+
+
+ campoCantidad.addEventListener(
+     "focus",
+     () => {
+
+          if (
                 campoCantidad.value === "1"
-            ) {
+          ) {
                 campoCantidad.value = "";
-            }
+          }
+      }
+ );
+
+
+ campoCantidad.addEventListener(
+     "blur",
+     () => {
+
+          campoCantidad.value =
+              obtenerCantidadValida();
+
+          actualizarCotizacion();
+      }
+ );
+
+
+ campoCantidad.addEventListener(
+     "input",
+     () => {
+
+          if (
+                campoCantidad.value !== ""
+          ) {
+                aplicarLimiteStock_();
+          }
+
+          actualizarCotizacion();
+      }
+ );
+
+
+ botonRestar.addEventListener(
+     "click",
+     () => {
+
+          campoCantidad.value =
+              Math.max(
+                  1,
+                  obtenerCantidadValida() - 1
+              );
+
+          actualizarCotizacion();
+      }
+ );
+
+
+ botonSumar.addEventListener(
+     "click",
+     () => {
+
+           const actual =
+               obtenerCantidadValida();
+
+           if (sinStock) {
+
+               campoCantidad.value =
+                   actual + 1;
+
+           } else {
+
+               const stockMax =
+                   obtenerStockSeleccionado_();
+
+               campoCantidad.value =
+                   Math.min(
+                       stockMax,
+                       actual + 1
+                   );
+           }
+
+           actualizarCotizacion();
+      }
+ );
+
+
+ document
+     .querySelectorAll(
+          ".opcion-color"
+     )
+     .forEach(
+          botonColor => {
+
+               botonColor.addEventListener(
+                   "click",
+                   () => {
+
+                        aplicarLimiteStock_();
+
+                        campoCantidad.value =
+                            obtenerCantidadValida();
+
+                        actualizarCotizacion();
+                    }
+               );
+           }
+      );
+
+
+ botonAccion.addEventListener(
+     "click",
+     () => {
+
+           const cantidad =
+               obtenerCantidadValida();
+
+           const color =
+               obtenerColorSeleccionado_();
+
+
+           if (sinStock) {
+
+              const mensaje = [
+                  "¡Hola! ■",
+                  "",
+                  "Quisiera consultar por la disponibilidad de este producto:",
+                  "",
+                  `■ Producto: ${producto.producto}`,
+                  color
+                      ? `■ Color: ${color}`
+                      : "",
+                  `■ Cantidad que necesito: ${cantidad} unidades`,
+                  "",
+                  color === "SURTIDO"
+                      ? "La combinación de colores del surtido se coordina según disponibilidad."
+                      : "",
+                  "",
+                  "¿Tienen fecha estimada de reposición o disponibilidad próxima?",
+                  "",
+                  "¡Muchas gracias!"
+              ]
+                  .filter(
+                      linea =>
+                           linea !== ""
+                  )
+                  .join("\n");
+
+              const url =
+                  `https://wa.me/${NUMERO_WHATSAPP}` +
+                  `?text=${encodeURIComponent(mensaje)}`;
+
+              window.open(
+                  url,
+                  "_blank",
+                  "noopener,noreferrer"
+              );
+
+              return;
         }
-    );
 
 
-    campoCantidad.addEventListener(
-        "blur",
-        () => {
+        if (
+              !window.InsuvenirCarrito ||
+              typeof window.InsuvenirCarrito.agregar !== "function"
+        ) {
 
-            campoCantidad.value =
-                obtenerCantidadValida();
+              console.error(
+                  "El módulo del carrito no está disponible."
+              );
 
-            actualizarCotizacion();
+              alert(
+                  "No pudimos agregar el producto al carrito. Recargá la página e intentá nuevamente."
+              );
+
+              return;
         }
+
+
+        const stockMax =
+            obtenerStockSeleccionado_();
+
+        const foto =
+            document.getElementById(
+                "foto-principal"
+            )?.src || "";
+
+
+             window.InsuvenirCarrito.agregar({
+
+                   familia:
+                       producto.familia,
+
+                   nombre:
+                       producto.nombreComercial ||
+                       producto.producto ||
+                       "Producto",
+
+                   color,
+
+                   cantidad,
+
+                   stockMax,
+
+                   precio1:
+                       producto.precio1,
+
+                   precio2:
+                       producto.precio2,
+
+                   precio3:
+                       producto.precio3,
+
+                   foto
+             });
+         }
     );
 
 
-    campoCantidad.addEventListener(
-        "input",
-        actualizarCotizacion
-    );
-
-
-    botonRestar.addEventListener(
-        "click",
-        () => {
-
-            campoCantidad.value =
-                Math.max(
-                    1,
-                    obtenerCantidadValida() - 1
-                );
-
-            actualizarCotizacion();
-        }
-    );
-
-
-    botonSumar.addEventListener(
-        "click",
-        () => {
-
-            campoCantidad.value =
-                obtenerCantidadValida() + 1;
-
-            actualizarCotizacion();
-        }
-    );
-
-
-    botonWhatsapp.addEventListener(
-        "click",
-        () => {
-
-            const cantidad =
-                obtenerCantidadValida();
-
-            const cotizacion =
-                calcularCotizacion_(
-                    producto,
-                    cantidad
-                );
-
-            const colorSeleccionado =
-                document.querySelector(
-                    ".opcion-color-activa"
-                );
-
-            const color =
-                colorSeleccionado
-                    ? colorSeleccionado.dataset.color
-                    : "";
-
-
-            const textoColorWhatsapp =
-                color
-                    ? `${ICONO_COLOR} Color: ${color}`
-                    : "";
-
-
-            const aclaracionSurtido =
-                color === "SURTIDO"
-                    ? "La combinación de colores del surtido se coordina según disponibilidad."
-                    : "";
-
-
-            let mensaje;
-
-
-            if (sinStock) {
-
-                mensaje = [
-
-                    `¡Hola! ${ICONO_SALUDO}`,
-
-                    "",
-
-                    "Quisiera consultar por la disponibilidad de este producto:",
-
-                    "",
-
-                    `${ICONO_PRODUCTO} Producto: ${producto.producto}`,
-
-                    textoColorWhatsapp,
-
-                    `${ICONO_CANTIDAD} Cantidad que necesito: ${cantidad} unidades`,
-
-                    "",
-
-                    aclaracionSurtido,
-
-                    "",
-
-                    "¿Tienen fecha estimada de reposición o disponibilidad próxima?",
-
-                    "",
-
-                    "¡Muchas gracias!"
-
-                ];
-
-            } else {
-
-                mensaje = [
-
-                    `¡Hola! ${ICONO_SALUDO}`,
-
-                    "",
-
-                    "Quisiera consultar por el siguiente producto:",
-
-                    "",
-
-                    `${ICONO_PRODUCTO} Producto: ${producto.producto}`,
-
-                    textoColorWhatsapp,
-
-                    `${ICONO_CANTIDAD} Cantidad: ${cantidad} unidades`,
-
-                    `${ICONO_PRECIO} Precio estimado: ${formatearPrecio(
-                        cotizacion.total
-                    )}`,
-
-                    "",
-
-                    aclaracionSurtido,
-
-                    "",
-
-                    "Quedo atento a la confirmación de disponibilidad.",
-
-                    "",
-
-                    "¡Muchas gracias!"
-
-                ];
-            }
-
-
-            const mensajeFinal =
-                mensaje
-                    .filter(
-                        linea =>
-                            linea !== ""
-                    )
-                    .join("\n");
-
-
-            const url =
-                `https://wa.me/${NUMERO_WHATSAPP}` +
-                `?text=${encodeURIComponent(
-                    mensajeFinal
-                )}`;
-
-
-            window.open(
-                url,
-                "_blank",
-                "noopener,noreferrer"
-            );
-        }
-    );
-
-
+    aplicarLimiteStock_();
     actualizarCotizacion();
 }
 
@@ -1294,44 +1388,44 @@ function calcularCotizacion_(
 
     if (cantidad >= 50) {
 
-        precioUnitario =
-            Number(
-                producto.precio3 || 0
-            );
+         precioUnitario =
+             Number(
+                 producto.precio3 || 0
+             );
 
-        mensajeEscala =
-            "✓ Se aplica el mejor precio: 50 unidades o más";
+         mensajeEscala =
+             "✓ Se aplica el mejor precio: 50 unidades o más";
 
     } else if (cantidad >= 20) {
 
-        precioUnitario =
-            Number(
-                producto.precio2 || 0
-            );
+         precioUnitario =
+             Number(
+                  producto.precio2 || 0
+             );
 
-        mensajeEscala =
-            "✓ Se aplica el precio de 20 a 49 unidades";
+          mensajeEscala =
+              "✓ Se aplica el precio de 20 a 49 unidades";
 
     } else {
 
-        precioUnitario =
-            Number(
-                producto.precio1 || 0
-            );
+          precioUnitario =
+              Number(
+                  producto.precio1 || 0
+              );
 
-        mensajeEscala =
-            "✓ Se aplica el precio de 1 a 19 unidades";
+          mensajeEscala =
+              "✓ Se aplica el precio de 1 a 19 unidades";
     }
 
 
     return {
 
-        precioUnitario,
+          precioUnitario,
 
-        total:
-            precioUnitario * cantidad,
+          total:
+              precioUnitario * cantidad,
 
-        mensajeEscala
+          mensajeEscala
     };
 }
 
@@ -1351,23 +1445,23 @@ function obtenerFotos(
 
 
     if (
-        ids.length === 0 &&
-        producto.idFoto
+          ids.length === 0 &&
+          producto.idFoto
     ) {
 
-        ids.push(
-            producto.idFoto
-        );
+          ids.push(
+              producto.idFoto
+          );
     }
 
 
     if (
-        ids.length === 0
+          ids.length === 0
     ) {
 
-        return [
-            crearPlaceholder()
-        ];
+          return [
+              crearPlaceholder()
+          ];
     }
 
 
@@ -1405,26 +1499,26 @@ function activarMiniaturas() {
     miniaturas.forEach(
         boton => {
 
-            boton.addEventListener(
-                "click",
-                () => {
+             boton.addEventListener(
+                 "click",
+                 () => {
 
-                    principal.src =
-                        boton.dataset.foto;
+                      principal.src =
+                          boton.dataset.foto;
 
-                    miniaturas.forEach(
-                        item =>
-                            item.classList.remove(
-                                "miniatura-activa"
-                            )
-                    );
+                      miniaturas.forEach(
+                          item =>
+                              item.classList.remove(
+                                  "miniatura-activa"
+                              )
+                      );
 
-                    boton.classList.add(
-                        "miniatura-activa"
-                    );
-                }
-            );
-        }
+                      boton.classList.add(
+                          "miniatura-activa"
+                      );
+                  }
+             );
+         }
     );
 }
 
@@ -1438,44 +1532,44 @@ function crearPlaceholder() {
     return (
         "data:image/svg+xml;charset=UTF-8," +
         encodeURIComponent(`
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="1000"
-                height="1000"
-                viewBox="0 0 1000 1000"
-            >
+             <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="1000"
+                  height="1000"
+                  viewBox="0 0 1000 1000"
+             >
 
-                <rect
-                    width="1000"
-                    height="1000"
-                    fill="#f7edf4"
-                />
+                  <rect
+                      width="1000"
+                      height="1000"
+                      fill="#f7edf4"
+                  />
 
-                <text
-                    x="50%"
-                    y="48%"
-                    text-anchor="middle"
-                    font-family="Arial"
-                    font-size="70"
-                    font-weight="bold"
-                    fill="#d96ca6"
-                >
-                    INSUVENIR
-                </text>
+                  <text
+                      x="50%"
+                      y="48%"
+                      text-anchor="middle"
+                      font-family="Arial"
+                      font-size="70"
+                      font-weight="bold"
+                      fill="#d96ca6"
+                  >
+                      INSUVENIR
+                  </text>
 
-                <text
-                    x="50%"
-                    y="57%"
-                    text-anchor="middle"
-                    font-family="Arial"
-                    font-size="32"
-                    fill="#8b7b84"
-                >
-                    Próximamente foto
-                </text>
+                  <text
+                      x="50%"
+                      y="57%"
+                      text-anchor="middle"
+                      font-family="Arial"
+                      font-size="32"
+                      fill="#8b7b84"
+                  >
+                      Próximamente foto
+                  </text>
 
-            </svg>
-        `)
+              </svg>
+         `)
     );
 }
 
@@ -1496,20 +1590,20 @@ function mostrarError(
 
     contenedor.innerHTML = `
 
-        <div class="mensaje-error">
+         <div class="mensaje-error">
 
-            <strong>
-                ${escaparHTML(mensaje)}
-            </strong>
+             <strong>
+                 ${escaparHTML(mensaje)}
+             </strong>
 
-            <a
-                href="index.html"
-                class="boton boton-principal"
-            >
-                Volver al inicio
-            </a>
+             <a
+                  href="index.html"
+                  class="boton boton-principal"
+             >
+                  Volver al inicio
+             </a>
 
-        </div>
+         </div>
     `;
 }
 
@@ -1638,14 +1732,14 @@ function actualizarSEOProducto(producto) {
         );
 
     if (
-        canonical &&
-        familia
+          canonical &&
+          familia
     ) {
 
-        canonical.setAttribute(
-            "href",
-            `https://insuvenir.com.ar/producto.html?familia=${encodeURIComponent(familia)}`
-        );
+          canonical.setAttribute(
+              "href",
+              `https://insuvenir.com.ar/producto.html?familia=${encodeURIComponent(familia)}`
+          );
     }
 
 }
