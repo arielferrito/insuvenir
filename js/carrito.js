@@ -274,9 +274,60 @@ function crearInterfazCarrito_() {
         );
 
     }
+   
+       /* BOTON FLOTANTE MOBILE */
+
+    const botonFlotante =
+        document.createElement(
+            "button"
+        );
+
+    botonFlotante.type =
+        "button";
+
+    botonFlotante.className =
+        "carrito-flotante";
+
+    botonFlotante.id =
+        "carrito-flotante";
+
+    botonFlotante.setAttribute(
+        "aria-label",
+        "Abrir carrito"
+    );
+
+    botonFlotante.innerHTML = `
+
+        <span class="carrito-flotante-icono">
+            🛒
+        </span>
+
+        <span
+            class="carrito-contador carrito-contador-flotante"
+            id="carrito-contador-flotante"
+        >
+            0
+        </span>
+
+    `;
+
+
+    botonFlotante.addEventListener(
+        "click",
+        abrirCarrito_
+    );
+
+
+    document.body.appendChild(
+        botonFlotante
+    );
 
 
     /* OVERLAY */
+
+    /* OVERLAY */
+
+   
 
     const overlay =
         document.createElement(
@@ -469,23 +520,38 @@ function renderizarCarrito_() {
     const carrito =
         leerCarrito_();
 
-    const contador =
+    const contadores = [
+
         document.getElementById(
             "carrito-contador"
-        );
+        ),
 
-    if (contador) {
+        document.getElementById(
+            "carrito-contador-flotante"
+        )
 
-        contador.textContent =
-            carrito.length;
+    ];
 
-        contador.style.display =
-            carrito.length > 0
-                ? "flex"
-                : "none";
 
-    }
+    contadores.forEach(
+        contador => {
 
+            if (!contador) {
+                return;
+            }
+
+
+            contador.textContent =
+                carrito.length;
+
+
+            contador.style.display =
+                carrito.length > 0
+                    ? "flex"
+                    : "none";
+
+        }
+    );
 
     const contenedor =
         document.getElementById(
@@ -840,9 +906,7 @@ function finalizarCarrito_() {
     const carrito =
         leerCarrito_();
 
-    if (
-        carrito.length === 0
-    ) {
+    if (carrito.length === 0) {
 
         mostrarAvisoCarrito_(
             "El carrito está vacío."
@@ -857,7 +921,9 @@ function finalizarCarrito_() {
 
     const lineas = [
 
-        "¡Hola! Quiero realizar el siguiente pedido:",
+        "¡Hola! 😊",
+        "",
+        "Quiero realizar el siguiente pedido:",
         ""
 
     ];
@@ -879,30 +945,40 @@ function finalizarCarrito_() {
 
 
             lineas.push(
-                `• ${item.nombre}`
+                `📦 Producto: ${item.nombre}`
             );
 
 
             if (item.color) {
 
                 lineas.push(
-                    `  Color: ${item.color}`
+                    `🎨 Color: ${item.color}`
                 );
 
             }
 
 
             lineas.push(
-                `  Cantidad: ${item.cantidad} unidades`
+                `🔢 Cantidad: ${item.cantidad} unidades`
             );
 
             lineas.push(
-                `  Precio unitario: ${formatearCarrito_(precio)}`
+                `💰 Precio unitario: ${formatearCarrito_(precio)}`
             );
 
             lineas.push(
-                `  Subtotal: ${formatearCarrito_(subtotal)}`
+                `💵 Subtotal: ${formatearCarrito_(subtotal)}`
             );
+
+
+            if (item.color === "SURTIDO") {
+
+                lineas.push(
+                    "🌈 La combinación de colores del surtido se coordina según disponibilidad."
+                );
+
+            }
+
 
             lineas.push("");
 
@@ -911,13 +987,19 @@ function finalizarCarrito_() {
 
 
     lineas.push(
-        `TOTAL ESTIMADO: ${formatearCarrito_(total)}`
+        `🧾 TOTAL ESTIMADO: ${formatearCarrito_(total)}`
     );
 
     lineas.push("");
 
     lineas.push(
         "Quedo atento a la confirmación de disponibilidad."
+    );
+
+    lineas.push("");
+
+    lineas.push(
+        "¡Muchas gracias!"
     );
 
 
@@ -937,7 +1019,6 @@ function finalizarCarrito_() {
     );
 
 }
-
 
 /* ===========================
    AVISO
