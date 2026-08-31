@@ -600,8 +600,9 @@ function renderizarCarrito_() {
 
                     const precio =
                         obtenerPrecioItem_(
-                            item
-                        );
+                            item,
+                             carrito
+                         );
 
                     const subtotal =
                         precio *
@@ -807,17 +808,48 @@ function manejarAccionItem_(evento) {
    PRECIO
 =========================== */
 
-function obtenerPrecioItem_(
-    item
+/* ===========================
+   CANTIDAD TOTAL POR PRODUCTO
+=========================== */
+
+function obtenerCantidadFamilia_(
+    item,
+    carrito
 ) {
 
-    const cantidad =
-        Number(
-            item.cantidad || 1
+    return carrito
+        .filter(
+            otro =>
+                String(otro.familia) ===
+                String(item.familia)
+        )
+        .reduce(
+            (total, otro) =>
+                total +
+                Number(otro.cantidad || 0),
+            0
+        );
+
+}
+
+
+/* ===========================
+   PRECIO POR ESCALA
+=========================== */
+
+function obtenerPrecioItem_(
+    item,
+    carrito
+) {
+
+    const cantidadTotalProducto =
+        obtenerCantidadFamilia_(
+            item,
+            carrito
         );
 
 
-    if (cantidad >= 50) {
+    if (cantidadTotalProducto >= 50) {
 
         return Number(
             item.precio3 || 0
@@ -826,7 +858,7 @@ function obtenerPrecioItem_(
     }
 
 
-    if (cantidad >= 20) {
+    if (cantidadTotalProducto >= 20) {
 
         return Number(
             item.precio2 || 0
@@ -851,18 +883,21 @@ function actualizarTotalCarrito_(
 ) {
 
     const total =
-        carrito.reduce(
-            (acumulado, item) => {
+    carrito.reduce(
+        (acumulado, item) => {
 
-                return (
-                    acumulado +
-                    obtenerPrecioItem_(item) *
-                    Number(item.cantidad || 0)
-                );
+            return (
+                acumulado +
+                obtenerPrecioItem_(
+                    item,
+                    carrito
+                ) *
+                Number(item.cantidad || 0)
+            );
 
-            },
-            0
-        );
+        },
+        0
+    );
 
 
     const elemento =
@@ -934,8 +969,9 @@ function finalizarCarrito_() {
 
             const precio =
                 obtenerPrecioItem_(
-                    item
-                );
+                    item,
+                    carrito
+    );
 
             const subtotal =
                 precio *
