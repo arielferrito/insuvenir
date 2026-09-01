@@ -1263,7 +1263,6 @@ body {
     .menu {
         max-height: 180px;
         opacity: 1;
-        overflow: hidden;
         transform: translateY(0);
 
         transition:
@@ -1280,6 +1279,7 @@ body {
     .header-mobile-reducido .menu {
         max-height: 0;
         opacity: 0;
+        overflow: hidden;
         pointer-events: none;
         transform: translateY(-8px);
     }
