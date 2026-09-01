@@ -479,7 +479,7 @@ function obtenerIconoCategoria(
             "img/LUNCHERAS.jpg",
 
         ACCESORIOS:
-            "img/VALIJITAS.jpg"
+            "img/ACCESORIOS.jpg"
     };
 
     const clave =
