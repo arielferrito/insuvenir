@@ -164,13 +164,11 @@ body {
     color: #d96ca6;
 }
 
-.menu-desplegable:hover .menu-desplegable-contenido,
-.menu-desplegable:focus-within .menu-desplegable-contenido {
+.menu-desplegable:hover .menu-desplegable-contenido {
     display: flex;
 }
 
-.menu-desplegable:hover .menu-desplegable-boton span,
-.menu-desplegable:focus-within .menu-desplegable-boton span {
+.menu-desplegable:hover .menu-desplegable-boton span {
     transform: rotate(180deg);
 }
 
@@ -670,7 +668,6 @@ body {
     }
 
 }
-
 /* ===========================
    BUSCADOR HOME
 =========================== */
@@ -738,7 +735,7 @@ body {
 
 @media (max-width: 900px) {
 
-    .header {
+    . {
         flex-direction: column;
 
         gap: 18px;
@@ -773,7 +770,7 @@ body {
 
 @media (max-width: 600px) {
 
-    .header {
+    . {
         height: auto;
 
         padding: 14px 16px;
@@ -802,42 +799,12 @@ body {
         font-size: 14px;
     }
 
-    .menu-desplegable {
-        position: static;
-    }
-
     .menu-desplegable-contenido {
-        position: absolute;
-
         top: 100%;
-        left: 50%;
 
-        transform: translateX(-50%);
+        width: 180px;
 
-        width: min(280px, calc(100vw - 32px));
-        min-width: 0;
-
-        margin-top: 8px;
-
-        padding: 8px;
-
-        gap: 2px;
-
-        border-radius: 14px;
-
-        box-shadow:
-            0 12px 28px rgba(65, 45, 57, .14);
-
-        z-index: 1200;
-    }
-
-    .header .menu-desplegable-contenido a {
-        padding: 7px 12px;
-
-        font-size: 25px;
-        line-height: 1.1;
-
-        text-align: center;
+        margin-top: 6px;
     }
 
     .hero {
@@ -945,7 +912,7 @@ body {
     CENTRADO
 =========================== */
 
-.header-centrado {
+.-centrado {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
@@ -972,7 +939,7 @@ body {
 
 @media (max-width: 900px) {
 
-    .header-centrado {
+    .-centrado {
         display: flex;
         flex-direction: column;
         gap: 12px;
@@ -1282,29 +1249,26 @@ body {
 @media (max-width: 600px) {
 
     .header {
-        overflow: visible;
-
         transition:
-            padding .32s ease,
-            gap .32s ease,
-            box-shadow .32s ease;
+            padding .30s ease,
+            gap .30s ease;
     }
 
     .logo-imagen {
-        transition:
-            width .32s ease;
+        transition: width .30s ease;
     }
 
     .menu {
-        max-height: 64px;
+        max-height: 90px;
         opacity: 1;
-        overflow: visible;
+        visibility: visible;
         transform: translateY(0);
 
         transition:
-            max-height .32s ease,
-            opacity .22s ease,
-            transform .32s ease;
+            max-height .30s ease,
+            opacity .18s ease,
+            transform .30s ease,
+            visibility 0s linear 0s;
     }
 
     .header-mobile-reducido {
@@ -1315,17 +1279,21 @@ body {
     .header-mobile-reducido .menu {
         max-height: 0;
         opacity: 0;
-        overflow: hidden;
+        visibility: hidden;
         pointer-events: none;
         transform: translateY(-6px);
+
+        transition:
+            max-height .30s ease,
+            opacity .18s ease,
+            transform .30s ease,
+            visibility 0s linear .18s;
     }
 
     .header-mobile-reducido .logo-imagen {
         width: 115px;
     }
-
 }
-
 /* ===========================
    SLIDER HOME
 =========================== */
@@ -1727,4 +1695,3 @@ h3,
     }
 
 }
-
