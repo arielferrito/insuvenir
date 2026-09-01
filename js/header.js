@@ -109,11 +109,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (!estabaAbierto) {
 
-                    menu.classList.add(
-                        "menu-desplegable-abierto"
-                    );
+    const header =
+        document.querySelector(".header");
 
-                }
+    const contenido =
+        menu.querySelector(
+            ".menu-desplegable-contenido"
+        );
+
+
+    if (
+        header &&
+        contenido &&
+        window.innerWidth <= 600
+    ) {
+
+        const abajoHeader =
+            header.getBoundingClientRect().bottom;
+
+        contenido.style.setProperty(
+            "--submenu-top",
+            `${abajoHeader}px`
+        );
+
+    }
+
+
+    menu.classList.add(
+        "menu-desplegable-abierto"
+    );
+
+}
 
             }
         );
