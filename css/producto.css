@@ -751,5 +751,7 @@
 
 }
 .boton-agregar-carrito {
-    font-family: "Chewy", cursive;
+    font-family: "Chewy";
+       font-size: 24px;
+
 }
