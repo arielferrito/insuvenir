@@ -1,15 +1,25 @@
 document.addEventListener(
     "DOMContentLoaded",
     () => {
+
         activarHeaderMobileScroll();
+
+        activarMenuCategorias();
+
     }
 );
 
 
+/* ===========================
+   HEADER MOBILE AL SCROLL
+=========================== */
+
 function activarHeaderMobileScroll() {
 
     const header =
-        document.querySelector(".header");
+        document.querySelector(
+            ".header"
+        );
 
     if (!header) {
         return;
@@ -18,7 +28,9 @@ function activarHeaderMobileScroll() {
 
     function actualizarHeader() {
 
-        if (window.innerWidth > 600) {
+        if (
+            window.innerWidth > 600
+        ) {
 
             header.classList.remove(
                 "header-mobile-reducido"
@@ -28,7 +40,9 @@ function activarHeaderMobileScroll() {
         }
 
 
-        if (window.scrollY > 120) {
+        if (
+            window.scrollY > 120
+        ) {
 
             header.classList.add(
                 "header-mobile-reducido"
@@ -59,93 +73,119 @@ function activarHeaderMobileScroll() {
 
     actualizarHeader();
 }
+
+
 /* ===========================
    MENU CATEGORIAS
 =========================== */
 
-document.addEventListener("DOMContentLoaded", () => {
+function activarMenuCategorias() {
 
     const menus =
         document.querySelectorAll(
             ".menu-desplegable"
         );
 
-    menus.forEach(menu => {
 
-        const boton =
-            menu.querySelector(
-                ".menu-desplegable-boton"
-            );
+    menus.forEach(
+        menu => {
 
-        if (!boton) return;
+            const boton =
+                menu.querySelector(
+                    ".menu-desplegable-boton"
+                );
 
-
-        boton.addEventListener(
-            "click",
-            evento => {
-
-                evento.preventDefault();
-                evento.stopPropagation();
+            const contenido =
+                menu.querySelector(
+                    ".menu-desplegable-contenido"
+                );
 
 
-                const estabaAbierto =
-                    menu.classList.contains(
-                        "menu-desplegable-abierto"
-                    );
+            if (
+                !boton ||
+                !contenido
+            ) {
+                return;
+            }
 
 
-                document
-                    .querySelectorAll(
-                        ".menu-desplegable-abierto"
-                    )
-                    .forEach(item => {
+            boton.addEventListener(
+                "click",
+                evento => {
 
-                        item.classList.remove(
+                    evento.preventDefault();
+                    evento.stopPropagation();
+
+
+                    const estabaAbierto =
+                        menu.classList.contains(
                             "menu-desplegable-abierto"
                         );
 
-                    });
+
+                    document
+                        .querySelectorAll(
+                            ".menu-desplegable-abierto"
+                        )
+                        .forEach(
+                            item => {
+
+                                item.classList.remove(
+                                    "menu-desplegable-abierto"
+                                );
+
+                            }
+                        );
 
 
-                if (!estabaAbierto) {
-
-    const header =
-        document.querySelector(".header");
-
-    const contenido =
-        menu.querySelector(
-            ".menu-desplegable-contenido"
-        );
+                    if (
+                        estabaAbierto
+                    ) {
+                        return;
+                    }
 
 
-    if (
-        header &&
-        contenido &&
-        window.innerWidth <= 600
-    ) {
+                    /* MOBILE:
+                       empieza justo debajo
+                       del boton Categorias
+                    */
 
-        const abajoHeader =
-            header.getBoundingClientRect().bottom;
+                    if (
+                        window.innerWidth <= 600
+                    ) {
 
-        contenido.style.setProperty(
-            "--submenu-top",
-            `${abajoHeader}px`
-        );
-
-    }
+                        const posicionBoton =
+                            boton.getBoundingClientRect();
 
 
-    menu.classList.add(
-        "menu-desplegable-abierto"
+                        contenido.style.setProperty(
+                            "--submenu-top",
+                            `${posicionBoton.bottom}px`
+                        );
+
+                    } else {
+
+                        contenido.style.removeProperty(
+                            "--submenu-top"
+                        );
+
+                    }
+
+
+                    menu.classList.add(
+                        "menu-desplegable-abierto"
+                    );
+
+                }
+            );
+
+        }
     );
 
-}
 
-            }
-        );
-
-    });
-
+    /* ===========================
+       CERRAR AL TOCAR AFUERA
+    =========================== */
 
     document.addEventListener(
         "click",
@@ -164,15 +204,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 .querySelectorAll(
                     ".menu-desplegable-abierto"
                 )
-                .forEach(item => {
+                .forEach(
+                    item => {
 
-                    item.classList.remove(
-                        "menu-desplegable-abierto"
-                    );
+                        item.classList.remove(
+                            "menu-desplegable-abierto"
+                        );
 
-                });
+                    }
+                );
 
         }
     );
 
-});
+}
