@@ -492,15 +492,10 @@ function obtenerIconoCategoria(
 
     if (!imagen) {
 
-        return "✨";
-    }
-
     return `
         <img
-            src="${imagen}"
-            alt="${escaparHTML(
-                categoria
-            )}"
+            src="img/TODOS.jpg"
+            alt="Todos"
             class="imagen-categoria"
             loading="lazy"
         >
