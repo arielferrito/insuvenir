@@ -59,3 +59,94 @@ function activarHeaderMobileScroll() {
 
     actualizarHeader();
 }
+/* ===========================
+   MENU CATEGORIAS
+=========================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const menus =
+        document.querySelectorAll(
+            ".menu-desplegable"
+        );
+
+    menus.forEach(menu => {
+
+        const boton =
+            menu.querySelector(
+                ".menu-desplegable-boton"
+            );
+
+        if (!boton) return;
+
+
+        boton.addEventListener(
+            "click",
+            evento => {
+
+                evento.preventDefault();
+                evento.stopPropagation();
+
+
+                const estabaAbierto =
+                    menu.classList.contains(
+                        "menu-desplegable-abierto"
+                    );
+
+
+                document
+                    .querySelectorAll(
+                        ".menu-desplegable-abierto"
+                    )
+                    .forEach(item => {
+
+                        item.classList.remove(
+                            "menu-desplegable-abierto"
+                        );
+
+                    });
+
+
+                if (!estabaAbierto) {
+
+                    menu.classList.add(
+                        "menu-desplegable-abierto"
+                    );
+
+                }
+
+            }
+        );
+
+    });
+
+
+    document.addEventListener(
+        "click",
+        evento => {
+
+            if (
+                evento.target.closest(
+                    ".menu-desplegable"
+                )
+            ) {
+                return;
+            }
+
+
+            document
+                .querySelectorAll(
+                    ".menu-desplegable-abierto"
+                )
+                .forEach(item => {
+
+                    item.classList.remove(
+                        "menu-desplegable-abierto"
+                    );
+
+                });
+
+        }
+    );
+
+});
