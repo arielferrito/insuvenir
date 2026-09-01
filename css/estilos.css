@@ -649,24 +649,22 @@ body {
 
 @media (max-width: 600px) {
 
-    .footer-marca p {
-        font-size: 27px;
-    }
+    .menu-desplegable-contenido {
+    top: calc(100% + 52px);
 
-    .footer-bloque h3 {
-        font-size: 39px;
-        margin-bottom: 10px;
-    }
+    width: 190px;
+    min-width: 190px;
 
-    .footer-bloque a,
-    .footer-bloque p {
-        font-size: 28px;
-    }
+    margin-top: 0;
 
-    .footer-inferior p {
-        font-size: 20px;
-    }
+    padding: 8px;
+}
 
+.menu-desplegable-contenido a {
+    padding: 6px 10px;
+
+    font-size: 24px;
+    line-height: 1.05;
 }
 /* ===========================
    BUSCADOR HOME
