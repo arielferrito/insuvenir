@@ -28,8 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function cargarProductos() {
 
-    async function cargarProductos() {
-
     const grilla =
         document.getElementById(
             "grilla-productos"
