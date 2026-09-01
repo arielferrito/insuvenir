@@ -164,11 +164,11 @@ body {
     color: #d96ca6;
 }
 
-.menu-desplegable:hover .menu-desplegable-contenido {
+.menu-desplegable-abierto .menu-desplegable-contenido {
     display: flex;
 }
 
-.menu-desplegable:hover .menu-desplegable-boton span {
+.menu-desplegable-abierto .menu-desplegable-boton span {
     transform: rotate(180deg);
 }
 
@@ -799,13 +799,29 @@ body {
         font-size: 14px;
     }
 
-    .menu-desplegable-contenido {
-        top: 100%;
+    .menu-desplegable {
+    position: static;
+}
 
-        width: 180px;
+.menu-desplegable-contenido {
+    position: absolute;
 
-        margin-top: 6px;
-    }
+    top: 100%;
+    left: 16px;
+    right: 16px;
+
+    width: auto;
+    min-width: 0;
+
+    margin-top: 0;
+
+    transform: none;
+
+    max-height: calc(100vh - 170px);
+    overflow-y: auto;
+
+    z-index: 2000;
+}
 
     .hero {
         min-height: auto;
