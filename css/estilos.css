@@ -770,7 +770,7 @@ body {
 
 @media (max-width: 600px) {
 
-    . {
+    .header {
         height: auto;
 
         padding: 14px 16px;
@@ -800,45 +800,46 @@ body {
     }
 
     .menu-desplegable {
-    position: relative;
-}
+        position: static;
+    }
 
-.menu-desplegable-contenido {
-    position: absolute;
+    .menu-desplegable-contenido {
+        position: fixed;
 
-    top: calc(100% + 6px);
-    left: 50%;
+        top: var(--submenu-top);
+        left: 0;
+        right: 0;
 
-    transform: translateX(-50%);
+        width: 100%;
+        min-width: 0;
 
-    width: 220px;
-    min-width: 220px;
+        margin: 0;
+        padding: 18px 24px;
 
-    margin: 0;
-    padding: 10px;
+        transform: none;
 
-    max-height: none;
-    overflow: visible;
+        max-height: calc(100vh - var(--submenu-top));
+        overflow-y: auto;
 
-    background: #ffffff;
+        background: #ffffff;
 
-    border: 1px solid #f0e6ec;
-    border-radius: 14px;
+        border: none;
+        border-radius: 0 0 18px 18px;
 
-    box-shadow:
-        0 12px 28px rgba(65, 45, 57, .14);
+        box-shadow:
+            0 12px 28px rgba(65, 45, 57, .14);
 
-    z-index: 2500;
-}
+        z-index: 3000;
+    }
 
-.menu-desplegable-contenido a {
-    padding: 8px 12px;
+    .menu-desplegable-contenido a {
+        padding: 9px 12px;
 
-    font-size: 25px;
-    line-height: 1.1;
+        font-size: 25px;
+        line-height: 1.1;
 
-    text-align: left;
-}
+        text-align: center;
+    }
 
     .hero {
         min-height: auto;
