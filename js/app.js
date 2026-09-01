@@ -314,8 +314,13 @@ function crearCategorias() {
         >
 
             <span class="icono-categoria">
-                ✨
-            </span>
+    <img
+        src="img/TODOS.jpg"
+        alt="Todos"
+        class="imagen-categoria"
+        loading="lazy"
+    >
+</span>
 
             <strong>
                 TODOS
