@@ -735,7 +735,7 @@ body {
 
 @media (max-width: 900px) {
 
-    .header {
+    . {
         flex-direction: column;
 
         gap: 18px;
@@ -770,7 +770,7 @@ body {
 
 @media (max-width: 600px) {
 
-    .header {
+    . {
         height: auto;
 
         padding: 14px 16px;
@@ -909,10 +909,10 @@ body {
     }
 }
 /* ===========================
-   HEADER CENTRADO
+    CENTRADO
 =========================== */
 
-.header-centrado {
+.-centrado {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
@@ -934,12 +934,12 @@ body {
 
 
 /* ===========================
-   HEADER TABLET
+    TABLET
 =========================== */
 
 @media (max-width: 900px) {
 
-    .header-centrado {
+    .-centrado {
         display: flex;
         flex-direction: column;
         gap: 12px;
@@ -957,7 +957,7 @@ body {
 
 
 /* ===========================
-   HEADER MOBILE
+    MOBILE
 =========================== */
 
 @media (max-width: 600px) {
@@ -1250,8 +1250,26 @@ body {
 
     .header {
         transition:
-            padding .25s ease,
-            gap .25s ease;
+            padding .28s ease,
+            gap .28s ease,
+            box-shadow .28s ease;
+    }
+
+    .logo-imagen {
+        transition:
+            width .28s ease;
+    }
+
+    .menu {
+        max-height: 180px;
+        opacity: 1;
+        overflow: hidden;
+        transform: translateY(0);
+
+        transition:
+            opacity .22s ease,
+            max-height .28s ease,
+            transform .28s ease;
     }
 
     .header-mobile-reducido {
@@ -1260,7 +1278,10 @@ body {
     }
 
     .header-mobile-reducido .menu {
-        display: none;
+        max-height: 0;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-8px);
     }
 
     .header-mobile-reducido .logo-imagen {
