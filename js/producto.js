@@ -556,7 +556,7 @@ const coloresSelector =
                                 />
                             </svg>
                         `
-                        : `<span aria-hidden="true">■</span>`
+                        : ""
                 }
 
                 ${textoBotonAccion}
