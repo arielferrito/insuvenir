@@ -3,6 +3,9 @@ const API_URL =
 
 const CLAVE_CATALOGO = "insuvenir_productos_v2";
 
+const CLAVE_CATALOGO_LOCAL =
+    "insuvenir_catalogo_cache_v1";;
+
 let categoriaSeleccionada = "";
 let todosLosProductos = [];
 let productosDestacados = [];
@@ -25,6 +28,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function cargarProductos() {
 
+    async function cargarProductos() {
+
     const grilla =
         document.getElementById(
             "grilla-productos"
@@ -32,11 +37,35 @@ async function cargarProductos() {
 
     if (!grilla) return;
 
-    grilla.innerHTML = `
-        <p class="mensaje-catalogo">
-            Cargando productos...
-        </p>
-    `;
+
+    /* ===========================
+       1. INTENTAR CACHE LOCAL
+    =========================== */
+
+    const productosCache =
+        obtenerCatalogoCache_();
+
+
+    if (productosCache.length > 0) {
+
+        aplicarCatalogo_(
+            productosCache
+        );
+
+    } else {
+
+        grilla.innerHTML = `
+            <p class="mensaje-catalogo">
+                Cargando productos...
+            </p>
+        `;
+
+    }
+
+
+    /* ===========================
+       2. ACTUALIZAR DESDE API
+    =========================== */
 
     try {
 
@@ -48,46 +77,84 @@ async function cargarProductos() {
                 }
             );
 
+
         if (!respuesta.ok) {
 
             throw new Error(
                 "No se pudo consultar la API."
             );
+
         }
+
 
         const productos =
             await respuesta.json();
 
-        if (!Array.isArray(productos)) {
+
+        if (
+            !Array.isArray(productos) ||
+            productos.length === 0
+        ) {
 
             throw new Error(
-                productos.error ||
-                "La API devolvió un formato incorrecto."
+                "La API no devolvió productos válidos."
             );
+
         }
 
-        todosLosProductos =
-            productos;
 
-        productosDestacados =
-            todosLosProductos.filter(
-                producto =>
-                    producto.destacado === true
-            );
+        /* ===========================
+           3. GUARDAR CACHE NUEVA
+        =========================== */
+
+        localStorage.setItem(
+            CLAVE_CATALOGO_LOCAL,
+            JSON.stringify(productos)
+        );
+
+
+        /*
+         * Producto.js ya utiliza esta
+         * clave en sessionStorage.
+         */
 
         sessionStorage.setItem(
             CLAVE_CATALOGO,
-            JSON.stringify(
-                todosLosProductos
-            )
+            JSON.stringify(productos)
         );
 
-        crearCategorias();
-        mostrarDestacados();
+
+        /* ===========================
+           4. ACTUALIZAR LA PANTALLA
+        =========================== */
+
+        aplicarCatalogo_(
+            productos
+        );
+
 
     } catch (error) {
 
-        console.error(error);
+        console.warn(
+            "No se pudo actualizar el catálogo desde la API.",
+            error
+        );
+
+
+        /*
+         * Si ya mostramos la cache,
+         * no hacemos nada más.
+         */
+
+        if (productosCache.length > 0) {
+            return;
+        }
+
+
+        /*
+         * Solo mostramos error si tampoco
+         * había catálogo guardado.
+         */
 
         grilla.innerHTML = `
             <div class="mensaje-error">
@@ -102,9 +169,103 @@ async function cargarProductos() {
 
             </div>
         `;
+
     }
+
+}
+/* ===========================
+   LEER CACHE LOCAL
+=========================== */
+
+function obtenerCatalogoCache_() {
+
+    try {
+
+        const contenido =
+            localStorage.getItem(
+                CLAVE_CATALOGO_LOCAL
+            );
+
+
+        if (!contenido) {
+            return [];
+        }
+
+
+        const productos =
+            JSON.parse(contenido);
+
+
+        if (
+            !Array.isArray(productos) ||
+            productos.length === 0
+        ) {
+
+            return [];
+
+        }
+
+
+        return productos;
+
+
+    } catch (error) {
+
+        console.warn(
+            "No se pudo leer la cache del catálogo.",
+            error
+        );
+
+
+        localStorage.removeItem(
+            CLAVE_CATALOGO_LOCAL
+        );
+
+
+        return [];
+
+    }
+
 }
 
+
+/* ===========================
+   APLICAR CATALOGO
+=========================== */
+
+function aplicarCatalogo_(
+    productos
+) {
+
+    todosLosProductos =
+        productos;
+
+
+    productosDestacados =
+        todosLosProductos.filter(
+            producto =>
+                producto.destacado === true
+        );
+
+
+    /*
+     * Dejamos también el catálogo
+     * disponible para producto.js.
+     */
+
+    sessionStorage.setItem(
+        CLAVE_CATALOGO,
+        JSON.stringify(
+            todosLosProductos
+        )
+    );
+
+
+    crearCategorias();
+
+    mostrarDestacados();
+
+}
 
 /* ===========================
    CATEGORIAS
