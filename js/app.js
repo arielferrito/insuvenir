@@ -460,6 +460,9 @@ function obtenerIconoCategoria(
 
     const imagenes = {
 
+        TODOS:
+            "img/TODOS.jpg",
+
         VASOS:
             "img/VASOS.jpg",
 
@@ -491,11 +494,15 @@ function obtenerIconoCategoria(
         imagenes[clave];
 
     if (!imagen) {
+        return "✨";
+    }
 
     return `
         <img
-            src="img/TODOS.jpg"
-            alt="Todos"
+            src="${imagen}"
+            alt="${escaparHTML(
+                categoria
+            )}"
             class="imagen-categoria"
             loading="lazy"
         >
