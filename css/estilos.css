@@ -373,6 +373,8 @@ body {
         );
 
     gap: 30px;
+
+   justify-content: center;
 }
 
 .producto {
