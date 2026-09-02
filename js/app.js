@@ -466,28 +466,28 @@ function obtenerIconoCategoria(
     const imagenes = {
 
         TODOS:
-            "img/TODOS.jpg",
+            "img/TODOS.png",
 
         VASOS:
-            "img/VASOS.jpg",
+            "img/VASOS.png",
 
         VALIJITAS:
-            "img/VALIJITAS.jpg",
+            "img/VALIJITAS.png",
 
         BOTELLITAS:
-            "img/BOTELLITAS.jpg",
+            "img/BOTELLITAS.png",
 
         BALDECITOS:
-            "img/BALDECITOS.jpg",
+            "img/BALDECITOS.png",
 
         BOLSITAS:
-            "img/BOLSITAS.jpg",
+            "img/BOLSITAS.png",
 
         LUNCHERAS:
-            "img/LUNCHERAS.jpg",
+            "img/LUNCHERAS.png",
 
         ACCESORIOS:
-            "img/ACCESORIOS.jpg"
+            "img/ACCESORIOS.png"
     };
 
     const clave =
