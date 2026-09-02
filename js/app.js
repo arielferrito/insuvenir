@@ -315,7 +315,7 @@ function crearCategorias() {
 
             <span class="icono-categoria">
     <img
-        src="img/TODOS.jpg"
+        src="img/TODOS.png"
         alt="Todos"
         class="imagen-categoria"
         loading="lazy"
