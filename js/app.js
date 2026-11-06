@@ -486,6 +486,9 @@ function obtenerIconoCategoria(
         LUNCHERAS:
             "img/LUNCHERAS.png",
 
+        COMBOS:
+            "img/COMBOS.png",
+
         ACCESORIOS:
             "img/ACCESORIOS.png"
     };
